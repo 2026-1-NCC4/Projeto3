@@ -4,16 +4,29 @@
 <a href= "https://www.fecap.br/"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhZPrRa89Kma0ZZogxm0pi-tCn_TLKeHGVxywp-LXAFGR3B1DPouAJYHgKZGV0XTEf4AE&usqp=CAU" alt="FECAP - Fundação de Comércio Álvares Penteado" border="0"></a>
 </p>
 
-# Dashboard
+# Dashboard de Indicadores Cannoli - Foodtech
 
-## Nome do projeto: Dashbord Cannoli
+## 👥 Grupo: TechTonics
+
+## Integrantes
+
+* **[Esther Oliveira Costa](https://www.linkedin.com/in/fernandaloura/)**
+* **[Gustavo Henrique Da Silva Santos](https://www.linkedin.com/in/ghsantos24/)**
+* **[Lucas Alves Bernardo](https://www.linkedin.com/in/lucas-alves-bernardo-093871252/)**
 
 
 
-## Professores Orientadores: <a href="www.linkedin.com/in/eduardo-savino/">Eduardo Savino</a>
+## 📚 Professores Orientadores
 
-## Descrição
+* **Eduardo Savino Gomes] ttps://href="www.linkedin.com/in/eduardo-savino**
+* **[Lucy Mari Tabuti](https://www.linkedin.com/in/lucymari/)**
+* **[Maurício Lopes da Cunha](https://www.linkedin.com/in/maureen-leung-5630492a/)**
+* **[Rodnil da Silva Moreira Lisboa](https://www.linkedin.com/in/professorrodnil/)**
+* **[Victor Bruno Alexander Rosetti de Quiroz](https://www.linkedin.com/in/victorbarq/)**
 
+
+
+ https://href="www.linkedin.com/in/eduardo-savino
 Este projeto é uma plataforma de centralização e análise de dados desenvolvida para a Cannoli, projetada para transformar métricas complexas em insights visuais e acionáveis. O foco principal é otimizar a leitura de KPIs e agilizar a tomada de decisão operacional.
 
 Além da visualização intuitiva, a arquitetura foi desenhada priorizando a escalabilidade e a segurança, garantindo que a integridade dos dados seja mantida mesmo com o aumento do volume de informações processadas. Com uma estrutura modular e pronta para integração com múltiplas fontes, o dashboard não atua apenas como um espelho do passado, mas como uma ferramenta estratégica que permite identificar tendências, antecipar gargalos operacionais e refinar o fluxo de trabalho diário da empresa com precisão cirúrgica.
