@@ -31,11 +31,7 @@ Este projeto é uma plataforma de centralização e análise de dados desenvolvi
 
 Além da visualização intuitiva, a arquitetura foi desenhada priorizando a escalabilidade e a segurança, garantindo que a integridade dos dados seja mantida mesmo com o aumento do volume de informações processadas. Com uma estrutura modular e pronta para integração com múltiplas fontes, o dashboard não atua apenas como um espelho do passado, mas como uma ferramenta estratégica que permite identificar tendências, antecipar gargalos operacionais e refinar o fluxo de trabalho diário da empresa com precisão cirúrgica.
 <br>
-<p align="center">
-<img src="https://github.com/user-attachments/assets/7435da2e-13f1-4744-a797-3f71ecaf094a" alt="NOME DO JOGO" border="0">
-  Home page <a rel="license" href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a> <a href="http://pix4free.org/">Pix4free</a>
-</p>
-<br><br>
+
 
 ## 🛠 Estrutura de pastas
 
