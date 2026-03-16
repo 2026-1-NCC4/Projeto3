@@ -6,13 +6,9 @@
 
 # Dashboard
 
-## Nome do projeto: Cannolitsky
-<p align="center">
-<img loading="lazy" src="https://github.com/user-attachments/assets/41cfcc1d-f8e9-4154-9886-c90f59c31f7f" width=115>
-</p>
+## Nome do projeto: Dashbord Cannoli
 
-| [<img loading="lazy" src="https://github.com/user-attachments/assets/814a1acf-5ab4-4d23-860d-a0d4d8baf006" width=115><br><sub>Saulo Santos</sub>](https://www.linkedin.com/in/saulo-santos-a1ba86334/) |  [<img loading="lazy" src="https://github.com/user-attachments/assets/48ca0ec2-c207-4de0-b645-276a22abee78" width=115><br><sub>Luan Rocha</sub>](https://www.linkedin.com/in/luanroccha13/) |  [<img loading="lazy" src="https://github.com/user-attachments/assets/d6890331-0775-4b66-971a-48ebdcf3ce38" width=115><br><sub>Larissa de Almeida Lira Oliveira</sub>](https://www.linkedin.com/in/larissa-de-almeida?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app) |  [<img loading="lazy" src="https://github.com/user-attachments/assets/42e9e7a8-7fce-498f-a739-6acc8d57e818" width=115><br><sub>Vinicius Cardoso de Lima</sub>](https://www.linkedin.com/in/vinicius-cardoso-de-lima-a9a918227/) |  
-| :---: | :---: | :---: | --- | 
+
 
 ## Professores Orientadores: <a href="www.linkedin.com/in/eduardo-savino/">Eduardo Savino</a>
 
