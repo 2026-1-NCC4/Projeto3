@@ -6,7 +6,7 @@
 
 # Dashboard de Indicadores Cannoli - Foodtech
 
-## 👥 Grupo: TechTonics
+## 👥 Grupo: TechSnack DevTeam
 
 ## Integrantes
 
