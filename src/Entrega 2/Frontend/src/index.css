@@ -1,0 +1,50 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background-color: #F5EFE6;
+    color: #1A1A1A;
+    overflow-x: hidden;
+  }
+  
+  /* Apenas títulos específicos usam Playfair, não todos os h1, h2, h3 */
+  .font-playfair {
+    font-family: 'Playfair Display', serif;
+  }
+  
+  .font-dm-sans {
+    font-family: 'DM Sans', sans-serif;
+  }
+}
+
+@layer utilities {
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .animate-fade-up {
+    animation: fadeUp 0.7s ease both;
+  }
+  
+  .animate-fade-up-delay {
+    animation: fadeUp 0.7s 0.15s ease both;
+  }
+  
+  .active\:scale-98:active {
+    transform: scale(0.98);
+  }
+}

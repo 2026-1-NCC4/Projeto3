@@ -1,0 +1,39 @@
+
+CREATE DATABASE IF NOT EXISTS violetaflow;
+USE violetaflow;
+SELECT DATABASE();
+CREATE TABLE IF NOT EXISTS users (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    senha VARCHAR(255) NOT NULL,
+    tipo VARCHAR(50) DEFAULT 'estudante',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    last_login TIMESTAMP NULL,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+
+CREATE TABLE IF NOT EXISTS tarefas (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    usuario_id INT NOT NULL,
+    titulo VARCHAR(255) NOT NULL,
+    horario VARCHAR(50),
+    descricao TEXT,
+    status VARCHAR(20) DEFAULT 'fazer',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Criar tabela de eventos
+CREATE TABLE IF NOT EXISTS eventos (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    usuario_id INT NOT NULL,
+    titulo VARCHAR(255) NOT NULL,
+    data DATE NOT NULL,
+    horario VARCHAR(50),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+SELECT * FROM users;
+SELECT * FROM tarefas;
+SELECT * FROM eventos;
