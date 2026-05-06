@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply font-dm-sans bg-cream text-text-dark overflow-x-hidden;
+  }
+  
+  /* Garantir que as fontes sejam aplicadas corretamente */
+  h1 {
+    @apply font-playfair;
+  }
+
+  /* 🔥 REMOVE O VERDE/AZUL DO AUTOFILL */
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  textarea:-webkit-autofill,
+  select:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px #F5EFE6 inset !important; /* mesma cor do fundo */
+    box-shadow: 0 0 0px 1000px #F5EFE6 inset !important;
+    -webkit-text-fill-color: #1f2937 !important; /* cor do texto */
+    transition: background-color 5000s ease-in-out 0s;
+  }
+}
+
+@layer utilities {
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .animate-fade-up {
+    animation: fadeUp 0.7s ease both;
+  }
+  
+  .animate-fade-up-delay {
+    animation: fadeUp 0.7s 0.15s ease both;
+  }
+}

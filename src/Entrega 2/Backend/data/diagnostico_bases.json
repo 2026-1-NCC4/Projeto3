@@ -1,0 +1,349 @@
+{
+  "pasta": "C:\\Users\\higoo\\Downloads\\Projeto3 (2)\\Projeto3\\Projeto3\\src\\Entrega 2\\Backend\\data",
+  "arquivos": [
+    {
+      "arquivo": "CAMPAIGN.CSV",
+      "linhas": 56461,
+      "colunas": [
+        "segmentid",
+        "templateid",
+        "storeid",
+        "name",
+        "description",
+        "type",
+        "statusend",
+        "createdat",
+        "customerid",
+        "sendat"
+      ],
+      "separador_detectado": ",",
+      "encoding_detectado": "utf-8",
+      "amostra": [
+        {
+          "segmentid": "9E2C65A1-05Bc-4896-902F-E3Bec38Ca1B9",
+          "templateid": "Cfbb9C54-6131-4Ede-B394-6Cfd2B5B407E",
+          "storeid": "01Ac4Ec3-F7E0-451D-Ab31-2Db1799816Ca",
+          "name": "Promover Almoço",
+          "description": "Campanha Para Promover Almoço",
+          "type": 1,
+          "statusend": 2,
+          "createdat": "2025-07-19 00:24:02.830000+00:00",
+          "customerid": "D6Eb7Af9-9071-4342-93E6-B2B559538288",
+          "sendat": "2025-08-01 14:15:53.997000+00:00"
+        },
+        {
+          "segmentid": "D7F18A0D-7Bcb-49C0-B44D-86Dce7D12578",
+          "templateid": "0807Ac90-8501-4Faf-Abaf-F81C4Bb8451D",
+          "storeid": "8Cc52834-D064-4C6A-8E08-8F33D4811872",
+          "name": "Combo Familia",
+          "description": "Combo Familia",
+          "type": 1,
+          "statusend": 2,
+          "createdat": "2025-12-02 22:08:22.588000+00:00",
+          "customerid": "7Bb6B09C-93A8-4702-Bd15-07D1A29Ea119",
+          "sendat": "2025-12-18 21:38:19.002000+00:00"
+        },
+        {
+          "segmentid": "8Cfa67Af-83Af-4C2A-B61E-4Ad80Be6E261",
+          "templateid": "59905Afd-F186-4D77-81C2-Aa2E2820B7F3",
+          "storeid": "0D860437-8F2F-4437-A866-811Bd07Ac367",
+          "name": "Clientes Com 1 Pedido",
+          "description": "",
+          "type": 1,
+          "statusend": 2,
+          "createdat": "2025-12-02 01:24:24.701000+00:00",
+          "customerid": "4Ea8E93C-071C-4E36-A04A-040C070Fef38",
+          "sendat": "2026-01-18 23:03:39.257000+00:00"
+        }
+      ]
+    },
+    {
+      "arquivo": "CAMPAIGNxORDER.CSV",
+      "linhas": 95284,
+      "colunas": [
+        "campaignid",
+        "message_id",
+        "sent_at",
+        "status",
+        "order_at",
+        "storeid",
+        "customerid",
+        "order_id",
+        "totalamount"
+      ],
+      "separador_detectado": ",",
+      "encoding_detectado": "utf-8",
+      "amostra": [
+        {
+          "campaignid": "Cfb4C5A3-Bbef-49B2-A9B4-36A36647A903",
+          "message_id": "6A24300F-79C8-4413-95D5-F36C553Ddf73",
+          "sent_at": "2026-01-10 21:38:10.033000+00:00",
+          "status": 2,
+          "order_at": "2025-11-15 00:21:44.201000+00:00",
+          "storeid": "0C02619D-0C57-492D-9660-Dd0F357A2F0C",
+          "customerid": "9B2B5739-1E9F-42Cb-Bddb-Cd4F150Ec9E2",
+          "order_id": "E4C15A26-D0Ca-4A18-Af1D-Ae430E27Cc25",
+          "totalamount": 49.99
+        },
+        {
+          "campaignid": "495C6A94-9Cca-4F58-9353-Fac46Ffd49A2",
+          "message_id": "7De7Cc4D-Fe29-445C-B980-6Ff8Af83Eb66",
+          "sent_at": "2025-11-15 18:35:27.382000+00:00",
+          "status": 2,
+          "order_at": "2025-11-15 00:21:44.201000+00:00",
+          "storeid": "0C02619D-0C57-492D-9660-Dd0F357A2F0C",
+          "customerid": "9B2B5739-1E9F-42Cb-Bddb-Cd4F150Ec9E2",
+          "order_id": "E4C15A26-D0Ca-4A18-Af1D-Ae430E27Cc25",
+          "totalamount": 49.99
+        },
+        {
+          "campaignid": "1412E88B-556F-4Bb6-8F55-625D783C597C",
+          "message_id": "Fb3A3377-B6Cd-478D-9844-C8Fc1F7F7911",
+          "sent_at": "2025-12-13 22:55:14.038000+00:00",
+          "status": 2,
+          "order_at": "2025-11-15 00:21:44.201000+00:00",
+          "storeid": "0C02619D-0C57-492D-9660-Dd0F357A2F0C",
+          "customerid": "9B2B5739-1E9F-42Cb-Bddb-Cd4F150Ec9E2",
+          "order_id": "E4C15A26-D0Ca-4A18-Af1D-Ae430E27Cc25",
+          "totalamount": 49.99
+        }
+      ]
+    },
+    {
+      "arquivo": "CUSTOMER.CSV",
+      "linhas": 160710,
+      "colunas": [
+        "id",
+        "name",
+        "gender",
+        "status",
+        "createdat",
+        "updatedat",
+        "updatedby"
+      ],
+      "separador_detectado": ",",
+      "encoding_detectado": "utf-8",
+      "amostra": [
+        {
+          "id": "F97B1646-19B7-48Af-B134-C0Ae196E8297",
+          "name": "Jaime",
+          "gender": "M",
+          "status": 1,
+          "createdat": "2025-07-03 22:19:02.159000+00:00",
+          "updatedat": "2025-09-02 22:13:00.346000+00:00",
+          "updatedby": "Admin"
+        },
+        {
+          "id": "1Fa651Fd-B539-49C8-8Ea7-E714A705F946",
+          "name": "Miche",
+          "gender": "N",
+          "status": 1,
+          "createdat": "2025-10-24 00:29:06.931000+00:00",
+          "updatedat": "2025-10-24 00:29:06.931000+00:00",
+          "updatedby": "Cannoli Api"
+        },
+        {
+          "id": "85Fc4A88-B5E8-470A-9Ed7-33643E2Be3Eb",
+          "name": "Kéren",
+          "gender": "N",
+          "status": 1,
+          "createdat": "2025-08-22 14:46:31.006000+00:00",
+          "updatedat": "2025-09-16 19:32:10.387000+00:00",
+          "updatedby": "Paulo Bertelli"
+        }
+      ]
+    },
+    {
+      "arquivo": "CUSTOMERADDRESS.CSV",
+      "linhas": 159550,
+      "colunas": [
+        "id",
+        "customerid",
+        "neighborhood",
+        "city",
+        "state",
+        "zipcode",
+        "status"
+      ],
+      "separador_detectado": ",",
+      "encoding_detectado": "utf-8",
+      "amostra": [
+        {
+          "id": "18D24F02-E05C-4Bd2-9484-00Cb78146E4F",
+          "customerid": "00006D85-9236-472D-A014-44Cf35B8E3B5",
+          "neighborhood": "Pintolândia",
+          "city": "Boa Vista",
+          "state": "Rr",
+          "zipcode": "69316718",
+          "status": 1
+        },
+        {
+          "id": "850A99F6-8C98-4290-B98D-E92035D61140",
+          "customerid": "000361E2-E911-4D8C-9442-Cfd38004381C",
+          "neighborhood": "Parque Pauliceia",
+          "city": "Duque De Caxias",
+          "state": "Rj",
+          "zipcode": "25071100",
+          "status": 1
+        },
+        {
+          "id": "96A55B58-5Fd0-4B12-893D-1386A72950A1",
+          "customerid": "0003774F-8824-46Cf-91B8-3F74E6182Ca8",
+          "neighborhood": "Jardim Sumare",
+          "city": "Araçatuba",
+          "state": "Sp",
+          "zipcode": "16015280",
+          "status": 1
+        }
+      ]
+    },
+    {
+      "arquivo": "STORE.csv",
+      "linhas": 77,
+      "colunas": [
+        "id",
+        "name",
+        "zipcode",
+        "status",
+        "createdat"
+      ],
+      "separador_detectado": ",",
+      "encoding_detectado": "utf-8",
+      "amostra": [
+        {
+          "id": "069768C1-6Fdd-4833-939E-Ea9F51A7Dff9",
+          "name": "Elvi Cozinhas Profissional",
+          "zipcode": "",
+          "status": 1,
+          "createdat": "2025-12-19 15:36:25.389000+00:00"
+        },
+        {
+          "id": "42C3B4Ba-0F3B-457A-8F36-5Cc42Dedf94C",
+          "name": "Atelier Doce Amor",
+          "zipcode": 4715003.0,
+          "status": 1,
+          "createdat": "2025-06-26 12:07:53.028000+00:00"
+        },
+        {
+          "id": "B6Bc362F-Cb27-44Ac-A9C8-5E9B08263F86",
+          "name": "Casa Da Esfiha Vila Gustavo Ltda",
+          "zipcode": 2201002.0,
+          "status": 1,
+          "createdat": "2025-06-26 12:07:53.037000+00:00"
+        }
+      ]
+    },
+    {
+      "arquivo": "STOREORDER.csv",
+      "linhas": 118622,
+      "colunas": [
+        "id",
+        "storeid",
+        "customerid",
+        "scheduledat",
+        "totalamount",
+        "subtotalamount",
+        "discountamount",
+        "taxamount",
+        "saleschannel",
+        "status",
+        "ordertype",
+        "createdat",
+        "createdby",
+        "status_label"
+      ],
+      "separador_detectado": ",",
+      "encoding_detectado": "utf-8",
+      "amostra": [
+        {
+          "id": "6986251F-3Cda-4671-Acb9-8Bc9646Ed2A9",
+          "storeid": "0D756Ccf-7F47-4D8D-A2Fb-Aa78226A401D",
+          "customerid": "3D04Ea93-8Ed5-4D29-B641-1A9A41E8820F",
+          "scheduledat": "2025-08-26 23:54:25.674000+00:00",
+          "totalamount": 59.9,
+          "subtotalamount": 69.9,
+          "discountamount": 10.0,
+          "taxamount": 0.0,
+          "saleschannel": "Ifood",
+          "status": 16,
+          "ordertype": "Delivery",
+          "createdat": "2025-08-26 23:54:25.674000+00:00",
+          "createdby": "Cannoli Hangfire",
+          "status_label": "Concluído"
+        },
+        {
+          "id": "D9B8Dc9A-D4Da-4A8B-A57A-Da6813074818",
+          "storeid": "4Bb014Bb-8B1D-489A-Aded-2060F3Fda27E",
+          "customerid": "5679Bc63-7F77-450C-B089-423Cf0C564C9",
+          "scheduledat": "2025-11-29 15:51:14.187000+00:00",
+          "totalamount": 114.0,
+          "subtotalamount": 114.0,
+          "discountamount": 0.0,
+          "taxamount": 0.0,
+          "saleschannel": "Cardapioweb",
+          "status": 16,
+          "ordertype": "Indoor",
+          "createdat": "2025-11-29 15:51:14.187000+00:00",
+          "createdby": "Cannoli Api",
+          "status_label": "Concluído"
+        },
+        {
+          "id": "0B22D312-5271-4C2B-B75E-2579Fadc759F",
+          "storeid": "4Bb014Bb-8B1D-489A-Aded-2060F3Fda27E",
+          "customerid": "5679Bc63-7F77-450C-B089-423Cf0C564C9",
+          "scheduledat": "2025-11-14 23:52:45.347000+00:00",
+          "totalamount": 83.9,
+          "subtotalamount": 83.9,
+          "discountamount": 0.0,
+          "taxamount": 0.0,
+          "saleschannel": "Cardapioweb",
+          "status": 16,
+          "ordertype": "Indoor",
+          "createdat": "2025-11-14 23:52:45.347000+00:00",
+          "createdby": "Cannoli Api",
+          "status_label": "Concluído"
+        }
+      ]
+    },
+    {
+      "arquivo": "TEMPLATE.csv",
+      "linhas": 348,
+      "colunas": [
+        "id",
+        "storeid",
+        "name",
+        "description",
+        "createdat",
+        "createdby"
+      ],
+      "separador_detectado": ",",
+      "encoding_detectado": "utf-8",
+      "amostra": [
+        {
+          "id": "D1650Bf1-B5B9-4B71-Aeef-4E88D0B8033B",
+          "storeid": "9B4Bf8Bf-2F5C-4680-Afe1-8014B371D518",
+          "name": "10% De Bonificação Chá Blend",
+          "description": "10% De Bonificação Chá Blend",
+          "createdat": "2025-10-24 12:57:52.522000+00:00",
+          "createdby": "Vida Leve - Compras"
+        },
+        {
+          "id": "C62D7F8B-9Df0-401D-9899-3B1710159478",
+          "storeid": "9B4Bf8Bf-2F5C-4680-Afe1-8014B371D518",
+          "name": "Template - Promoções De Reposição",
+          "description": "Template - Promoções De Reposição",
+          "createdat": "2025-10-24 13:11:22.084000+00:00",
+          "createdby": "Vida Leve - Compras"
+        },
+        {
+          "id": "D89Cc9Cf-Ca1A-45C8-A694-76B6C4Ebded7",
+          "storeid": "97674906-E4Bb-47Cf-9D9E-4Ebd7F4Ee919",
+          "name": "Convite Ensaio - Outubro25",
+          "description": "Convite Ensaio - Outubro25",
+          "createdat": "2025-10-26 00:56:31.378000+00:00",
+          "createdby": "Admin"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "nomePlataforma": "Cannoli CRM",
+  "emailSuporte": "suporte@cannolicrm.com",
+  "limiteRecorrencia": 25,
+  "limiteTicketMedio": 40,
+  "limiteQuedaReceita": 15,
+  "alertasCriticos": true,
+  "recalculoAutomatico": true,
+  "permitirConvites": true
+}
