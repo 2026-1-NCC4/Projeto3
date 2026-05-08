@@ -2,70 +2,140 @@ import React from 'react';
 
 const recursosData = [
   {
+    etiqueta: 'Dados',
     icone: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="#F26322" strokeWidth="2" strokeLinecap="round" className="w-[26px] h-[26px]">
-        <rect x="3" y="4" width="18" height="4" rx="1" />
-        <rect x="3" y="10" width="18" height="4" rx="1" />
-        <rect x="3" y="16" width="18" height="4" rx="1" />
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
+        <path d="M4 7c0-1.7 3.6-3 8-3s8 1.3 8 3-3.6 3-8 3-8-1.3-8-3Z" />
+        <path d="M4 7v5c0 1.7 3.6 3 8 3s8-1.3 8-3V7" />
+        <path d="M4 12v5c0 1.7 3.6 3 8 3s8-1.3 8-3v-5" />
       </svg>
     ),
-    titulo: 'Centralize seus dados',
-    descricao: 'Conecte pedidos, clientes e campanhas em um só lugar para ter visão completa do seu negócio.'
+    titulo: 'Dados centralizados',
+    descricao:
+      'Organize pedidos, clientes, campanhas e histórico de compras em uma base única para acompanhar o negócio com mais clareza.'
   },
   {
+    etiqueta: 'Segmentação',
     icone: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="#F26322" strokeWidth="2" strokeLinecap="round" className="w-[26px] h-[26px]">
-        <circle cx="11" cy="11" r="7" />
-        <line x1="16.5" y1="16.5" x2="22" y2="22" />
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
+        <circle cx="8" cy="8" r="3" />
+        <circle cx="17" cy="7" r="2" />
+        <circle cx="16" cy="17" r="3" />
+        <path d="M10.5 9.5l3.5 5" />
+        <path d="M10.7 7.6l4.4-.4" />
       </svg>
     ),
-    titulo: 'Identifique oportunidades',
-    descricao: 'Descubra padrões de compra e segmente clientes com inteligência baseada em dados reais.'
+    titulo: 'Clientes por comportamento',
+    descricao:
+      'Identifique clientes ativos, inativos, recorrentes e em risco para apoiar campanhas mais precisas e ações de reativação.'
   },
   {
+    etiqueta: 'Performance',
     icone: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="#F26322" strokeWidth="2" strokeLinecap="round" className="w-[26px] h-[26px]">
-        <polyline points="3 17 9 11 13 15 21 7" />
-        <rect x="3" y="3" width="18" height="18" rx="2" strokeOpacity="0.3" />
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
+        <path d="M3 3v18h18" />
+        <path d="M7 15l4-4 3 3 5-7" />
+        <path d="M19 7v5h-5" />
       </svg>
     ),
-    titulo: 'Acompanhe a performance',
-    descricao: 'Monitore vendas, conversões e engajamento em tempo real.'
+    titulo: 'Indicadores em evolução',
+    descricao:
+      'Acompanhe receita, pedidos, ticket médio, recorrência e campanhas com indicadores preparados para atualização dinâmica.'
   }
 ];
 
-const CardRecurso = ({ icone, titulo, descricao }) => {
+const CardRecurso = ({ etiqueta, icone, titulo, descricao }) => {
   return (
-    <div className="bg-white border border-border rounded-2xl p-9 pt-9 pb-8 transition hover:shadow-[0_12px_36px_rgba(242,99,34,0.12)] hover:-translate-y-1">
-      <div className="w-[52px] h-[52px] bg-orange/10 rounded-xl flex items-center justify-center mb-5">
-        {icone}
+    <div className="group relative overflow-hidden rounded-[28px] border border-orange/10 bg-white p-7 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_24px_60px_rgba(242,99,34,0.16)]">
+      <div className="absolute -right-12 -top-12 h-32 w-32 rounded-full bg-orange/10 blur-2xl transition-all duration-300 group-hover:bg-orange/20" />
+
+      <div className="relative">
+        <div className="mb-6 flex items-center justify-between">
+          <div className="flex h-13 w-13 items-center justify-center rounded-2xl bg-orange/10 text-orange transition-all duration-300 group-hover:scale-105 group-hover:bg-orange group-hover:text-white">
+            {icone}
+          </div>
+
+          <span className="rounded-full border border-orange/15 bg-orange/5 px-3 py-1 text-xs font-semibold text-orange">
+            {etiqueta}
+          </span>
+        </div>
+
+        <h3 className="text-lg font-bold text-text-dark">
+          {titulo}
+        </h3>
+
+        <p className="mt-3 text-sm leading-relaxed text-gray-500">
+          {descricao}
+        </p>
       </div>
-      <h3 className="text-sm font-bold text-text-dark mb-2.5 font-dm-sans">{titulo}</h3>
-      <p className="text-xs text-text-soft leading-relaxed font-dm-sans">{descricao}</p>
     </div>
   );
 };
 
 const Recursos = () => {
   return (
-    <section id="sobre" className="py-20 px-6 bg-cream">
-      <div className="max-w-[900px] mx-auto">
-        <h2 className="text-center text-[20px] md:text-[28px] font-bold text-text-dark tracking-[-0.4px] leading-tight font-dm-sans">
-          Análise de dados = previsibilidade.
-        </h2>
-        <p className="text-center mt-3 text-sm text-text-mid leading-relaxed max-w-[560px] mx-auto font-dm-sans">
-          A Cannoli segmenta sua base automaticamente por comportamento de compra. Descubra quem está ativo, inativo ou em risco e dispare campanhas personalizadas, tudo integrado com seu sistema.
-        </p>
+    <section
+      id="sobre"
+      className="relative overflow-hidden bg-white px-6 py-28"
+    >
+      <div className="absolute left-0 top-0 h-72 w-72 rounded-full bg-orange/5 blur-3xl" />
+      <div className="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-orange/5 blur-3xl" />
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mt-12">
+      <div className="relative mx-auto max-w-6xl">
+        <div className="mx-auto max-w-3xl text-center">
+          <span className="inline-flex items-center gap-2 rounded-full border border-orange/15 bg-orange/5 px-4 py-2 text-sm font-semibold text-orange">
+            <span className="h-2 w-2 rounded-full bg-orange" />
+            Sobre a solução
+          </span>
+
+          <h2 className="mt-6 text-3xl font-black tracking-tight text-text-dark md:text-5xl">
+            Transforme dados em decisões comerciais.
+          </h2>
+
+          <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-gray-500 md:text-lg">
+            A Cannoli organiza a base de clientes e transforma histórico de compras em
+            indicadores, segmentações e oportunidades de ação para aumentar retenção e vendas.
+          </p>
+        </div>
+
+        <div className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-3">
           {recursosData.map((recurso, index) => (
             <CardRecurso
               key={index}
+              etiqueta={recurso.etiqueta}
               icone={recurso.icone}
               titulo={recurso.titulo}
               descricao={recurso.descricao}
             />
           ))}
+        </div>
+
+        <div className="mt-14 rounded-[30px] border border-orange/10 bg-gradient-to-r from-orange/10 via-orange/5 to-transparent p-6 md:p-8">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+            <div>
+              <p className="text-3xl font-black text-orange">01</p>
+              <h3 className="mt-2 font-bold text-text-dark">Importe a base</h3>
+              <p className="mt-2 text-sm text-gray-500">
+                Comece com os dados existentes em Excel e transforme a base em informação estruturada.
+              </p>
+            </div>
+
+            <div>
+              <p className="text-3xl font-black text-orange">02</p>
+              <h3 className="mt-2 font-bold text-text-dark">Calcule indicadores</h3>
+              <p className="mt-2 text-sm text-gray-500">
+                O motor analítico prepara KPIs, rankings, segmentações e alertas para o painel.
+              </p>
+            </div>
+
+            <div>
+              <p className="text-3xl font-black text-orange">03</p>
+              <h3 className="mt-2 font-bold text-text-dark">Aja com mais precisão</h3>
+              <p className="mt-2 text-sm text-gray-500">
+                Use os insights para reativar clientes, acompanhar campanhas e priorizar oportunidades.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </section>

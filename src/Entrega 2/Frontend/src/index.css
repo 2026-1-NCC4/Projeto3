@@ -8,19 +8,24 @@
   }
   
   body {
-    font-family: 'DM Sans', sans-serif;
-    background-color: #F5EFE6;
-    color: #1A1A1A;
-    overflow-x: hidden;
+    @apply font-dm-sans bg-cream text-text-dark overflow-x-hidden;
   }
   
-  /* Apenas títulos específicos usam Playfair, não todos os h1, h2, h3 */
-  .font-playfair {
-    font-family: 'Playfair Display', serif;
+  /* Garantir que as fontes sejam aplicadas corretamente */
+  h1 {
+    @apply font-playfair;
   }
-  
-  .font-dm-sans {
-    font-family: 'DM Sans', sans-serif;
+
+  /* 🔥 REMOVE O VERDE/AZUL DO AUTOFILL */
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  textarea:-webkit-autofill,
+  select:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px #F5EFE6 inset !important; /* mesma cor do fundo */
+    box-shadow: 0 0 0px 1000px #F5EFE6 inset !important;
+    -webkit-text-fill-color: #1f2937 !important; /* cor do texto */
+    transition: background-color 5000s ease-in-out 0s;
   }
 }
 
@@ -28,7 +33,7 @@
   @keyframes fadeUp {
     from {
       opacity: 0;
-      transform: translateY(20px);
+      transform: translateY(24px);
     }
     to {
       opacity: 1;
@@ -42,9 +47,5 @@
   
   .animate-fade-up-delay {
     animation: fadeUp 0.7s 0.15s ease both;
-  }
-  
-  .active\:scale-98:active {
-    transform: scale(0.98);
   }
 }

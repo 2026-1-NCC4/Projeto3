@@ -1,0 +1,18 @@
+{
+  "ignore": [
+    "data/*",
+    "data/admin_dashboard.json",
+    "data/admin_config.json",
+    "python/__pycache__/*"
+  ],
+  "watch": [
+    "server.js",
+    "app.js",
+    "routes",
+    "controllers",
+    "middlewares",
+    "models",
+    "database"
+  ],
+  "ext": "js,json"
+}

@@ -1,0 +1,510 @@
+{
+  "atualizadoEm": "2026-05-07T22:32:11.784371",
+  "perfil": "admin",
+  "filtros": {
+    "periodos": [
+      "2025-02",
+      "2025-03",
+      "2025-04",
+      "2025-05",
+      "2025-06",
+      "2025-07",
+      "2025-08",
+      "2025-09",
+      "2025-10",
+      "2025-11",
+      "2025-12",
+      "2026-01",
+      "2026-02",
+      "2026-05"
+    ],
+    "empresas": [
+      {
+        "id": "F28B08C9-2101-48A5-A27F-2585F2Bf6823",
+        "nome": "A Rainha Do Frango"
+      },
+      {
+        "id": "13B738E0-614F-4Fe2-9982-6D88867Bfa5A",
+        "nome": "Agustina Restaurante E Empório"
+      },
+      {
+        "id": "A6A267A8-E71B-4935-Ac9F-B778Eb739Fd4",
+        "nome": "Anderson Camargo"
+      },
+      {
+        "id": "42C3B4Ba-0F3B-457A-8F36-5Cc42Dedf94C",
+        "nome": "Atelier Doce Amor"
+      },
+      {
+        "id": "1E31B67E-621C-4915-9Fb2-67B918F3D6D6",
+        "nome": "Austrália Hamburgueria Artesanal"
+      },
+      {
+        "id": "D0B78249-59B8-4C16-B40C-B084B8Aa371E",
+        "nome": "Açaí Dugoiás"
+      },
+      {
+        "id": "99792B54-3864-420B-A5Df-354Ff67Ca28D",
+        "nome": "Bode Dú Burger"
+      },
+      {
+        "id": "9E69D92E-Fff3-4500-B77A-C429Cc312Da5",
+        "nome": "Bolos Miraculosos"
+      },
+      {
+        "id": "8Eccb620-5990-433F-8C9B-D77D0F1Da591",
+        "nome": "Burguer For You"
+      },
+      {
+        "id": "483Af9D2-7C76-4B9B-Ae0F-81Ef7F021568",
+        "nome": "Caldo Bom Do Mateus"
+      },
+      {
+        "id": "3F0Dba5F-C1F2-4C74-B8B4-318Eff71031C",
+        "nome": "Cannoli Food Cashback"
+      },
+      {
+        "id": "6A086D6C-89F1-404D-98D8-1D2F3559E7B2",
+        "nome": "Cannoli Food Cashback Ii"
+      },
+      {
+        "id": "1092E75C-Afb5-4992-869A-8D15C195A7C2",
+        "nome": "Cannoli Food Cashback Iii"
+      },
+      {
+        "id": "1167E267-F93C-47Bb-9807-79387Acdacfd",
+        "nome": "Cannoli Food Datamaxi"
+      },
+      {
+        "id": "C979E8B2-8Ff6-4Ddf-Bb83-0218348A7C3B",
+        "nome": "Casa Da Esfiha - Guarulhos"
+      },
+      {
+        "id": "0C02619D-0C57-492D-9660-Dd0F357A2F0C",
+        "nome": "Casa Da Esfiha Jardim Japão"
+      },
+      {
+        "id": "B6Bc362F-Cb27-44Ac-A9C8-5E9B08263F86",
+        "nome": "Casa Da Esfiha Vila Gustavo Ltda"
+      },
+      {
+        "id": "0D756Ccf-7F47-4D8D-A2Fb-Aa78226A401D",
+        "nome": "Casa Da Mae Joana Pizzaria Ltda"
+      },
+      {
+        "id": "C752E0Af-D9D0-4F2E-A4B9-1D94B4F58493",
+        "nome": "Central Das Esfihas - Cangaíba"
+      },
+      {
+        "id": "2Fdc6149-Fbf3-442D-88Fe-C8375A86266D",
+        "nome": "Cerrado Imóveis"
+      },
+      {
+        "id": "1207Abf9-C860-40Dd-A053-484539E76005",
+        "nome": "Codgox"
+      },
+      {
+        "id": "17A0899A-73Bd-4Af5-8082-0Eb551650F26",
+        "nome": "Delivery Do Salesio"
+      },
+      {
+        "id": "4Ba8925F-94Ab-4Bed-97B7-B07A22B6D31F",
+        "nome": "Demonstração"
+      },
+      {
+        "id": "3Da392C6-86E3-4847-8A04-0Cdae0E501F9",
+        "nome": "Dona Baunilha"
+      },
+      {
+        "id": "069768C1-6Fdd-4833-939E-Ea9F51A7Dff9",
+        "nome": "Elvi Cozinhas Profissional"
+      },
+      {
+        "id": "97674906-E4Bb-47Cf-9D9E-4Ebd7F4Ee919",
+        "nome": "Empresa Teste"
+      },
+      {
+        "id": "5818Afa9-3322-45A6-Bc5B-5D19E6Ea1F25",
+        "nome": "Filipa Empório E Restaurante"
+      },
+      {
+        "id": "1Af0098B-1276-47Db-95E5-8Ef8D43878B5",
+        "nome": "Food Service"
+      },
+      {
+        "id": "6E240E72-2948-443E-Bf4A-23243C0721D0",
+        "nome": "Giralda Doceria"
+      },
+      {
+        "id": "8C4E96A9-A7B8-4B4C-A891-F600C9Eceee5",
+        "nome": "Gran Royalle"
+      },
+      {
+        "id": "74358477-B282-482A-Ab5A-69Dea060Fc35",
+        "nome": "Jbbl Choperia"
+      },
+      {
+        "id": "5325Fbf9-22E9-4C68-8E42-8C740E9Eec32",
+        "nome": "La Brunet Paes E Doces Pedro Doll Ltda"
+      },
+      {
+        "id": "5F30B411-Fad3-437C-88B4-Ca78C96A13E7",
+        "nome": "Leo'S Pizzas"
+      },
+      {
+        "id": "260231Be-A964-48Bb-Bf2E-A0C3A0Dbeca4",
+        "nome": "Lf - Cambe - Outlet Center"
+      },
+      {
+        "id": "92E0B17F-C94B-445A-A36E-207220Bf3E08",
+        "nome": "Lf - Cpg - Norte Sul Plaza"
+      },
+      {
+        "id": "794C6C63-Da08-42A6-8Efb-205595089B8C",
+        "nome": "Lf - Ppb - Prudenshopping"
+      },
+      {
+        "id": "4F22F901-8089-4555-B131-Adb9B724A343",
+        "nome": "Lf - Sbc - Atacadao Centro"
+      },
+      {
+        "id": "9Df6847D-7296-4A38-92E9-0Ef12Fed73Eb",
+        "nome": "Lf - Umuarama - Av Parana"
+      },
+      {
+        "id": "9698049A-9F42-42E5-Afe4-6566C3Bbea07",
+        "nome": "Loja Do Samuel"
+      },
+      {
+        "id": "B70F7Bdc-3543-459B-9312-6A108Aa3F117",
+        "nome": "Loja Modelo"
+      },
+      {
+        "id": "6Dad43B9-E9E2-4318-94D8-800Ece3Fdea2",
+        "nome": "Lp - Maringa - Willie Davids"
+      },
+      {
+        "id": "B420E889-0A10-4A3D-Bc0B-12Ae5B50D84E",
+        "nome": "Lp - Mgf - Maringá Park"
+      },
+      {
+        "id": "Fd5Bc963-Ff69-40C4-B5D8-1709E233Fe02",
+        "nome": "Machado & Rodrigues Food Ltda"
+      },
+      {
+        "id": "39946E25-8Ac3-43A4-8010-C883D2E0C637",
+        "nome": "Maná Burger"
+      },
+      {
+        "id": "Aefd1124-D1D3-40A6-9B06-7F74Bfa58Fba",
+        "nome": "Marinara Pizzaria & Restaurante"
+      },
+      {
+        "id": "8Cc52834-D064-4C6A-8E08-8F33D4811872",
+        "nome": "Mordidela Balsas"
+      },
+      {
+        "id": "6E59Cea6-7A9F-43C1-A72E-67915A8F1B1C",
+        "nome": "Nicolas Franco Monteiro"
+      },
+      {
+        "id": "573Da7Db-86Cb-41Ce-8Eab-990Fc4D25Dbd",
+        "nome": "Nutreon Labs"
+      },
+      {
+        "id": "01Ac4Ec3-F7E0-451D-Ab31-2Db1799816Ca",
+        "nome": "Padaria Century"
+      },
+      {
+        "id": "F7A936Fb-644A-436B-8907-7846B067865E",
+        "nome": "Padaria Maria Amália"
+      },
+      {
+        "id": "106Cd2Af-2375-40D3-Ab22-0172926F95F6",
+        "nome": "Padaria Silvana"
+      },
+      {
+        "id": "392C030B-95A1-42C9-B08C-C9C64Eed1246",
+        "nome": "Padaria Villa Real"
+      },
+      {
+        "id": "1Fcd01E3-2Dba-4Af8-Ae58-C39060F3E575",
+        "nome": "Padaria Vitória Régia"
+      },
+      {
+        "id": "4Bb014Bb-8B1D-489A-Aded-2060F3Fda27E",
+        "nome": "Pizza B"
+      },
+      {
+        "id": "2F89Fa97-27Cb-424C-A55C-31A8D4019551",
+        "nome": "Pizzaria Do Patrao"
+      },
+      {
+        "id": "45A5Cbf8-Bd4F-464A-B0E7-A03E0Ada659F",
+        "nome": "Pizzaria Valentina"
+      },
+      {
+        "id": "0C9B05F1-4F62-4513-A8E9-30964E1A5E4E",
+        "nome": "Polpanorte - Balneario Shopping"
+      },
+      {
+        "id": "1Fc00824-25Fd-4D94-Ad69-5B95Cb468A43",
+        "nome": "Polpanorte - Caceres"
+      },
+      {
+        "id": "A8Ad2209-4A89-4802-8Bf1-E30F999A3982",
+        "nome": "Polpanorte - Campo Grande"
+      },
+      {
+        "id": "9Fbcb539-D291-43E2-A1B7-6E864C230B2D",
+        "nome": "Polpanorte - Goiania"
+      },
+      {
+        "id": "0100729C-1Bce-4809-96B7-896Eb9Dbe599",
+        "nome": "Polpanorte - Horto"
+      },
+      {
+        "id": "1D376C83-8D4C-4273-Bb83-E0B7A7080041",
+        "nome": "Polpanorte - Londrina"
+      },
+      {
+        "id": "0F8A86Cb-Dd5B-4Edd-8558-Be543B1620B1",
+        "nome": "Polpanorte - P9 Arvores"
+      },
+      {
+        "id": "Dfdeb26D-2695-40Fc-A518-57Bf4Aa4E81C",
+        "nome": "Polpanorte - Pacubra"
+      },
+      {
+        "id": "86256660-0078-49C2-88D6-E0Bf52Be1A5B",
+        "nome": "Polpanorte - Parquinho"
+      },
+      {
+        "id": "E67A239E-9524-4865-B644-8Dd0Bddd2Bb1",
+        "nome": "Polpanorte - Quadras"
+      },
+      {
+        "id": "Ad90C57D-5C1D-4C39-A749-9Bd728F2C772",
+        "nome": "Polpanorte - Shopping Ibirapuera"
+      },
+      {
+        "id": "6F70Cd42-25Eb-4F6B-994D-A134156F70Fe",
+        "nome": "Polpanorte - São José Dos Pinhais"
+      },
+      {
+        "id": "2D5C651A-B787-41A5-8A82-Bd7Bf844B64B",
+        "nome": "Ponto Da Esfiha - Cachoeirinha"
+      },
+      {
+        "id": "1Caf86A9-Bab9-42B1-8A47-7A3F9E24F805",
+        "nome": "Ponto Da Esfiha - Itapecerica Da Serra"
+      },
+      {
+        "id": "0D860437-8F2F-4437-A866-811Bd07Ac367",
+        "nome": "Sai Burguer"
+      },
+      {
+        "id": "45F9Fac9-7A83-4Da2-9011-39816A4Bf0A8",
+        "nome": "Sorvetes Italia"
+      },
+      {
+        "id": "8B04A4D8-A0E4-4F9C-9272-5250326A10Af",
+        "nome": "São João Da Penha"
+      },
+      {
+        "id": "Dbac911D-086E-4612-8Fac-Db980D0F7A63",
+        "nome": "São João Vilela"
+      },
+      {
+        "id": "125764B3-4916-4326-9C6B-D1F7B2Ffdc57",
+        "nome": "Trailer Do Pops - F J Melo Junior"
+      },
+      {
+        "id": "21E1A735-Bfd6-40B6-Bbe1-35889F94Fadb",
+        "nome": "Veneto Pizzaria"
+      },
+      {
+        "id": "9B4Bf8Bf-2F5C-4680-Afe1-8014B371D518",
+        "nome": "Vida Leve"
+      }
+    ],
+    "canais": [
+      "Anotaai",
+      "Cannoli",
+      "Cannoli-Tab",
+      "Cardapioweb",
+      "Datamaxi",
+      "Epadoca",
+      "Ifood",
+      "Pos",
+      "Posdevice",
+      "Whatsapp",
+      "app",
+      "balcao",
+      "delivery_proprio"
+    ],
+    "tiposPedido": [
+      "Delivery",
+      "Indoor",
+      "Takeout",
+      "delivery",
+      "takeout"
+    ]
+  },
+  "filtrosAplicados": {
+    "periodo": "todos",
+    "empresa": "F28B08C9-2101-48A5-A27F-2585F2Bf6823",
+    "canal": "todos",
+    "tipoPedido": "todos"
+  },
+  "kpis": {
+    "receitaTotal": 0,
+    "totalPedidos": 0,
+    "ticketMedio": 0,
+    "totalEmpresas": 77,
+    "totalClientes": 160710,
+    "clientesAtivos": 0,
+    "clientesInativos": 0,
+    "clientesRecorrentes": 0,
+    "clientesOcasionais": 0,
+    "clientesSemPedido": 160710,
+    "taxaRecorrencia": 0,
+    "descontosTotal": 0,
+    "taxaDescontoMedia": 0,
+    "crescimentoReceita": 0,
+    "crescimentoPedidos": 0,
+    "totalCampanhas": 56461,
+    "receitaCampanhas": 0
+  },
+  "crescimento": {
+    "receita": 0,
+    "pedidos": 0,
+    "statusReceita": "atencao",
+    "statusPedidos": "atencao"
+  },
+  "segmentacaoClientes": {
+    "ativos": 0,
+    "inativos": 0,
+    "recorrentes": 0,
+    "ocasionais": 0,
+    "semPedido": 160710,
+    "comPedido": 0,
+    "taxaRecorrencia": 0
+  },
+  "graficos": {
+    "receitaPorMes": [],
+    "pedidosPorMes": [],
+    "ticketMedioPorMes": [],
+    "clientesNovosPorMes": [],
+    "performanceCanais": [],
+    "pedidosPorTipo": [],
+    "topEmpresasReceita": [],
+    "topEmpresasPedidos": [],
+    "clientesPorEstado": []
+  },
+  "rankingEmpresas": [],
+  "indicadoresObrigatorios": {
+    "porEmpresa": [],
+    "mensagensPorCampanhaEmpresa": []
+  },
+  "empresasRisco": {
+    "baixaRecorrencia": [],
+    "ticketBaixo": [],
+    "baixoVolumePedidos": [],
+    "baixaReceita": []
+  },
+  "performanceCampanhas": [],
+  "campanhas": {
+    "totalCampanhas": 56461,
+    "totalTemplates": 348,
+    "receitaCampanhas": 0,
+    "pedidosGerados": 0,
+    "mensagens": 0,
+    "conversaoMedia": 0,
+    "melhoresCampanhas": [],
+    "campanhasBaixaConversao": [],
+    "templatesMaisUsados": []
+  },
+  "clientes": {
+    "segmentacao": {
+      "ativos": 0,
+      "inativos": 0,
+      "recorrentes": 0,
+      "ocasionais": 0,
+      "semPedido": 160710,
+      "comPedido": 0,
+      "taxaRecorrencia": 0
+    },
+    "clientesNovosPorMes": [],
+    "clientesPorEstado": [],
+    "rfm": {
+      "resumo": {
+        "totalClientesAnalisados": 0,
+        "campeoes": 0,
+        "fieis": 0,
+        "potenciais": 0,
+        "emRisco": 0,
+        "perdidos": 0,
+        "novosClientes": 0
+      },
+      "segmentos": [],
+      "topClientes": []
+    },
+    "coortes": []
+  },
+  "financeiro": {
+    "receitaTotal": 0,
+    "receitaBruta": 0,
+    "receitaLiquida": 0,
+    "custosVariaveis": 0,
+    "margemBruta": 0,
+    "margemPercentual": 0,
+    "caixaEstimado": 0,
+    "ticketMedio": 0,
+    "descontosTotal": 0,
+    "taxaDescontoMedia": 0,
+    "percentualCustoVariavel": 38,
+    "percentualReservaCaixa": 18,
+    "receitaPorMes": [],
+    "ticketMedioPorMes": [],
+    "performanceCanais": [],
+    "pedidosPorTipo": [],
+    "resultadoPorMes": [],
+    "resultadoPorCanal": [],
+    "resultadoPorTipoPedido": [],
+    "alertasFinanceiros": []
+  },
+  "empresas": {
+    "total": 77,
+    "rankingReceita": [],
+    "melhoresDesempenhos": [],
+    "empresasRisco": {
+      "baixaRecorrencia": [],
+      "ticketBaixo": [],
+      "baixoVolumePedidos": [],
+      "baixaReceita": []
+    }
+  },
+  "recomendacoes": {
+    "resumo": {
+      "totalRecomendacoes": 0,
+      "altaPrioridade": 0,
+      "roiMedioSimulado": 0,
+      "melhorConversao": 0,
+      "totalTestesAB": 0,
+      "totalInsights": 0
+    },
+    "sugestoesCampanha": [],
+    "testeAB": [],
+    "insights": []
+  },
+  "alertas": [
+    {
+      "tipo": "sem_dados",
+      "prioridade": "media",
+      "empresa": "Filtros selecionados",
+      "mensagem": "Nenhum pedido encontrado para os filtros aplicados.",
+      "acaoSugerida": "Tente selecionar outro período, empresa, canal ou tipo de pedido."
+    }
+  ]
+}

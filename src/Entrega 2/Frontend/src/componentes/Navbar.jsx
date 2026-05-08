@@ -1,33 +1,49 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
+  const navigate = useNavigate();
+
   return (
-    <nav className="sticky top-0 z-50 bg-orange h-[60px] flex items-center justify-between px-5 md:px-10">
-      {/* Logo com Playfair Display */}
-      <div className="font-playfair text-[22px] font-black text-white tracking-tight">
-        li
-      </div>
-      <ul className="flex gap-6 md:gap-9 list-none">
-        <li>
-          <a href="#sobre" className="text-white text-sm font-medium opacity-90 hover:opacity-100 transition font-dm-sans">
+    <nav className="fixed top-0 left-0 w-full z-50 bg-orange/95 backdrop-blur-sm border-b border-white/10">
+      <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+        <button
+          type="button"
+          onClick={() => navigate('/')}
+          className="font-playfair text-2xl font-bold text-white"
+        >
+          li
+        </button>
+
+        <div className="hidden md:flex items-center gap-10 text-white font-semibold text-sm">
+          <a href="#sobre" className="hover:text-white/80 transition">
             Sobre nós
           </a>
-        </li>
-        <li>
-          <a href="#planos" className="text-white text-sm font-medium opacity-90 hover:opacity-100 transition font-dm-sans">
+
+          <a href="#planos" className="hover:text-white/80 transition">
             Planos
           </a>
-        </li>
-        <li>
-          <a href="#integracoes" className="text-white text-sm font-medium opacity-90 hover:opacity-100 transition font-dm-sans">
+
+          <a href="#integracoes" className="hover:text-white/80 transition">
             Integrações
           </a>
-        </li>
-      </ul>
-      <div className="w-[34px] h-[34px] rounded-full bg-white/25 flex items-center justify-center cursor-pointer">
-        <svg viewBox="0 0 24 24" className="w-[18px] h-[18px] fill-white">
-          <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z" />
-        </svg>
+        </div>
+
+        <button
+          type="button"
+          onClick={() => navigate('/login')}
+          className="w-11 h-11 rounded-full bg-white/20 hover:bg-white/30 transition flex items-center justify-center text-white"
+          aria-label="Acessar login"
+          title="Acessar login"
+        >
+          <svg
+            className="w-6 h-6"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+          >
+            <path d="M12 12c2.761 0 5-2.239 5-5s-2.239-5-5-5-5 2.239-5 5 2.239 5 5 5zm0 2c-3.314 0-8 1.657-8 5v1c0 .552.448 1 1 1h14c.552 0 1-.448 1-1v-1c0-3.343-4.686-5-8-5z" />
+          </svg>
+        </button>
       </div>
     </nav>
   );

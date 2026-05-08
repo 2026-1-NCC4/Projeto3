@@ -1,82 +1,54 @@
 const API_URL = 'http://localhost:3001/api';
 
-const getToken = () => {
-  return localStorage.getItem('violetaflow_token') || sessionStorage.getItem('violetaflow_token');
-};
+async function request(endpoint, options = {}) {
+  const token = localStorage.getItem('token');
 
-const getHeaders = () => {
-  return {
-    'Content-Type': 'application/json',
-    'Authorization': `Bearer ${getToken()}`
-  };
-};
+  const response = await fetch(`${API_URL}${endpoint}`, {
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      ...(token && {
+        Authorization: `Bearer ${token}`,
+      }),
+      ...options.headers,
+    },
+  });
 
-// API de Tarefas
-export const tarefasAPI = {
-  getAll: async () => {
-    const response = await fetch(`${API_URL}/tarefas`, { headers: getHeaders() });
-    return response.json();
-  },
-  create: async (tarefa) => {
-    const response = await fetch(`${API_URL}/tarefas`, {
-      method: 'POST',
-      headers: getHeaders(),
-      body: JSON.stringify(tarefa)
-    });
-    return response.json();
-  },
-  update: async (id, tarefa) => {
-    const response = await fetch(`${API_URL}/tarefas/${id}`, {
-      method: 'PUT',
-      headers: getHeaders(),
-      body: JSON.stringify(tarefa)
-    });
-    return response.json();
-  },
-  mover: async (id, novoStatus) => {
-    const response = await fetch(`${API_URL}/tarefas/${id}/mover`, {
-      method: 'PATCH',
-      headers: getHeaders(),
-      body: JSON.stringify({ novoStatus })
-    });
-    return response.json();
-  },
-  delete: async (id) => {
-    const response = await fetch(`${API_URL}/tarefas/${id}`, {
-      method: 'DELETE',
-      headers: getHeaders()
-    });
-    return response.json();
+  let data = null;
+
+  try {
+    data = await response.json();
+  } catch (error) {
+    data = null;
   }
-};
 
-// API de Eventos
-export const eventosAPI = {
-  getAll: async () => {
-    const response = await fetch(`${API_URL}/eventos`, { headers: getHeaders() });
-    return response.json();
-  },
-  create: async (evento) => {
-    const response = await fetch(`${API_URL}/eventos`, {
-      method: 'POST',
-      headers: getHeaders(),
-      body: JSON.stringify(evento)
-    });
-    return response.json();
-  },
-  update: async (id, evento) => {
-    const response = await fetch(`${API_URL}/eventos/${id}`, {
-      method: 'PUT',
-      headers: getHeaders(),
-      body: JSON.stringify(evento)
-    });
-    return response.json();
-  },
-  delete: async (id) => {
-    const response = await fetch(`${API_URL}/eventos/${id}`, {
-      method: 'DELETE',
-      headers: getHeaders()
-    });
-    return response.json();
+  if (!response.ok) {
+    throw new Error(data?.message || 'Erro na comunicação com o servidor.');
   }
+
+  return data;
+}
+
+export const api = {
+  get: (endpoint) =>
+    request(endpoint, {
+      method: 'GET',
+    }),
+
+  post: (endpoint, body) =>
+    request(endpoint, {
+      method: 'POST',
+      body: JSON.stringify(body),
+    }),
+
+  put: (endpoint, body) =>
+    request(endpoint, {
+      method: 'PUT',
+      body: JSON.stringify(body),
+    }),
+
+  delete: (endpoint) =>
+    request(endpoint, {
+      method: 'DELETE',
+    }),
 };
