@@ -10,7 +10,10 @@ import {
 } from 'recharts';
 
 import Sidebar from '../dashboard/Sidebar';
-import { buscarAdminDashboard } from './services/adminDashboardService';
+import {
+  buscarAdminDashboard,
+  buscarCompanyDashboard
+} from './services/adminDashboardService';
 import FiltrosDashboard from './shared/FiltrosDashboard';
 
 const FILTROS_PADRAO = {
@@ -79,6 +82,9 @@ const Clientes = () => {
   const [erro, setErro] = useState('');
   const [filtros, setFiltros] = useState(FILTROS_PADRAO);
 
+  const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
+  const isEmpresa = usuario.role === 'empresa';
+
   const filtrosRef = useRef(FILTROS_PADRAO);
 
   useEffect(() => {
@@ -90,7 +96,10 @@ const Clientes = () => {
       setLoading(true);
       setErro('');
 
-      const data = await buscarAdminDashboard(filtrosAplicados);
+      const data = isEmpresa
+        ? await buscarCompanyDashboard(filtrosAplicados)
+        : await buscarAdminDashboard(filtrosAplicados);
+
       setDashboard(data);
     } catch (error) {
       setErro(error.message);
@@ -149,9 +158,18 @@ const Clientes = () => {
               </h1>
 
               <p className="text-sm text-gray-500 mt-2 max-w-3xl">
-                Segmentação global de clientes, recorrência, RFM simplificado,
-                coortes de retenção e distribuição geográfica.
+                {isEmpresa
+                  ? 'Segmentação dos clientes da sua empresa, recorrência, RFM simplificado, coortes de retenção e distribuição geográfica.'
+                  : 'Segmentação global de clientes, recorrência, RFM simplificado, coortes de retenção e distribuição geográfica.'}
               </p>
+
+              {isEmpresa && (
+                <div className="flex flex-wrap items-center gap-2 mt-3">
+                  <span className="px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-semibold">
+                    Visão filtrada pela empresa logada
+                  </span>
+                </div>
+              )}
             </div>
 
             <button
@@ -185,8 +203,13 @@ const Clientes = () => {
                 onAplicar={aplicarFiltros}
                 onLimpar={limparFiltros}
                 loading={loading}
-                titulo="Filtros da aba"
-                descricao="Use estes filtros para recalcular os dados exibidos em clientes."
+                esconderEmpresa={isEmpresa}
+                titulo={isEmpresa ? 'Filtros da empresa' : 'Filtros da aba'}
+                descricao={
+                  isEmpresa
+                    ? 'Use estes filtros para recalcular apenas os dados de clientes da sua empresa.'
+                    : 'Use estes filtros para recalcular os dados exibidos em clientes.'
+                }
               />
 
               <section className="grid grid-cols-1 md:grid-cols-4 gap-5 mb-6">
@@ -255,9 +278,9 @@ const Clientes = () => {
                 />
 
                 <CardResumo
-                  titulo="Ticket médio RFM"
-                  valor={formatarMoeda(resumoRfm.ticketMedioRfm)}
-                  descricao="Média dos clientes analisados"
+                  titulo="Novos clientes"
+                  valor={formatarNumero(resumoRfm.novosClientes)}
+                  descricao="Clientes recentes na análise RFM"
                 />
               </section>
 
@@ -294,7 +317,7 @@ const Clientes = () => {
                         <div>
                           <SegmentoBadge segmento={item.segmento} />
                           <p className="text-xs text-gray-500 mt-2">
-                            {item.descricao}
+                            Receita: {formatarMoeda(item.receita)} · Pedidos: {formatarNumero(item.pedidos)}
                           </p>
                         </div>
 
@@ -303,7 +326,7 @@ const Clientes = () => {
                             {formatarNumero(item.clientes)}
                           </p>
                           <p className="text-xs text-gray-500">
-                            {formatarPercentual(item.percentual)}
+                            {formatarPercentual(item.participacao)}
                           </p>
                         </div>
                       </div>
@@ -337,9 +360,9 @@ const Clientes = () => {
                       <tr className="border-b text-left text-gray-500">
                         <th className="py-3 pr-4">Cliente</th>
                         <th className="py-3 pr-4">Segmento</th>
-                        <th className="py-3 pr-4">Última compra</th>
+                        <th className="py-3 pr-4">Último pedido</th>
                         <th className="py-3 pr-4">Pedidos</th>
-                        <th className="py-3 pr-4">Valor total</th>
+                        <th className="py-3 pr-4">Receita</th>
                         <th className="py-3 pr-4">Ticket médio</th>
                         <th className="py-3 pr-4">Score RFM</th>
                       </tr>
@@ -357,15 +380,15 @@ const Clientes = () => {
                           </td>
 
                           <td className="py-3 pr-4">
-                            {cliente.diasDesdeUltimaCompra} dias
+                            {cliente.ultimoPedido || '-'}
                           </td>
 
                           <td className="py-3 pr-4">
-                            {formatarNumero(cliente.frequencia)}
+                            {formatarNumero(cliente.pedidos)}
                           </td>
 
                           <td className="py-3 pr-4">
-                            {formatarMoeda(cliente.valorTotal)}
+                            {formatarMoeda(cliente.receita)}
                           </td>
 
                           <td className="py-3 pr-4">
@@ -373,7 +396,7 @@ const Clientes = () => {
                           </td>
 
                           <td className="py-3 pr-4 font-bold text-orange">
-                            {formatarNumero(cliente.scoreRfm)}
+                            {formatarNumero(cliente.scoreRFM)}
                           </td>
                         </tr>
                       ))}
@@ -408,6 +431,7 @@ const Clientes = () => {
                     <thead>
                       <tr className="border-b text-left text-gray-500">
                         <th className="py-3 pr-4">Coorte</th>
+                        <th className="py-3 pr-4">Clientes base</th>
                         <th className="py-3 pr-4">Mês 0</th>
                         <th className="py-3 pr-4">Mês 1</th>
                         <th className="py-3 pr-4">Mês 2</th>
@@ -419,40 +443,44 @@ const Clientes = () => {
 
                     <tbody>
                       {coortes.map((coorte, index) => (
-                        <tr key={`${coorte.cohort}-${index}`} className="border-b last:border-b-0">
+                        <tr key={`${coorte.coorte}-${index}`} className="border-b last:border-b-0">
                           <td className="py-3 pr-4 font-medium">
-                            {coorte.cohort}
+                            {coorte.coorte}
                           </td>
 
                           <td className="py-3 pr-4">
-                            {formatarPercentual(coorte.mes0)}
+                            {formatarNumero(coorte.clientesBase)}
                           </td>
 
                           <td className="py-3 pr-4">
-                            {formatarPercentual(coorte.mes1)}
+                            {formatarPercentual(coorte.retencaoMes0)}
                           </td>
 
                           <td className="py-3 pr-4">
-                            {formatarPercentual(coorte.mes2)}
+                            {formatarPercentual(coorte.retencaoMes1)}
                           </td>
 
                           <td className="py-3 pr-4">
-                            {formatarPercentual(coorte.mes3)}
+                            {formatarPercentual(coorte.retencaoMes2)}
                           </td>
 
                           <td className="py-3 pr-4">
-                            {formatarPercentual(coorte.mes4)}
+                            {formatarPercentual(coorte.retencaoMes3)}
                           </td>
 
                           <td className="py-3 pr-4">
-                            {formatarPercentual(coorte.mes5)}
+                            {formatarPercentual(coorte.retencaoMes4)}
+                          </td>
+
+                          <td className="py-3 pr-4">
+                            {formatarPercentual(coorte.retencaoMes5)}
                           </td>
                         </tr>
                       ))}
 
                       {coortes.length === 0 && (
                         <tr>
-                          <td colSpan="7" className="py-6 text-center text-gray-500">
+                          <td colSpan="8" className="py-6 text-center text-gray-500">
                             Nenhuma coorte encontrada para a visão atual.
                           </td>
                         </tr>

@@ -47,9 +47,9 @@ const TooltipGrafico = ({ active, payload, label }) => {
   }
 
   return (
-    <div className="bg-white rounded-xl shadow-lg border border-orange/10 p-3">
+    <div className="bg-white rounded-xl shadow-lg border border-orange/10 p-3 max-w-[260px]">
       {label && (
-        <p className="text-sm font-bold text-text-dark mb-2">
+        <p className="text-sm font-bold text-text-dark mb-2 break-words">
           {label}
         </p>
       )}
@@ -70,7 +70,7 @@ const TooltipGrafico = ({ active, payload, label }) => {
               : formatarNumero(valor);
 
         return (
-          <p key={index} className="text-xs text-gray-600">
+          <p key={index} className="text-xs text-gray-600 break-words">
             <strong>{item.name || item.dataKey}:</strong> {valorFormatado}
           </p>
         );
@@ -82,7 +82,7 @@ const TooltipGrafico = ({ active, payload, label }) => {
 const StatusBadge = ({ status }) => {
   return (
     <span
-      className={`px-3 py-1 rounded-full text-xs font-semibold ${
+      className={`inline-flex px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap ${
         status === 'saudavel'
           ? 'bg-green-100 text-green-700'
           : status === 'atencao'
@@ -97,15 +97,15 @@ const StatusBadge = ({ status }) => {
 
 const CardResumo = ({ titulo, valor, descricao }) => {
   return (
-    <div className="bg-white rounded-2xl p-6 border border-orange/10 shadow-sm">
-      <p className="text-sm text-gray-500">{titulo}</p>
+    <div className="bg-white rounded-2xl p-5 sm:p-6 border border-orange/10 shadow-sm min-w-0">
+      <p className="text-sm text-gray-500 break-words">{titulo}</p>
 
-      <h2 className="text-3xl font-bold mt-2 text-text-dark">
+      <h2 className="text-2xl sm:text-3xl font-bold mt-2 text-text-dark break-words">
         {valor}
       </h2>
 
       {descricao && (
-        <p className="text-xs text-gray-400 mt-2">
+        <p className="text-xs text-gray-400 mt-2 leading-relaxed">
           {descricao}
         </p>
       )}
@@ -115,20 +115,20 @@ const CardResumo = ({ titulo, valor, descricao }) => {
 
 const CardGrafico = ({ titulo, descricao, children }) => {
   return (
-    <section className="bg-white rounded-2xl p-6 border border-orange/10 shadow-sm">
+    <section className="bg-white rounded-2xl p-5 sm:p-6 border border-orange/10 shadow-sm min-w-0">
       <div className="mb-5">
-        <h2 className="text-xl font-bold text-text-dark">
+        <h2 className="text-lg sm:text-xl font-bold text-text-dark leading-snug">
           {titulo}
         </h2>
 
         {descricao && (
-          <p className="text-sm text-gray-500 mt-1">
+          <p className="text-sm text-gray-500 mt-1 leading-relaxed">
             {descricao}
           </p>
         )}
       </div>
 
-      <div className="h-80">
+      <div className="h-[300px] sm:h-80 w-full min-w-0">
         {children}
       </div>
     </section>
@@ -143,6 +143,10 @@ const Empresas = () => {
   const [atualizando, setAtualizando] = useState(false);
   const [ultimaAtualizacao, setUltimaAtualizacao] = useState(null);
   const [filtros, setFiltros] = useState(FILTROS_PADRAO);
+
+  const fontePoppins = {
+    fontFamily: "'Poppins', sans-serif"
+  };
 
   const filtrosRef = useRef(FILTROS_PADRAO);
 
@@ -276,40 +280,60 @@ const Empresas = () => {
     <div className="flex min-h-screen bg-cream">
       <Sidebar isOpen={sidebarOpen} toggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
 
-      <div className="flex-1 lg:ml-72">
+      <div className="flex-1 w-full min-w-0 lg:ml-72">
         <button
+          type="button"
           onClick={() => setSidebarOpen(!sidebarOpen)}
           className="lg:hidden fixed top-4 left-4 z-50 bg-orange p-2 rounded-lg shadow-lg"
+          aria-label="Abrir menu"
         >
           <svg className="w-6 h-6 fill-white" viewBox="0 0 24 24">
             <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
           </svg>
         </button>
 
-        <main className="p-5 lg:p-8">
-          <header className="mb-8 flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
-            <div>
-              <h1 className="text-3xl font-bold text-text-dark">
+        <main className="w-full max-w-[1600px] mx-auto p-4 sm:p-5 lg:p-8 pt-20 lg:pt-8">
+          <header
+            className="mb-8 flex flex-col xl:flex-row xl:items-start xl:justify-between gap-4"
+            style={fontePoppins}
+          >
+            <div className="min-w-0">
+              <h1
+                className="text-2xl sm:text-3xl font-bold text-text-dark leading-tight"
+                style={fontePoppins}
+              >
                 Empresas
               </h1>
 
-              <p className="text-sm text-gray-500 mt-2">
+              <p
+                className="text-sm text-gray-500 mt-2 max-w-3xl leading-relaxed"
+                style={fontePoppins}
+              >
                 Visão administrativa das empresas cadastradas na plataforma Cannoli.
               </p>
 
               <div className="flex flex-wrap items-center gap-2 mt-3">
-                <span className="px-3 py-1 rounded-full bg-orange/10 text-orange text-xs font-semibold">
+                <span
+                  className="px-3 py-1 rounded-full bg-orange/10 text-orange text-xs font-semibold"
+                  style={fontePoppins}
+                >
                   Atualização automática a cada 1 hora
                 </span>
 
                 {ultimaAtualizacao && (
-                  <span className="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-semibold">
+                  <span
+                    className="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-semibold"
+                    style={fontePoppins}
+                  >
                     Última atualização: {ultimaAtualizacao.toLocaleString('pt-BR')}
                   </span>
                 )}
 
                 {atualizando && (
-                  <span className="px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-semibold">
+                  <span
+                    className="px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-semibold"
+                    style={fontePoppins}
+                  >
                     Atualizando dados...
                   </span>
                 )}
@@ -325,20 +349,21 @@ const Empresas = () => {
                 })
               }
               disabled={loading || atualizando}
-              className="px-5 py-3 rounded-xl bg-orange text-white font-semibold hover:bg-orange-dark transition disabled:opacity-60"
+              className="w-full sm:w-auto px-5 py-3 rounded-xl bg-orange text-white font-semibold hover:bg-orange-dark transition disabled:opacity-60"
+              style={fontePoppins}
             >
               Atualizar agora
             </button>
           </header>
 
           {loading && (
-            <section className="bg-white rounded-2xl p-8 border border-orange/10">
+            <section className="bg-white rounded-2xl p-6 sm:p-8 border border-orange/10">
               Carregando empresas...
             </section>
           )}
 
           {erro && (
-            <section className="bg-red-100 rounded-2xl p-6 border border-red-300 text-red-700">
+            <section className="bg-red-100 rounded-2xl p-5 sm:p-6 border border-red-300 text-red-700">
               {erro}
             </section>
           )}
@@ -356,7 +381,7 @@ const Empresas = () => {
                 descricao="Use estes filtros para recalcular os dados exibidos nesta visão."
               />
 
-              <section className="grid grid-cols-1 md:grid-cols-4 gap-5 mb-6">
+              <section className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-5 mb-6">
                 <CardResumo
                   titulo="Total de empresas"
                   valor={formatarNumero(empresas.total)}
@@ -382,7 +407,7 @@ const Empresas = () => {
                 />
               </section>
 
-              <section className="grid grid-cols-1 md:grid-cols-4 gap-5 mb-6">
+              <section className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-5 mb-6">
                 <CardResumo
                   titulo="Mensagens enviadas"
                   valor={formatarNumero(totalMensagens)}
@@ -408,7 +433,7 @@ const Empresas = () => {
                 />
               </section>
 
-              <section className="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-6">
+              <section className="grid grid-cols-1 2xl:grid-cols-2 gap-5 sm:gap-6 mb-6">
                 <CardGrafico
                   titulo="Top empresas por receita"
                   descricao="Ranking das empresas com maior faturamento na base atual."
@@ -417,15 +442,15 @@ const Empresas = () => {
                     <BarChart
                       data={topEmpresasReceita}
                       layout="vertical"
-                      margin={{ top: 5, right: 20, left: 40, bottom: 5 }}
+                      margin={{ top: 5, right: 20, left: 20, bottom: 5 }}
                     >
                       <CartesianGrid strokeDasharray="3 3" stroke="#eee" />
-                      <XAxis type="number" tick={{ fontSize: 12 }} />
+                      <XAxis type="number" tick={{ fontSize: 11 }} />
                       <YAxis
                         type="category"
                         dataKey="empresa"
-                        width={150}
-                        tick={{ fontSize: 11 }}
+                        width={120}
+                        tick={{ fontSize: 10 }}
                       />
                       <Tooltip content={<TooltipGrafico />} />
                       <Bar
@@ -445,17 +470,18 @@ const Empresas = () => {
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart
                       data={dadosConversaoVendas}
-                      margin={{ top: 5, right: 20, left: 0, bottom: 40 }}
+                      margin={{ top: 5, right: 20, left: 0, bottom: 55 }}
                     >
                       <CartesianGrid strokeDasharray="3 3" stroke="#eee" />
                       <XAxis
                         dataKey="empresa"
-                        tick={{ fontSize: 10 }}
-                        angle={-25}
+                        tick={{ fontSize: 9 }}
+                        angle={-30}
                         textAnchor="end"
-                        height={70}
+                        height={80}
+                        interval={0}
                       />
-                      <YAxis tick={{ fontSize: 12 }} />
+                      <YAxis tick={{ fontSize: 11 }} />
                       <Tooltip content={<TooltipGrafico />} />
                       <Bar
                         dataKey="taxaConversaoNumero"
@@ -468,8 +494,8 @@ const Empresas = () => {
                 </CardGrafico>
               </section>
 
-              <section className="grid grid-cols-1 xl:grid-cols-3 gap-6 mb-6">
-                <div className="xl:col-span-2">
+              <section className="grid grid-cols-1 2xl:grid-cols-3 gap-5 sm:gap-6 mb-6">
+                <div className="2xl:col-span-2 min-w-0">
                   <CardGrafico
                     titulo="Faturamento x receita de campanhas"
                     descricao="Comparação entre faturamento total e receita gerada por campanhas."
@@ -477,17 +503,18 @@ const Empresas = () => {
                     <ResponsiveContainer width="100%" height="100%">
                       <BarChart
                         data={topIndicadoresCampanhas}
-                        margin={{ top: 5, right: 20, left: 0, bottom: 40 }}
+                        margin={{ top: 5, right: 20, left: 0, bottom: 55 }}
                       >
                         <CartesianGrid strokeDasharray="3 3" stroke="#eee" />
                         <XAxis
                           dataKey="empresa"
-                          tick={{ fontSize: 10 }}
-                          angle={-25}
+                          tick={{ fontSize: 9 }}
+                          angle={-30}
                           textAnchor="end"
-                          height={70}
+                          height={80}
+                          interval={0}
                         />
-                        <YAxis tick={{ fontSize: 12 }} />
+                        <YAxis tick={{ fontSize: 11 }} />
                         <Tooltip content={<TooltipGrafico />} />
                         <Bar
                           dataKey="faturamentoTotal"
@@ -517,8 +544,8 @@ const Empresas = () => {
                           data={dadosRisco}
                           dataKey="valor"
                           nameKey="nome"
-                          innerRadius={60}
-                          outerRadius={105}
+                          innerRadius={50}
+                          outerRadius={95}
                           paddingAngle={3}
                         >
                           {dadosRisco.map((item, index) => (
@@ -529,27 +556,27 @@ const Empresas = () => {
                       </PieChart>
                     </ResponsiveContainer>
                   ) : (
-                    <div className="h-full flex items-center justify-center text-sm text-gray-500">
+                    <div className="h-full flex items-center justify-center text-sm text-gray-500 text-center px-4">
                       Nenhum dado de risco encontrado.
                     </div>
                   )}
                 </CardGrafico>
               </section>
 
-              <section className="bg-white rounded-2xl p-6 border border-orange/10 shadow-sm mb-6">
+              <section className="bg-white rounded-2xl p-5 sm:p-6 border border-orange/10 shadow-sm mb-6">
                 <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 mb-4">
                   <div>
-                    <h2 className="text-xl font-bold">
+                    <h2 className="text-lg sm:text-xl font-bold">
                       Indicadores obrigatórios por empresa
                     </h2>
-                    <p className="text-sm text-gray-500 mt-1">
+                    <p className="text-sm text-gray-500 mt-1 leading-relaxed">
                       Conversão em número de vendas, conversão em valor, mensagens e faturamento por empresa.
                     </p>
                   </div>
                 </div>
 
-                <div className="overflow-x-auto">
-                  <table className="w-full text-sm">
+                <div className="overflow-x-auto -mx-5 sm:-mx-6 px-5 sm:px-6">
+                  <table className="w-full min-w-[1100px] text-sm">
                     <thead>
                       <tr className="border-b text-left text-gray-500">
                         <th className="py-3 pr-4">Empresa</th>
@@ -622,13 +649,13 @@ const Empresas = () => {
                 </div>
               </section>
 
-              <section className="bg-white rounded-2xl p-6 border border-orange/10 shadow-sm mb-6">
-                <h2 className="text-xl font-bold mb-4">
+              <section className="bg-white rounded-2xl p-5 sm:p-6 border border-orange/10 shadow-sm mb-6">
+                <h2 className="text-lg sm:text-xl font-bold mb-4">
                   Ranking de empresas por receita
                 </h2>
 
-                <div className="overflow-x-auto">
-                  <table className="w-full text-sm">
+                <div className="overflow-x-auto -mx-5 sm:-mx-6 px-5 sm:px-6">
+                  <table className="w-full min-w-[900px] text-sm">
                     <thead>
                       <tr className="border-b text-left text-gray-500">
                         <th className="py-3 pr-4">Empresa</th>
@@ -668,16 +695,16 @@ const Empresas = () => {
                 </div>
               </section>
 
-              <section className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-                <div className="bg-white rounded-2xl p-6 border border-orange/10 shadow-sm">
-                  <h2 className="text-xl font-bold mb-4">
+              <section className="grid grid-cols-1 xl:grid-cols-2 gap-5 sm:gap-6">
+                <div className="bg-white rounded-2xl p-5 sm:p-6 border border-orange/10 shadow-sm">
+                  <h2 className="text-lg sm:text-xl font-bold mb-4">
                     Empresas com baixa recorrência
                   </h2>
 
                   <div className="space-y-3">
                     {(risco.baixaRecorrencia || []).map((empresa, index) => (
                       <div key={index} className="rounded-xl bg-red-50 border border-red-100 p-4">
-                        <p className="font-bold">{empresa.empresa}</p>
+                        <p className="font-bold break-words">{empresa.empresa}</p>
                         <p className="text-sm text-red-700 mt-1">
                           Recorrência: {formatarPercentual(empresa.recorrencia)}
                         </p>
@@ -692,15 +719,15 @@ const Empresas = () => {
                   </div>
                 </div>
 
-                <div className="bg-white rounded-2xl p-6 border border-orange/10 shadow-sm">
-                  <h2 className="text-xl font-bold mb-4">
+                <div className="bg-white rounded-2xl p-5 sm:p-6 border border-orange/10 shadow-sm">
+                  <h2 className="text-lg sm:text-xl font-bold mb-4">
                     Empresas com ticket baixo
                   </h2>
 
                   <div className="space-y-3">
                     {(risco.ticketBaixo || []).map((empresa, index) => (
                       <div key={index} className="rounded-xl bg-yellow-50 border border-yellow-100 p-4">
-                        <p className="font-bold">{empresa.empresa}</p>
+                        <p className="font-bold break-words">{empresa.empresa}</p>
                         <p className="text-sm text-yellow-700 mt-1">
                           Ticket médio: {formatarMoeda(empresa.ticketMedio)}
                         </p>

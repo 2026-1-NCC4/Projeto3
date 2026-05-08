@@ -1,7 +1,11 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import Sidebar from '../dashboard/Sidebar';
-import { buscarAdminDashboard } from './services/adminDashboardService';
 import FiltrosDashboard from './shared/FiltrosDashboard';
+import {
+  buscarAdminDashboard,
+  buscarCompanyDashboard
+} from './services/adminDashboardService';
+
 import {
   Bar,
   BarChart,
@@ -47,9 +51,9 @@ const TooltipGrafico = ({ active, payload, label }) => {
   }
 
   return (
-    <div className="bg-white rounded-xl shadow-lg border border-orange/10 p-3">
+    <div className="bg-white rounded-xl shadow-lg border border-orange/10 p-3 max-w-[260px]">
       {label && (
-        <p className="text-sm font-bold text-text-dark mb-2">
+        <p className="text-sm font-bold text-text-dark mb-2 break-words">
           {label}
         </p>
       )}
@@ -66,7 +70,7 @@ const TooltipGrafico = ({ active, payload, label }) => {
               : formatarNumero(valor);
 
         return (
-          <p key={index} className="text-xs text-gray-600">
+          <p key={index} className="text-xs text-gray-600 break-words">
             <strong>{item.name || item.dataKey}:</strong> {valorFormatado}
           </p>
         );
@@ -77,15 +81,17 @@ const TooltipGrafico = ({ active, payload, label }) => {
 
 const CardResumo = ({ titulo, valor, descricao }) => {
   return (
-    <div className="bg-white rounded-2xl p-6 border border-orange/10 shadow-sm">
-      <p className="text-sm text-gray-500">{titulo}</p>
+    <div className="bg-white rounded-2xl p-5 sm:p-6 border border-orange/10 shadow-sm min-w-0">
+      <p className="text-sm text-gray-500 break-words">
+        {titulo}
+      </p>
 
-      <h2 className="text-3xl font-bold mt-2 text-text-dark">
+      <h2 className="text-2xl sm:text-3xl font-bold mt-2 text-text-dark break-words">
         {valor}
       </h2>
 
       {descricao && (
-        <p className="text-xs text-gray-400 mt-2">
+        <p className="text-xs text-gray-400 mt-2 leading-relaxed">
           {descricao}
         </p>
       )}
@@ -95,20 +101,20 @@ const CardResumo = ({ titulo, valor, descricao }) => {
 
 const CardGrafico = ({ titulo, descricao, children }) => {
   return (
-    <section className="bg-white rounded-2xl p-6 border border-orange/10 shadow-sm">
+    <section className="bg-white rounded-2xl p-5 sm:p-6 border border-orange/10 shadow-sm min-w-0">
       <div className="mb-5">
-        <h2 className="text-xl font-bold text-text-dark">
+        <h2 className="text-lg sm:text-xl font-bold text-text-dark leading-snug">
           {titulo}
         </h2>
 
         {descricao && (
-          <p className="text-sm text-gray-500 mt-1">
+          <p className="text-sm text-gray-500 mt-1 leading-relaxed">
             {descricao}
           </p>
         )}
       </div>
 
-      <div className="h-80">
+      <div className="h-[300px] sm:h-80 w-full min-w-0">
         {children}
       </div>
     </section>
@@ -123,6 +129,13 @@ const Campanhas = () => {
   const [atualizando, setAtualizando] = useState(false);
   const [ultimaAtualizacao, setUltimaAtualizacao] = useState(null);
   const [filtros, setFiltros] = useState(FILTROS_PADRAO);
+
+  const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
+  const isEmpresa = usuario.role === 'empresa';
+
+  const fontePoppins = {
+    fontFamily: "'Poppins', sans-serif"
+  };
 
   const filtrosRef = useRef(FILTROS_PADRAO);
 
@@ -143,7 +156,10 @@ const Campanhas = () => {
 
       setErro('');
 
-      const data = await buscarAdminDashboard(filtrosAplicados);
+      const data = isEmpresa
+        ? await buscarCompanyDashboard(filtrosAplicados)
+        : await buscarAdminDashboard(filtrosAplicados);
+
       setDashboard(data);
       setUltimaAtualizacao(new Date());
     } catch (error) {
@@ -203,11 +219,6 @@ const Campanhas = () => {
     0
   );
 
-  const totalClientesImpactados = mensagensPorCampanhaEmpresa.reduce(
-    (acc, item) => acc + Number(item.clientes || 0),
-    0
-  );
-
   const conversaoObrigatoria =
     totalMensagensPorCampanhaEmpresa > 0
       ? (totalPedidosConvertidosPorCampanhaEmpresa / totalMensagensPorCampanhaEmpresa) * 100
@@ -247,40 +258,71 @@ const Campanhas = () => {
     <div className="flex min-h-screen bg-cream">
       <Sidebar isOpen={sidebarOpen} toggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
 
-      <div className="flex-1 lg:ml-72">
+      <div className="flex-1 w-full min-w-0 lg:ml-72">
         <button
+          type="button"
           onClick={() => setSidebarOpen(!sidebarOpen)}
           className="lg:hidden fixed top-4 left-4 z-50 bg-orange p-2 rounded-lg shadow-lg"
+          aria-label="Abrir menu"
         >
           <svg className="w-6 h-6 fill-white" viewBox="0 0 24 24">
             <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
           </svg>
         </button>
 
-        <main className="p-5 lg:p-8">
-          <header className="mb-8 flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
-            <div>
-              <h1 className="text-3xl font-bold text-text-dark">
+        <main className="w-full max-w-[1600px] mx-auto p-4 sm:p-5 lg:p-8 pt-20 lg:pt-8">
+          <header
+            className="mb-8 flex flex-col xl:flex-row xl:items-start xl:justify-between gap-4"
+            style={fontePoppins}
+          >
+            <div className="min-w-0">
+              <h1
+                className="text-2xl sm:text-3xl font-bold text-text-dark leading-tight"
+                style={fontePoppins}
+              >
                 Campanhas
               </h1>
 
-              <p className="text-sm text-gray-500 mt-2">
-                Performance global das campanhas, pedidos gerados, conversão e templates utilizados.
+              <p
+                className="text-sm text-gray-500 mt-2 max-w-3xl leading-relaxed"
+                style={fontePoppins}
+              >
+                {isEmpresa
+                  ? 'Performance das campanhas da sua empresa, pedidos gerados, conversão e templates utilizados.'
+                  : 'Performance global das campanhas, pedidos gerados, conversão e templates utilizados.'}
               </p>
 
               <div className="flex flex-wrap items-center gap-2 mt-3">
-                <span className="px-3 py-1 rounded-full bg-orange/10 text-orange text-xs font-semibold">
+                <span
+                  className="px-3 py-1 rounded-full bg-orange/10 text-orange text-xs font-semibold"
+                  style={fontePoppins}
+                >
                   Atualização automática a cada 1 hora
                 </span>
 
+                {isEmpresa && (
+                  <span
+                    className="px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-semibold"
+                    style={fontePoppins}
+                  >
+                    Visão filtrada pela empresa logada
+                  </span>
+                )}
+
                 {ultimaAtualizacao && (
-                  <span className="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-semibold">
+                  <span
+                    className="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-semibold"
+                    style={fontePoppins}
+                  >
                     Última atualização: {ultimaAtualizacao.toLocaleString('pt-BR')}
                   </span>
                 )}
 
                 {atualizando && (
-                  <span className="px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-semibold">
+                  <span
+                    className="px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-semibold"
+                    style={fontePoppins}
+                  >
                     Atualizando dados...
                   </span>
                 )}
@@ -296,20 +338,21 @@ const Campanhas = () => {
                 })
               }
               disabled={loading || atualizando}
-              className="px-5 py-3 rounded-xl bg-orange text-white font-semibold hover:bg-orange-dark transition disabled:opacity-60"
+              className="w-full sm:w-auto px-5 py-3 rounded-xl bg-orange text-white font-semibold hover:bg-orange-dark transition disabled:opacity-60"
+              style={fontePoppins}
             >
               Atualizar agora
             </button>
           </header>
 
           {loading && (
-            <section className="bg-white rounded-2xl p-8 border border-orange/10">
+            <section className="bg-white rounded-2xl p-6 sm:p-8 border border-orange/10">
               Carregando campanhas...
             </section>
           )}
 
           {erro && (
-            <section className="bg-red-100 rounded-2xl p-6 border border-red-300 text-red-700">
+            <section className="bg-red-100 rounded-2xl p-5 sm:p-6 border border-red-300 text-red-700">
               {erro}
             </section>
           )}
@@ -323,11 +366,16 @@ const Campanhas = () => {
                 onAplicar={aplicarFiltros}
                 onLimpar={limparFiltros}
                 loading={loading || atualizando}
-                titulo="Filtros da aba"
-                descricao="Use estes filtros para recalcular os dados exibidos em campanhas."
+                esconderEmpresa={isEmpresa}
+                titulo={isEmpresa ? 'Filtros da empresa' : 'Filtros da aba'}
+                descricao={
+                  isEmpresa
+                    ? 'Use estes filtros para recalcular apenas os dados da sua empresa.'
+                    : 'Use estes filtros para recalcular os dados exibidos em campanhas.'
+                }
               />
 
-              <section className="grid grid-cols-1 md:grid-cols-4 gap-5 mb-6">
+              <section className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-5 mb-6">
                 <CardResumo
                   titulo="Total de campanhas"
                   valor={formatarNumero(campanhas.totalCampanhas)}
@@ -353,7 +401,7 @@ const Campanhas = () => {
                 />
               </section>
 
-              <section className="grid grid-cols-1 md:grid-cols-4 gap-5 mb-6">
+              <section className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-5 mb-6">
                 <CardResumo
                   titulo="Mensagens por campanha/empresa"
                   valor={formatarNumero(totalMensagensPorCampanhaEmpresa)}
@@ -379,7 +427,7 @@ const Campanhas = () => {
                 />
               </section>
 
-              <section className="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-6">
+              <section className="grid grid-cols-1 2xl:grid-cols-2 gap-5 sm:gap-6 mb-6">
                 <CardGrafico
                   titulo="Melhores campanhas por receita"
                   descricao="Ranking das campanhas com maior receita gerada."
@@ -388,15 +436,15 @@ const Campanhas = () => {
                     <BarChart
                       data={topCampanhasReceita}
                       layout="vertical"
-                      margin={{ top: 5, right: 20, left: 40, bottom: 5 }}
+                      margin={{ top: 5, right: 20, left: 20, bottom: 5 }}
                     >
                       <CartesianGrid strokeDasharray="3 3" stroke="#eee" />
-                      <XAxis type="number" tick={{ fontSize: 12 }} />
+                      <XAxis type="number" tick={{ fontSize: 11 }} />
                       <YAxis
                         type="category"
                         dataKey="campanha"
-                        width={160}
-                        tick={{ fontSize: 11 }}
+                        width={125}
+                        tick={{ fontSize: 10 }}
                       />
                       <Tooltip content={<TooltipGrafico />} />
                       <Bar
@@ -416,17 +464,18 @@ const Campanhas = () => {
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart
                       data={topCampanhasConversao}
-                      margin={{ top: 5, right: 20, left: 0, bottom: 50 }}
+                      margin={{ top: 5, right: 20, left: 0, bottom: 60 }}
                     >
                       <CartesianGrid strokeDasharray="3 3" stroke="#eee" />
                       <XAxis
                         dataKey="campanha"
-                        tick={{ fontSize: 10 }}
-                        angle={-25}
+                        tick={{ fontSize: 9 }}
+                        angle={-30}
                         textAnchor="end"
-                        height={80}
+                        height={85}
+                        interval={0}
                       />
-                      <YAxis tick={{ fontSize: 12 }} />
+                      <YAxis tick={{ fontSize: 11 }} />
                       <Tooltip content={<TooltipGrafico />} />
                       <Bar
                         dataKey="conversao"
@@ -439,8 +488,8 @@ const Campanhas = () => {
                 </CardGrafico>
               </section>
 
-              <section className="grid grid-cols-1 xl:grid-cols-3 gap-6 mb-6">
-                <div className="xl:col-span-2">
+              <section className="grid grid-cols-1 2xl:grid-cols-3 gap-5 sm:gap-6 mb-6">
+                <div className="2xl:col-span-2 min-w-0">
                   <CardGrafico
                     titulo="Receita por campanha e empresa"
                     descricao="Top combinações de campanha e empresa por receita convertida."
@@ -448,17 +497,18 @@ const Campanhas = () => {
                     <ResponsiveContainer width="100%" height="100%">
                       <BarChart
                         data={topCampanhaEmpresaReceita}
-                        margin={{ top: 5, right: 20, left: 0, bottom: 60 }}
+                        margin={{ top: 5, right: 20, left: 0, bottom: 65 }}
                       >
                         <CartesianGrid strokeDasharray="3 3" stroke="#eee" />
                         <XAxis
                           dataKey="campanha"
-                          tick={{ fontSize: 10 }}
-                          angle={-25}
+                          tick={{ fontSize: 9 }}
+                          angle={-30}
                           textAnchor="end"
                           height={90}
+                          interval={0}
                         />
-                        <YAxis tick={{ fontSize: 12 }} />
+                        <YAxis tick={{ fontSize: 11 }} />
                         <Tooltip content={<TooltipGrafico />} />
                         <Bar
                           dataKey="receita"
@@ -482,8 +532,8 @@ const Campanhas = () => {
                           data={dadosTemplates}
                           dataKey="usos"
                           nameKey="template"
-                          innerRadius={60}
-                          outerRadius={105}
+                          innerRadius={50}
+                          outerRadius={95}
                           paddingAngle={3}
                         >
                           {dadosTemplates.map((item, index) => (
@@ -494,14 +544,14 @@ const Campanhas = () => {
                       </PieChart>
                     </ResponsiveContainer>
                   ) : (
-                    <div className="h-full flex items-center justify-center text-sm text-gray-500">
+                    <div className="h-full flex items-center justify-center text-sm text-gray-500 text-center px-4">
                       Nenhum template identificado.
                     </div>
                   )}
                 </CardGrafico>
               </section>
 
-              <section className="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-6">
+              <section className="grid grid-cols-1 2xl:grid-cols-2 gap-5 sm:gap-6 mb-6">
                 <CardGrafico
                   titulo="Mensagens x pedidos convertidos"
                   descricao="Comparação por campanha/empresa para avaliar eficiência da comunicação."
@@ -509,17 +559,18 @@ const Campanhas = () => {
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart
                       data={topCampanhaEmpresaConversao}
-                      margin={{ top: 5, right: 20, left: 0, bottom: 60 }}
+                      margin={{ top: 5, right: 20, left: 0, bottom: 65 }}
                     >
                       <CartesianGrid strokeDasharray="3 3" stroke="#eee" />
                       <XAxis
                         dataKey="campanha"
-                        tick={{ fontSize: 10 }}
-                        angle={-25}
+                        tick={{ fontSize: 9 }}
+                        angle={-30}
                         textAnchor="end"
                         height={90}
+                        interval={0}
                       />
-                      <YAxis tick={{ fontSize: 12 }} />
+                      <YAxis tick={{ fontSize: 11 }} />
                       <Tooltip content={<TooltipGrafico />} />
                       <Bar
                         dataKey="mensagens"
@@ -545,15 +596,15 @@ const Campanhas = () => {
                     <BarChart
                       data={topCampanhaEmpresaConversao}
                       layout="vertical"
-                      margin={{ top: 5, right: 20, left: 40, bottom: 5 }}
+                      margin={{ top: 5, right: 20, left: 20, bottom: 5 }}
                     >
                       <CartesianGrid strokeDasharray="3 3" stroke="#eee" />
-                      <XAxis type="number" tick={{ fontSize: 12 }} />
+                      <XAxis type="number" tick={{ fontSize: 11 }} />
                       <YAxis
                         type="category"
                         dataKey="campanha"
-                        width={160}
-                        tick={{ fontSize: 11 }}
+                        width={125}
+                        tick={{ fontSize: 10 }}
                       />
                       <Tooltip content={<TooltipGrafico />} />
                       <Bar
@@ -567,21 +618,21 @@ const Campanhas = () => {
                 </CardGrafico>
               </section>
 
-              <section className="bg-white rounded-2xl p-6 border border-orange/10 shadow-sm mb-6">
+              <section className="bg-white rounded-2xl p-5 sm:p-6 border border-orange/10 shadow-sm mb-6">
                 <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 mb-4">
                   <div>
-                    <h2 className="text-xl font-bold">
+                    <h2 className="text-lg sm:text-xl font-bold">
                       Mensagens por campanha e empresa
                     </h2>
 
-                    <p className="text-sm text-gray-500 mt-1">
+                    <p className="text-sm text-gray-500 mt-1 leading-relaxed">
                       Indicador obrigatório: mensagens, pedidos convertidos, clientes, receita e taxa de conversão por campanha/empresa.
                     </p>
                   </div>
                 </div>
 
-                <div className="overflow-x-auto">
-                  <table className="w-full text-sm">
+                <div className="overflow-x-auto -mx-5 sm:-mx-6 px-5 sm:px-6">
+                  <table className="w-full min-w-[900px] text-sm">
                     <thead>
                       <tr className="border-b text-left text-gray-500">
                         <th className="py-3 pr-4">Empresa</th>
@@ -639,13 +690,13 @@ const Campanhas = () => {
                 </div>
               </section>
 
-              <section className="bg-white rounded-2xl p-6 border border-orange/10 shadow-sm mb-6">
-                <h2 className="text-xl font-bold mb-4">
+              <section className="bg-white rounded-2xl p-5 sm:p-6 border border-orange/10 shadow-sm mb-6">
+                <h2 className="text-lg sm:text-xl font-bold mb-4">
                   Melhores campanhas por receita
                 </h2>
 
-                <div className="overflow-x-auto">
-                  <table className="w-full text-sm">
+                <div className="overflow-x-auto -mx-5 sm:-mx-6 px-5 sm:px-6">
+                  <table className="w-full min-w-[850px] text-sm">
                     <thead>
                       <tr className="border-b text-left text-gray-500">
                         <th className="py-3 pr-4">Campanha</th>
@@ -681,16 +732,16 @@ const Campanhas = () => {
                 </div>
               </section>
 
-              <section className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-                <div className="bg-white rounded-2xl p-6 border border-orange/10 shadow-sm">
-                  <h2 className="text-xl font-bold mb-4">
+              <section className="grid grid-cols-1 xl:grid-cols-2 gap-5 sm:gap-6">
+                <div className="bg-white rounded-2xl p-5 sm:p-6 border border-orange/10 shadow-sm">
+                  <h2 className="text-lg sm:text-xl font-bold mb-4">
                     Campanhas com baixa conversão
                   </h2>
 
                   <div className="space-y-3">
                     {baixaConversao.map((campanha, index) => (
                       <div key={`${campanha.campanha}-${index}`} className="rounded-xl bg-red-50 border border-red-100 p-4">
-                        <p className="font-bold">{campanha.campanha}</p>
+                        <p className="font-bold break-words">{campanha.campanha}</p>
 
                         <p className="text-sm text-red-700 mt-1">
                           Conversão: {formatarPercentual(campanha.conversao)}
@@ -710,17 +761,20 @@ const Campanhas = () => {
                   </div>
                 </div>
 
-                <div className="bg-white rounded-2xl p-6 border border-orange/10 shadow-sm">
-                  <h2 className="text-xl font-bold mb-4">
+                <div className="bg-white rounded-2xl p-5 sm:p-6 border border-orange/10 shadow-sm">
+                  <h2 className="text-lg sm:text-xl font-bold mb-4">
                     Templates mais usados
                   </h2>
 
                   <div className="space-y-3">
                     {templates.map((template, index) => (
-                      <div key={`${template.template}-${index}`} className="rounded-xl bg-orange/5 border border-orange/10 p-4 flex items-center justify-between">
-                        <p className="font-bold">{template.template}</p>
+                      <div
+                        key={`${template.template}-${index}`}
+                        className="rounded-xl bg-orange/5 border border-orange/10 p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2"
+                      >
+                        <p className="font-bold break-words">{template.template}</p>
 
-                        <span className="text-sm text-orange font-bold">
+                        <span className="text-sm text-orange font-bold whitespace-nowrap">
                           {formatarNumero(template.usos)} usos
                         </span>
                       </div>

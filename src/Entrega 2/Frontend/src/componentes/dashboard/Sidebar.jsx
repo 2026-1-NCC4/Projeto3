@@ -165,9 +165,11 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
           <button
             type="button"
             onClick={() => handleNavigate('/dashboard')}
-            className="font-playfair text-4xl font-black text-white tracking-tight flex items-center gap-2"
+            className="flex items-end gap-1.5"
+            aria-label="Ir para o dashboard"
           >
-            li
+            <div className="w-4 h-10 rounded-xl bg-white"></div>
+            <div className="w-4 h-7 rounded-xl bg-white"></div>
           </button>
 
           <div className="mt-5 pt-4 border-t border-white/15">

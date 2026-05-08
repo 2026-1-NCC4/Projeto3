@@ -13,8 +13,8 @@ const PainelEsquerdo = () => {
         
         {/* Logo */}
         <div className="flex items-end gap-2 mb-8">
-          <div className="w-4 h-16 rounded-xl bg-white"></div>
           <div className="w-4 h-28 rounded-xl bg-white"></div>
+          <div className="w-4 h-16 rounded-xl bg-white"></div>
           <span className="ml-3 text-2xl font-bold tracking-wide">
             Cannoli
           </span>

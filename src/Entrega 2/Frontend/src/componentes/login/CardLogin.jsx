@@ -60,24 +60,29 @@ const CardLogin = ({ mudarTela }) => {
   };
 
   return (
-    <div className="w-full max-w-[340px] animate-fade-up">
-      
-      {/* 🔥 TÍTULO NOVO */}
-      <h1 className="font-playfair text-3xl font-bold">
-       Login
+    <div
+      className="w-full max-w-[340px] animate-fade-up"
+      style={{ fontFamily: "'Poppins', sans-serif" }}
+    >
+      <h1
+        className="text-3xl font-bold"
+        style={{ fontFamily: "'Poppins', sans-serif" }}
+      >
+        Login
       </h1>
 
-      {/* 🔥 SUBTÍTULO MELHOR */}
       <p className="text-sm mt-3 mb-10 text-gray-500">
         Acesse sua conta para continuar
       </p>
 
       {mensagem.texto && (
-        <div className={`mb-4 p-3 rounded-md text-sm ${
-          mensagem.tipo === 'erro' 
-            ? 'bg-red-100 text-red-700 border border-red-300' 
-            : 'bg-green-100 text-green-700 border border-green-300'
-        }`}>
+        <div
+          className={`mb-4 p-3 rounded-md text-sm ${
+            mensagem.tipo === 'erro' 
+              ? 'bg-red-100 text-red-700 border border-red-300' 
+              : 'bg-green-100 text-green-700 border border-green-300'
+          }`}
+        >
           {mensagem.texto}
         </div>
       )}
@@ -93,7 +98,6 @@ const CardLogin = ({ mudarTela }) => {
           disabled={loading}
         />
         
-        {/* 🔥 CORREÇÃO AQUI */}
         <CampoInput 
           tipo="password" 
           placeholder="Senha" 
@@ -110,6 +114,7 @@ const CardLogin = ({ mudarTela }) => {
             onClick={() => mudarTela('recuperar-senha')}
             className="text-xs text-orange hover:underline"
             disabled={loading}
+            style={{ fontFamily: "'Poppins', sans-serif" }}
           >
             Esqueceu a senha?
           </button>
@@ -118,9 +123,10 @@ const CardLogin = ({ mudarTela }) => {
         <button 
           type="submit"
           disabled={loading}
-          className={`w-full mt-7 py-3 bg-orange text-white rounded-md transition-all
+          className={`w-full mt-7 py-3 bg-orange text-white rounded-md font-semibold transition-all
             ${loading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-orange-dark hover:shadow-md'}
           `}
+          style={{ fontFamily: "'Poppins', sans-serif" }}
         >
           {loading ? 'Entrando...' : 'Entrar'}
         </button>

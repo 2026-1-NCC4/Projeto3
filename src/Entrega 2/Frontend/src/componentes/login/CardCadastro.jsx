@@ -13,6 +13,10 @@ const CardCadastro = ({ mudarTela }) => {
   const [codigoConvite, setCodigoConvite] = useState('');
   const [loading, setLoading] = useState(false);
 
+  const fontePoppins = {
+    fontFamily: "'Poppins', sans-serif"
+  };
+
   const validarCNPJ = (cnpj) => {
     cnpj = cnpj.replace(/[^\d]+/g, '');
 
@@ -232,12 +236,18 @@ const CardCadastro = ({ mudarTela }) => {
   };
 
   return (
-    <div className="w-full max-w-[400px] animate-fade-up">
-      <h1 className="font-playfair text-3xl font-bold">
+    <div
+      className="w-full max-w-[400px] animate-fade-up"
+      style={fontePoppins}
+    >
+      <h1
+        className="text-3xl font-bold"
+        style={fontePoppins}
+      >
         Criar Conta
       </h1>
 
-      <p className="text-sm mt-3 mb-6">
+      <p className="text-sm mt-3 mb-6 text-gray-500">
         Escolha o tipo de cadastro
       </p>
 
@@ -254,6 +264,7 @@ const CardCadastro = ({ mudarTela }) => {
               ? 'bg-orange text-white shadow-md'
               : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
           }`}
+          style={fontePoppins}
         >
           Colaborador
         </button>
@@ -269,17 +280,20 @@ const CardCadastro = ({ mudarTela }) => {
               ? 'bg-orange text-white shadow-md'
               : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
           }`}
+          style={fontePoppins}
         >
           Empresa
         </button>
       </div>
 
       {mensagem.texto && (
-        <div className={`mb-4 p-3 rounded-md text-sm ${
-          mensagem.tipo === 'erro'
-            ? 'bg-red-100 text-red-700 border border-red-300'
-            : 'bg-green-100 text-green-700 border border-green-300'
-        }`}>
+        <div
+          className={`mb-4 p-3 rounded-md text-sm ${
+            mensagem.tipo === 'erro'
+              ? 'bg-red-100 text-red-700 border border-red-300'
+              : 'bg-green-100 text-green-700 border border-green-300'
+          }`}
+        >
           {mensagem.texto}
         </div>
       )}
@@ -388,6 +402,7 @@ const CardCadastro = ({ mudarTela }) => {
           className={`w-full mt-7 py-3 bg-orange text-white rounded-lg font-medium transition-all duration-200 ${
             loading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-orange-dark hover:shadow-md'
           }`}
+          style={fontePoppins}
         >
           {loading
             ? 'Processando...'

@@ -67,6 +67,10 @@ const ImportacaoDados = () => {
 
   const token = localStorage.getItem('token');
 
+  const fontePoppins = {
+    fontFamily: "'Poppins', sans-serif"
+  };
+
   const carregarHistorico = async () => {
     try {
       setCarregandoHistorico(true);
@@ -182,12 +186,21 @@ const ImportacaoDados = () => {
         </button>
 
         <main className="p-5 lg:p-8">
-          <header className="mb-8">
-            <h1 className="text-3xl font-bold text-text-dark">
+          <header
+            className="mb-8"
+            style={fontePoppins}
+          >
+            <h1
+              className="text-3xl font-bold text-text-dark"
+              style={fontePoppins}
+            >
               Importação de Dados
             </h1>
 
-            <p className="text-sm text-gray-500 mt-2 max-w-3xl">
+            <p
+              className="text-sm text-gray-500 mt-2 max-w-3xl"
+              style={fontePoppins}
+            >
               Envie arquivos CSV ou Excel para validação, tratamento básico,
               deduplicação e registro de qualidade dos dados.
             </p>

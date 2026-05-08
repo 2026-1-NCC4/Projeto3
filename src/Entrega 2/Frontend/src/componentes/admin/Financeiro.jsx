@@ -15,7 +15,10 @@ import {
 } from 'recharts';
 
 import Sidebar from '../dashboard/Sidebar';
-import { buscarAdminDashboard } from './services/adminDashboardService';
+import {
+  buscarAdminDashboard,
+  buscarCompanyDashboard
+} from './services/adminDashboardService';
 import FiltrosDashboard from './shared/FiltrosDashboard';
 
 const FILTROS_PADRAO = {
@@ -80,6 +83,13 @@ const Financeiro = () => {
   const [erro, setErro] = useState('');
   const [filtros, setFiltros] = useState(FILTROS_PADRAO);
 
+  const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
+  const isEmpresa = usuario.role === 'empresa';
+
+  const fontePoppins = {
+    fontFamily: "'Poppins', sans-serif"
+  };
+
   const filtrosRef = useRef(FILTROS_PADRAO);
 
   useEffect(() => {
@@ -91,7 +101,10 @@ const Financeiro = () => {
       setLoading(true);
       setErro('');
 
-      const data = await buscarAdminDashboard(filtrosAplicados);
+      const data = isEmpresa
+        ? await buscarCompanyDashboard(filtrosAplicados)
+        : await buscarAdminDashboard(filtrosAplicados);
+
       setDashboard(data);
     } catch (error) {
       setErro(error.message);
@@ -121,8 +134,6 @@ const Financeiro = () => {
 
   const receitaPorMes = financeiro.receitaPorMes || [];
   const ticketMedioPorMes = financeiro.ticketMedioPorMes || [];
-  const pedidosPorTipo = financeiro.pedidosPorTipo || [];
-  const canais = financeiro.performanceCanais || [];
 
   const resultadoPorMes = financeiro.resultadoPorMes || [];
   const resultadoPorCanal = financeiro.resultadoPorCanal || [];
@@ -144,16 +155,37 @@ const Financeiro = () => {
         </button>
 
         <main className="p-5 lg:p-8">
-          <header className="mb-8 flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
+          <header
+            className="mb-8 flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4"
+            style={fontePoppins}
+          >
             <div>
-              <h1 className="text-3xl font-bold text-text-dark">
+              <h1
+                className="text-3xl font-bold text-text-dark"
+                style={fontePoppins}
+              >
                 Financeiro
               </h1>
 
-              <p className="text-sm text-gray-500 mt-2 max-w-3xl">
-                Painel financeiro com receita bruta, receita líquida simulada,
-                custos variáveis, margem, caixa estimado, canais e alertas financeiros.
+              <p
+                className="text-sm text-gray-500 mt-2 max-w-3xl"
+                style={fontePoppins}
+              >
+                {isEmpresa
+                  ? 'Painel financeiro da sua empresa com receita bruta, receita líquida simulada, custos variáveis, margem, caixa estimado, canais e alertas financeiros.'
+                  : 'Painel financeiro com receita bruta, receita líquida simulada, custos variáveis, margem, caixa estimado, canais e alertas financeiros.'}
               </p>
+
+              {isEmpresa && (
+                <div className="flex flex-wrap items-center gap-2 mt-3">
+                  <span
+                    className="px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-semibold"
+                    style={fontePoppins}
+                  >
+                    Visão filtrada pela empresa logada
+                  </span>
+                </div>
+              )}
             </div>
 
             <button
@@ -161,6 +193,7 @@ const Financeiro = () => {
               onClick={() => carregarDados({ filtrosAplicados: filtrosRef.current })}
               disabled={loading}
               className="px-5 py-3 rounded-xl bg-orange text-white font-semibold hover:bg-orange-dark transition disabled:opacity-50"
+              style={fontePoppins}
             >
               {loading ? 'Atualizando...' : 'Atualizar financeiro'}
             </button>
@@ -187,8 +220,13 @@ const Financeiro = () => {
                 onAplicar={aplicarFiltros}
                 onLimpar={limparFiltros}
                 loading={loading}
-                titulo="Filtros da aba"
-                descricao="Use estes filtros para recalcular os dados exibidos em financeiro."
+                esconderEmpresa={isEmpresa}
+                titulo={isEmpresa ? 'Filtros da empresa' : 'Filtros da aba'}
+                descricao={
+                  isEmpresa
+                    ? 'Use estes filtros para recalcular apenas os dados financeiros da sua empresa.'
+                    : 'Use estes filtros para recalcular os dados exibidos em financeiro.'
+                }
               />
 
               <section className="grid grid-cols-1 md:grid-cols-4 gap-5 mb-6">

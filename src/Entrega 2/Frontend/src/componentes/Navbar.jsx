@@ -10,9 +10,11 @@ const Navbar = () => {
         <button
           type="button"
           onClick={() => navigate('/')}
-          className="font-playfair text-2xl font-bold text-white"
+          className="flex items-end gap-1.5"
+          aria-label="Voltar para a página inicial"
         >
-          li
+          <div className="w-3 h-8 rounded-xl bg-white"></div>
+          <div className="w-3 h-5 rounded-xl bg-white"></div>
         </button>
 
         <div className="hidden md:flex items-center gap-10 text-white font-semibold text-sm">

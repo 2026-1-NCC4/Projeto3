@@ -322,12 +322,13 @@ const Dashboard = () => {
 
   const podeConvidarStaff = usuario.role === 'admin';
   const isPainelCannoli = usuario.role === 'admin' || usuario.role === 'colaborador';
+  const isEmpresa = usuario.role === 'empresa';
 
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
   };
 
-  const carregarDashboardAdmin = async (filtrosSelecionados = {}, opcoes = {}) => {
+  const carregarDashboard = async (filtrosSelecionados = {}, opcoes = {}) => {
     try {
       if (!opcoes.silencioso) {
         setLoading(true);
@@ -335,14 +336,27 @@ const Dashboard = () => {
 
       setErro('');
 
-      const params = new URLSearchParams({
+      const filtrosBase = {
         periodo: filtrosSelecionados.periodo || periodoSelecionado,
         empresa: filtrosSelecionados.empresa || empresaSelecionada,
         canal: filtrosSelecionados.canal || canalSelecionado,
         tipoPedido: filtrosSelecionados.tipoPedido || tipoPedidoSelecionado
-      });
+      };
 
-      const response = await fetch(`${API_URL}/admin-dashboard?${params.toString()}`, {
+      const params = new URLSearchParams();
+
+      params.append('periodo', filtrosBase.periodo);
+      params.append('canal', filtrosBase.canal);
+      params.append('tipoPedido', filtrosBase.tipoPedido);
+
+      let endpoint = `${API_URL}/company-dashboard`;
+
+      if (isPainelCannoli) {
+        endpoint = `${API_URL}/admin-dashboard`;
+        params.append('empresa', filtrosBase.empresa);
+      }
+
+      const response = await fetch(`${endpoint}?${params.toString()}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -394,7 +408,7 @@ const Dashboard = () => {
       setResultadoTempoReal(data.data);
       setUltimaAtualizacaoTempoReal(new Date());
 
-      await carregarDashboardAdmin(
+      await carregarDashboard(
         {
           periodo: periodoSelecionado,
           empresa: empresaSelecionada,
@@ -415,7 +429,7 @@ const Dashboard = () => {
   const aplicarFiltros = () => {
     setDetalheAtivo(null);
 
-    carregarDashboardAdmin({
+    carregarDashboard({
       periodo: periodoSelecionado,
       empresa: empresaSelecionada,
       canal: canalSelecionado,
@@ -430,7 +444,7 @@ const Dashboard = () => {
     setTipoPedidoSelecionado('todos');
     setDetalheAtivo(null);
 
-    carregarDashboardAdmin({
+    carregarDashboard({
       periodo: 'todos',
       empresa: 'todas',
       canal: 'todos',
@@ -466,16 +480,12 @@ const Dashboard = () => {
       return;
     }
 
-    if (isPainelCannoli) {
-      carregarDashboardAdmin({
-        periodo: 'todos',
-        empresa: 'todas',
-        canal: 'todos',
-        tipoPedido: 'todos'
-      });
-    } else {
-      setLoading(false);
-    }
+    carregarDashboard({
+      periodo: 'todos',
+      empresa: 'todas',
+      canal: 'todos',
+      tipoPedido: 'todos'
+    });
   }, []);
 
   const kpis = dashboard?.kpis || {};
@@ -498,11 +508,15 @@ const Dashboard = () => {
 
 
   const empresaSelecionadaNome = useMemo(() => {
+    if (isEmpresa) {
+      return dashboard?.contextoEmpresa?.companyName || 'Minha empresa';
+    }
+
     if (empresaSelecionada === 'todas') return 'Todas as empresas';
 
     const empresa = filtros.empresas?.find((item) => item.id === empresaSelecionada);
     return empresa?.nome || 'Empresa selecionada';
-  }, [empresaSelecionada, filtros.empresas]);
+  }, [isEmpresa, dashboard, empresaSelecionada, filtros.empresas]);
 
   const detalhes = useMemo(() => {
     const rankingEmpresas = dashboard?.rankingEmpresas || [];
@@ -753,7 +767,10 @@ const Dashboard = () => {
         <main className="p-5 lg:p-8">
           <header className="mb-8 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
             <div>
-              <h1 className="text-3xl font-bold text-text-dark">
+              <h1
+                className="text-3xl font-bold text-text-dark"
+                style={{ fontFamily: "'Poppins', sans-serif" }}
+              >
                 {isPainelCannoli ? 'Painel Global Cannoli' : 'Painel da Empresa'}
               </h1>
 
@@ -871,7 +888,7 @@ const Dashboard = () => {
             </section>
           )}
 
-          {!loading && !erro && isPainelCannoli && dashboard && (
+          {!loading && !erro && dashboard && (
             <>
               <section className="bg-white rounded-2xl shadow-sm p-6 mb-6 border border-orange/10">
                 <div className="flex items-center gap-2 mb-5">
@@ -881,10 +898,12 @@ const Dashboard = () => {
 
                   <div>
                     <h2 className="text-xl font-bold text-text-dark">
-                      Filtros globais
+                      {isPainelCannoli ? 'Filtros globais' : 'Filtros da empresa'}
                     </h2>
                     <p className="text-sm text-gray-500">
-                      Os filtros recalculam a visão global usando o motor Python do dashboard.
+                      {isPainelCannoli
+                        ? 'Os filtros recalculam a visão global usando o motor Python do dashboard.'
+                        : 'Os filtros recalculam apenas os dados da empresa logada.'}
                     </p>
                   </div>
                 </div>
@@ -908,23 +927,25 @@ const Dashboard = () => {
                     </select>
                   </div>
 
-                  <div>
-                    <label className="text-xs font-semibold text-gray-500">
-                      Empresa
-                    </label>
-                    <select
-                      value={empresaSelecionada}
-                      onChange={(e) => setEmpresaSelecionada(e.target.value)}
-                      className="mt-2 w-full border border-orange/10 rounded-xl px-4 py-3 bg-white text-sm outline-none focus:border-orange"
-                    >
-                      <option value="todas">Todas as empresas</option>
-                      {filtros.empresas?.map((empresa) => (
-                        <option key={empresa.id} value={empresa.id}>
-                          {empresa.nome}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
+                  {isPainelCannoli && (
+                    <div>
+                      <label className="text-xs font-semibold text-gray-500">
+                        Empresa
+                      </label>
+                      <select
+                        value={empresaSelecionada}
+                        onChange={(e) => setEmpresaSelecionada(e.target.value)}
+                        className="mt-2 w-full border border-orange/10 rounded-xl px-4 py-3 bg-white text-sm outline-none focus:border-orange"
+                      >
+                        <option value="todas">Todas as empresas</option>
+                        {filtros.empresas?.map((empresa) => (
+                          <option key={empresa.id} value={empresa.id}>
+                            {empresa.nome}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  )}
 
                   <div>
                     <label className="text-xs font-semibold text-gray-500">
@@ -1259,51 +1280,35 @@ const Dashboard = () => {
                 </CardGrafico>
 
                 <CardGrafico
-                  titulo="Pedidos por mês"
-                  descricao="Série temporal comparando pedidos do período atual com o período anterior e a variação percentual."
+                  titulo="Ticket médio por mês"
+                  descricao="Evolução mensal do ticket médio dentro da visão atual."
                 >
                   <ResponsiveContainer width="100%" height="100%">
-                    <ComposedChart data={seriePedidosComparativa}>
+                    <AreaChart data={graficos.ticketMedioPorMes || []}>
+                      <defs>
+                        <linearGradient id="ticketMedioGradient" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="5%" stopColor="#f26322" stopOpacity={0.35} />
+                          <stop offset="95%" stopColor="#f26322" stopOpacity={0.02} />
+                        </linearGradient>
+                      </defs>
                       <CartesianGrid strokeDasharray="3 3" stroke="#eee" />
                       <XAxis dataKey="periodo" tick={{ fontSize: 12 }} />
                       <YAxis
-                        yAxisId="valor"
                         tick={{ fontSize: 12 }}
-                        tickFormatter={(value) => formatarNumero(value)}
+                        tickFormatter={(value) => formatarMoeda(value)}
                       />
-                      <YAxis
-                        yAxisId="percentual"
-                        orientation="right"
-                        tick={{ fontSize: 12 }}
-                        tickFormatter={(value) => `${Number(value || 0).toFixed(0)}%`}
-                      />
-                      <Tooltip content={<TooltipSerieTemporal tipo="numero" />} />
+                      <Tooltip formatter={(value) => formatarMoeda(value)} />
                       <Legend />
-                      <ReferenceLine yAxisId="percentual" y={0} stroke="#999" strokeDasharray="3 3" />
-                      <Bar
-                        yAxisId="valor"
-                        dataKey="anterior"
-                        name="Período anterior"
-                        fill="#ffb088"
-                        radius={[8, 8, 0, 0]}
-                      />
-                      <Bar
-                        yAxisId="valor"
-                        dataKey="atual"
-                        name="Período atual"
-                        fill="#f26322"
-                        radius={[8, 8, 0, 0]}
-                      />
-                      <Line
-                        yAxisId="percentual"
+                      <Area
                         type="monotone"
-                        dataKey="variacaoPercentual"
-                        name="Variação %"
-                        stroke="#d9480f"
+                        dataKey="ticketMedio"
+                        name="Ticket médio"
+                        stroke="#f26322"
                         strokeWidth={3}
+                        fill="url(#ticketMedioGradient)"
                         dot={{ r: 4 }}
                       />
-                    </ComposedChart>
+                    </AreaChart>
                   </ResponsiveContainer>
                 </CardGrafico>
               </section>
@@ -1422,7 +1427,7 @@ const Dashboard = () => {
                 <div className="xl:col-span-2 bg-white rounded-2xl shadow-sm p-6 border border-orange/10">
                   <div className="mb-6">
                     <h2 className="text-xl font-bold text-text-dark">
-                      Top empresas por receita
+                      {isPainelCannoli ? 'Top empresas por receita' : 'Receita da empresa'}
                     </h2>
                     <p className="text-sm text-gray-500 mt-1">
                       Empresas com maior faturamento dentro da visão atual.
@@ -1584,14 +1589,14 @@ const Dashboard = () => {
             </>
           )}
 
-          {!loading && !erro && !isPainelCannoli && (
+          {!loading && !erro && !dashboard && !isPainelCannoli && (
             <section className="bg-white rounded-2xl shadow-sm p-8 border border-orange/10">
               <h2 className="text-xl font-bold text-text-dark">
                 Dashboard da empresa
               </h2>
 
               <p className="text-sm text-gray-500 mt-3 max-w-2xl">
-                O painel da empresa será configurado na próxima etapa, filtrando os dados somente para a empresa logada.
+                Nenhum dado encontrado para a empresa logada.
               </p>
             </section>
           )}

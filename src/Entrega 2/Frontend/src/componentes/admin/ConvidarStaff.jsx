@@ -18,6 +18,10 @@ const ConvidarStaff = () => {
   const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
   const token = localStorage.getItem('token');
 
+  const fontePoppins = {
+    fontFamily: "'Poppins', sans-serif"
+  };
+
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
   };
@@ -122,13 +126,22 @@ const ConvidarStaff = () => {
         </button>
 
         <main className="p-5 lg:p-8">
-          <div className="flex items-center justify-between mb-6">
+          <div
+            className="flex items-center justify-between mb-6"
+            style={fontePoppins}
+          >
             <div>
-              <h1 className="text-3xl font-bold text-text-dark">
+              <h1
+                className="text-3xl font-bold text-text-dark"
+                style={fontePoppins}
+              >
                 Convidar colaborador Cannoli
               </h1>
 
-              <p className="text-sm text-gray-500 mt-2">
+              <p
+                className="text-sm text-gray-500 mt-2"
+                style={fontePoppins}
+              >
                 Envie um código de convite para um funcionário interno acessar o painel global da Cannoli.
               </p>
             </div>
@@ -136,6 +149,7 @@ const ConvidarStaff = () => {
             <button
               onClick={() => navigate('/dashboard')}
               className="bg-orange text-white px-5 py-3 rounded-xl font-medium hover:bg-orange-dark transition-colors"
+              style={fontePoppins}
             >
               Voltar
             </button>

@@ -4,39 +4,35 @@ import React from 'react';
 const integracoesData = [
   {
     nome: '99Food',
-    classe: 'text-[#E8253A]',
-    conteudo: (
-      <>
-        <span>99</span><span className="text-base opacity-80">Food</span>
-      </>
-    )
+    logo: 'https://damedosassados.com.br/wp-content/uploads/2021/03/99-food-logo-1536x360-1.png',
+    altura: 'max-h-7',
+    largura: 'max-w-[105px]'
   },
   {
     nome: 'iFood',
-    classe: 'text-[#EA1D2C]',
-    conteudo: (
-      <>
-        <span className="text-[#EA1D2C] italic font-black">i</span>
-        <span className="text-[#EA1D2C] font-black">food</span>
-      </>
-    )
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/IFood_logo.svg/3840px-IFood_logo.svg.png',
+    altura: 'max-h-7',
+    largura: 'max-w-[95px]'
   },
   {
     nome: 'Linx',
-    classe: 'text-[#0065B3] font-bold tracking-[-1px]',
-    conteudo: (
-      <>
-        Linx<span className="text-orange text-[22px] leading-none align-middle">✦</span>
-      </>
-    )
+    logo: 'https://e7.pngegg.com/pngimages/925/291/png-clipart-linx-computer-software-management-business-enterprise-resource-planning-brazil-angle-company.png',
+    altura: 'max-h-8',
+    largura: 'max-w-[105px]'
   }
 ];
 
 // Componente do card de integração
-const CardIntegracao = ({ children, classe }) => {
+const CardIntegracao = ({ nome, logo, altura, largura }) => {
   return (
-    <div className={`flex items-center justify-center px-7 py-4 bg-white border border-border rounded-xl text-xl font-extrabold text-text-dark min-w-[120px] transition hover:shadow-md ${classe}`}>
-      {children}
+    <div className="flex items-center justify-center px-7 py-4 bg-white border border-border rounded-xl min-w-[120px] h-[62px] transition hover:shadow-md">
+      <img
+        src={logo}
+        alt={`Logo ${nome}`}
+        title={nome}
+        className={`${altura} ${largura} object-contain`}
+        loading="lazy"
+      />
     </div>
   );
 };
@@ -59,9 +55,13 @@ const Integracoes = () => {
         {/* Logos das integrações */}
         <div className="flex flex-wrap items-center justify-center gap-12 mt-10">
           {integracoesData.map((integracao, index) => (
-            <CardIntegracao key={index} classe={integracao.classe}>
-              {integracao.conteudo}
-            </CardIntegracao>
+            <CardIntegracao
+              key={index}
+              nome={integracao.nome}
+              logo={integracao.logo}
+              altura={integracao.altura}
+              largura={integracao.largura}
+            />
           ))}
         </div>
       </div>

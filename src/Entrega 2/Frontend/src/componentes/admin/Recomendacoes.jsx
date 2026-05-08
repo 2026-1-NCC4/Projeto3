@@ -1,6 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Sidebar from '../dashboard/Sidebar';
-import { buscarAdminDashboard } from './services/adminDashboardService';
+import {
+  buscarAdminDashboard,
+  buscarCompanyDashboard
+} from './services/adminDashboardService';
 import FiltrosDashboard from './shared/FiltrosDashboard';
 
 const FILTROS_PADRAO = {
@@ -34,7 +37,7 @@ const PrioridadeBadge = ({ prioridade }) => {
         : 'bg-green-100 text-green-700 border-green-200';
 
   return (
-    <span className={`px-3 py-1 rounded-full text-xs font-semibold border ${classe}`}>
+    <span className={`inline-flex px-3 py-1 rounded-full text-xs font-semibold border whitespace-nowrap ${classe}`}>
       {prioridade || 'baixa'}
     </span>
   );
@@ -50,7 +53,7 @@ const TipoBadge = ({ tipo }) => {
   };
 
   return (
-    <span className="px-3 py-1 rounded-full text-xs font-semibold bg-orange/10 text-orange border border-orange/20">
+    <span className="inline-flex px-3 py-1 rounded-full text-xs font-semibold bg-orange/10 text-orange border border-orange/20 whitespace-nowrap">
       {labels[tipo] || tipo || 'Recomendação'}
     </span>
   );
@@ -58,15 +61,17 @@ const TipoBadge = ({ tipo }) => {
 
 const CardResumo = ({ titulo, valor, descricao }) => {
   return (
-    <div className="bg-white rounded-2xl p-6 border border-orange/10 shadow-sm">
-      <p className="text-sm text-gray-500">{titulo}</p>
+    <div className="bg-white rounded-2xl p-5 sm:p-6 border border-orange/10 shadow-sm min-w-0">
+      <p className="text-sm text-gray-500 break-words">
+        {titulo}
+      </p>
 
-      <h2 className="text-3xl font-bold mt-2 text-text-dark">
+      <h2 className="text-2xl sm:text-3xl font-bold mt-2 text-text-dark break-words">
         {valor}
       </h2>
 
       {descricao && (
-        <p className="text-xs text-gray-400 mt-2">
+        <p className="text-xs text-gray-400 mt-2 leading-relaxed">
           {descricao}
         </p>
       )}
@@ -81,6 +86,13 @@ const Recomendacoes = () => {
   const [erro, setErro] = useState('');
   const [filtros, setFiltros] = useState(FILTROS_PADRAO);
 
+  const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
+  const isEmpresa = usuario.role === 'empresa';
+
+  const fontePoppins = {
+    fontFamily: "'Poppins', sans-serif"
+  };
+
   const filtrosRef = useRef(FILTROS_PADRAO);
 
   useEffect(() => {
@@ -92,7 +104,10 @@ const Recomendacoes = () => {
       setLoading(true);
       setErro('');
 
-      const data = await buscarAdminDashboard(filtrosAplicados);
+      const data = isEmpresa
+        ? await buscarCompanyDashboard(filtrosAplicados)
+        : await buscarAdminDashboard(filtrosAplicados);
+
       setDashboard(data);
     } catch (error) {
       setErro(error.message);
@@ -132,47 +147,71 @@ const Recomendacoes = () => {
     <div className="flex min-h-screen bg-cream">
       <Sidebar isOpen={sidebarOpen} toggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
 
-      <div className="flex-1 lg:ml-72">
+      <div className="flex-1 w-full min-w-0 lg:ml-72">
         <button
+          type="button"
           onClick={() => setSidebarOpen(!sidebarOpen)}
           className="lg:hidden fixed top-4 left-4 z-50 bg-orange p-2 rounded-lg shadow-lg"
+          aria-label="Abrir menu"
         >
           <svg className="w-6 h-6 fill-white" viewBox="0 0 24 24">
             <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
           </svg>
         </button>
 
-        <main className="p-5 lg:p-8">
-          <header className="mb-8 flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
-            <div>
-              <h1 className="text-3xl font-bold text-text-dark">
+        <main className="w-full max-w-[1600px] mx-auto p-4 sm:p-5 lg:p-8 pt-20 lg:pt-8">
+          <header
+            className="mb-8 flex flex-col xl:flex-row xl:items-start xl:justify-between gap-4"
+            style={fontePoppins}
+          >
+            <div className="min-w-0">
+              <h1
+                className="text-2xl sm:text-3xl font-bold text-text-dark leading-tight"
+                style={fontePoppins}
+              >
                 Recomendações
               </h1>
 
-              <p className="text-sm text-gray-500 mt-2 max-w-3xl">
-                Sugestões estratégicas de campanha com justificativa baseada em dados,
-                ROI simulado, intervalo de confiança e teste A/B simulado.
+              <p
+                className="text-sm text-gray-500 mt-2 max-w-3xl leading-relaxed"
+                style={fontePoppins}
+              >
+                {isEmpresa
+                  ? 'Sugestões estratégicas de campanha baseadas nos dados da sua empresa.'
+                  : 'Sugestões estratégicas de campanha com justificativa baseada em dados, ROI simulado, intervalo de confiança e teste A/B simulado.'}
               </p>
+
+              {isEmpresa && (
+                <div className="flex flex-wrap items-center gap-2 mt-3">
+                  <span
+                    className="px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-semibold"
+                    style={fontePoppins}
+                  >
+                    Visão filtrada pela empresa logada
+                  </span>
+                </div>
+              )}
             </div>
 
             <button
               type="button"
               onClick={() => carregarDados({ filtrosAplicados: filtrosRef.current })}
               disabled={loading}
-              className="px-5 py-3 rounded-xl bg-orange text-white font-semibold hover:bg-orange-dark transition disabled:opacity-50"
+              className="w-full sm:w-auto px-5 py-3 rounded-xl bg-orange text-white font-semibold hover:bg-orange-dark transition disabled:opacity-50"
+              style={fontePoppins}
             >
               {loading ? 'Atualizando...' : 'Atualizar recomendações'}
             </button>
           </header>
 
           {loading && (
-            <section className="bg-white rounded-2xl p-8 border border-orange/10">
+            <section className="bg-white rounded-2xl p-6 sm:p-8 border border-orange/10">
               Carregando recomendações...
             </section>
           )}
 
           {erro && (
-            <section className="bg-red-100 rounded-2xl p-6 border border-red-300 text-red-700">
+            <section className="bg-red-100 rounded-2xl p-5 sm:p-6 border border-red-300 text-red-700">
               {erro}
             </section>
           )}
@@ -186,11 +225,16 @@ const Recomendacoes = () => {
                 onAplicar={aplicarFiltros}
                 onLimpar={limparFiltros}
                 loading={loading}
-                titulo="Filtros da aba"
-                descricao="Use estes filtros para recalcular as recomendações exibidas nesta visão."
+                esconderEmpresa={isEmpresa}
+                titulo={isEmpresa ? 'Filtros da empresa' : 'Filtros da aba'}
+                descricao={
+                  isEmpresa
+                    ? 'Use estes filtros para recalcular apenas as recomendações da sua empresa.'
+                    : 'Use estes filtros para recalcular as recomendações exibidas nesta visão.'
+                }
               />
 
-              <section className="grid grid-cols-1 md:grid-cols-4 gap-5 mb-6">
+              <section className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-5 mb-6">
                 <CardResumo
                   titulo="Total de recomendações"
                   valor={formatarNumero(resumo.totalRecomendacoes)}
@@ -216,21 +260,21 @@ const Recomendacoes = () => {
                 />
               </section>
 
-              <section className="grid grid-cols-1 xl:grid-cols-3 gap-6 mb-6">
-                <div className="bg-white rounded-2xl p-6 border border-orange/10 shadow-sm xl:col-span-2">
+              <section className="grid grid-cols-1 2xl:grid-cols-3 gap-5 sm:gap-6 mb-6">
+                <div className="bg-white rounded-2xl p-5 sm:p-6 border border-orange/10 shadow-sm 2xl:col-span-2 min-w-0">
                   <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 mb-5">
-                    <div>
-                      <h2 className="text-xl font-bold">
+                    <div className="min-w-0">
+                      <h2 className="text-lg sm:text-xl font-bold">
                         Sugestões de campanha
                       </h2>
 
-                      <p className="text-sm text-gray-500 mt-1">
+                      <p className="text-sm text-gray-500 mt-1 leading-relaxed">
                         Recomendações priorizadas com base em recorrência, ticket médio,
                         conversão, receita e performance histórica.
                       </p>
                     </div>
 
-                    <span className="text-xs bg-orange/10 text-orange font-semibold px-3 py-2 rounded-full">
+                    <span className="w-fit text-xs bg-orange/10 text-orange font-semibold px-3 py-2 rounded-full whitespace-nowrap">
                       {formatarNumero(sugestoes.length)} sugestões
                     </span>
                   </div>
@@ -239,89 +283,89 @@ const Recomendacoes = () => {
                     {sugestoes.map((item, index) => (
                       <div
                         key={`${item.empresa}-${item.tipo}-${index}`}
-                        className="rounded-2xl border border-orange/10 bg-orange/5 p-5"
+                        className="rounded-2xl border border-orange/10 bg-orange/5 p-4 sm:p-5 min-w-0"
                       >
-                        <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-3 mb-4">
-                          <div>
+                        <div className="flex flex-col xl:flex-row xl:items-start xl:justify-between gap-4 mb-4">
+                          <div className="min-w-0">
                             <div className="flex flex-wrap items-center gap-2 mb-2">
                               <PrioridadeBadge prioridade={item.prioridade} />
                               <TipoBadge tipo={item.tipo} />
                             </div>
 
-                            <h3 className="text-lg font-bold text-text-dark">
+                            <h3 className="text-base sm:text-lg font-bold text-text-dark leading-snug break-words">
                               {item.campanhaRecomendada}
                             </h3>
 
-                            <p className="text-sm text-gray-500 mt-1">
+                            <p className="text-sm text-gray-500 mt-1 break-words">
                               Empresa: <strong>{item.empresa}</strong>
                             </p>
 
                             {item.campanhaReferencia && (
-                              <p className="text-xs text-gray-400 mt-1">
+                              <p className="text-xs text-gray-400 mt-1 break-words">
                                 Campanha referência: {item.campanhaReferencia}
                               </p>
                             )}
                           </div>
 
-                          <div className="grid grid-cols-2 gap-3 min-w-[240px]">
-                            <div className="rounded-xl bg-white border border-orange/10 p-3">
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full xl:w-[280px] shrink-0">
+                            <div className="rounded-xl bg-white border border-orange/10 p-3 min-w-0">
                               <p className="text-xs text-gray-500">ROI simulado</p>
-                              <p className="font-bold text-orange mt-1">
+                              <p className="font-bold text-orange mt-1 break-words">
                                 {formatarPercentual(item.roiSimulado)}
                               </p>
                             </div>
 
-                            <div className="rounded-xl bg-white border border-orange/10 p-3">
+                            <div className="rounded-xl bg-white border border-orange/10 p-3 min-w-0">
                               <p className="text-xs text-gray-500">Receita potencial</p>
-                              <p className="font-bold text-orange mt-1">
+                              <p className="font-bold text-orange mt-1 break-words">
                                 {formatarMoeda(item.receitaPotencial)}
                               </p>
                             </div>
                           </div>
                         </div>
 
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                          <div>
+                        <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
+                          <div className="min-w-0">
                             <p className="text-xs font-semibold text-gray-500 uppercase">
                               Justificativa
                             </p>
 
-                            <p className="text-sm text-gray-700 mt-2 leading-relaxed">
+                            <p className="text-sm text-gray-700 mt-2 leading-relaxed break-words">
                               {item.justificativa}
                             </p>
                           </div>
 
-                          <div>
+                          <div className="min-w-0">
                             <p className="text-xs font-semibold text-gray-500 uppercase">
                               Ação sugerida
                             </p>
 
-                            <p className="text-sm text-gray-700 mt-2 leading-relaxed">
+                            <p className="text-sm text-gray-700 mt-2 leading-relaxed break-words">
                               {item.acaoSugerida}
                             </p>
                           </div>
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-5">
-                          <div className="rounded-xl bg-white border border-orange/10 p-3">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3 mt-5">
+                          <div className="rounded-xl bg-white border border-orange/10 p-3 min-w-0">
                             <p className="text-xs text-gray-500">Métrica base</p>
-                            <p className="font-semibold mt-1">
+                            <p className="font-semibold mt-1 break-words">
                               {item.metricaBase || '-'}
                             </p>
                           </div>
 
-                          <div className="rounded-xl bg-white border border-orange/10 p-3">
+                          <div className="rounded-xl bg-white border border-orange/10 p-3 min-w-0">
                             <p className="text-xs text-gray-500">Valor da métrica</p>
-                            <p className="font-semibold mt-1">
+                            <p className="font-semibold mt-1 break-words">
                               {typeof item.valorMetrica === 'number'
                                 ? formatarPercentual(item.valorMetrica)
                                 : item.valorMetrica || '-'}
                             </p>
                           </div>
 
-                          <div className="rounded-xl bg-white border border-orange/10 p-3">
+                          <div className="rounded-xl bg-white border border-orange/10 p-3 min-w-0 sm:col-span-2 xl:col-span-1">
                             <p className="text-xs text-gray-500">IC 95%</p>
-                            <p className="font-semibold mt-1">
+                            <p className="font-semibold mt-1 break-words">
                               {formatarPercentual(item.intervaloConfianca95?.inferior)} a{' '}
                               {formatarPercentual(item.intervaloConfianca95?.superior)}
                             </p>
@@ -338,9 +382,9 @@ const Recomendacoes = () => {
                   </div>
                 </div>
 
-                <aside className="space-y-6">
-                  <div className="bg-white rounded-2xl p-6 border border-orange/10 shadow-sm">
-                    <h2 className="text-xl font-bold mb-4">
+                <aside className="space-y-5 sm:space-y-6 min-w-0">
+                  <div className="bg-white rounded-2xl p-5 sm:p-6 border border-orange/10 shadow-sm">
+                    <h2 className="text-lg sm:text-xl font-bold mb-4">
                       Prioridades críticas
                     </h2>
 
@@ -348,17 +392,17 @@ const Recomendacoes = () => {
                       {sugestoesAltaPrioridade.slice(0, 6).map((item, index) => (
                         <div
                           key={`${item.empresa}-${index}`}
-                          className="rounded-xl bg-red-50 border border-red-100 p-4"
+                          className="rounded-xl bg-red-50 border border-red-100 p-4 min-w-0"
                         >
-                          <div className="flex items-center justify-between gap-3">
-                            <p className="font-bold text-sm">
+                          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                            <p className="font-bold text-sm break-words">
                               {item.empresa}
                             </p>
 
                             <PrioridadeBadge prioridade={item.prioridade} />
                           </div>
 
-                          <p className="text-xs text-red-700 mt-2">
+                          <p className="text-xs text-red-700 mt-2 break-words">
                             {item.campanhaRecomendada}
                           </p>
                         </div>
@@ -372,8 +416,8 @@ const Recomendacoes = () => {
                     </div>
                   </div>
 
-                  <div className="bg-white rounded-2xl p-6 border border-orange/10 shadow-sm">
-                    <h2 className="text-xl font-bold mb-4">
+                  <div className="bg-white rounded-2xl p-5 sm:p-6 border border-orange/10 shadow-sm">
+                    <h2 className="text-lg sm:text-xl font-bold mb-4">
                       Insights estratégicos
                     </h2>
 
@@ -381,21 +425,21 @@ const Recomendacoes = () => {
                       {insights.map((insight, index) => (
                         <div
                           key={`${insight.tipo}-${index}`}
-                          className="rounded-xl bg-gray-50 border border-gray-100 p-4"
+                          className="rounded-xl bg-gray-50 border border-gray-100 p-4 min-w-0"
                         >
-                          <div className="flex items-center justify-between gap-3">
-                            <p className="font-bold text-sm">
+                          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                            <p className="font-bold text-sm break-words">
                               {insight.titulo}
                             </p>
 
                             <PrioridadeBadge prioridade={insight.prioridade} />
                           </div>
 
-                          <p className="text-sm text-gray-600 mt-2">
+                          <p className="text-sm text-gray-600 mt-2 leading-relaxed break-words">
                             {insight.mensagem}
                           </p>
 
-                          <p className="text-xs text-orange font-semibold mt-2">
+                          <p className="text-xs text-orange font-semibold mt-2 break-words">
                             {insight.acaoSugerida}
                           </p>
                         </div>
@@ -411,20 +455,20 @@ const Recomendacoes = () => {
                 </aside>
               </section>
 
-              <section className="bg-white rounded-2xl p-6 border border-orange/10 shadow-sm mb-6">
+              <section className="bg-white rounded-2xl p-5 sm:p-6 border border-orange/10 shadow-sm mb-6">
                 <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 mb-5">
-                  <div>
-                    <h2 className="text-xl font-bold">
+                  <div className="min-w-0">
+                    <h2 className="text-lg sm:text-xl font-bold">
                       Teste A/B simulado
                     </h2>
 
-                    <p className="text-sm text-gray-500 mt-1">
+                    <p className="text-sm text-gray-500 mt-1 leading-relaxed">
                       Comparativo inferencial simples entre campanhas com base em mensagens,
                       pedidos convertidos, conversão e intervalo de confiança.
                     </p>
                   </div>
 
-                  <span className="text-xs bg-orange/10 text-orange font-semibold px-3 py-2 rounded-full">
+                  <span className="w-fit text-xs bg-orange/10 text-orange font-semibold px-3 py-2 rounded-full whitespace-nowrap">
                     {formatarNumero(resumo.totalTestesAB)} teste(s)
                   </span>
                 </div>
@@ -433,52 +477,52 @@ const Recomendacoes = () => {
                   {testesAB.map((teste, index) => (
                     <div
                       key={`${teste.campanhaA}-${teste.campanhaB}-${index}`}
-                      className="rounded-2xl border border-orange/10 p-5"
+                      className="rounded-2xl border border-orange/10 p-4 sm:p-5 min-w-0"
                     >
-                      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-5">
-                        <div>
-                          <h3 className="text-lg font-bold text-text-dark">
+                      <div className="flex flex-col xl:flex-row xl:items-center xl:justify-between gap-4 mb-5">
+                        <div className="min-w-0">
+                          <h3 className="text-base sm:text-lg font-bold text-text-dark leading-snug break-words">
                             {teste.campanhaA} vs {teste.campanhaB}
                           </h3>
 
-                          <p className="text-sm text-gray-500 mt-1">
+                          <p className="text-sm text-gray-500 mt-1 break-words">
                             Empresa: {teste.empresa}
                           </p>
                         </div>
 
-                        <div className="rounded-xl bg-green-100 border border-green-200 px-4 py-3">
+                        <div className="rounded-xl bg-green-100 border border-green-200 px-4 py-3 w-full sm:w-fit shrink-0">
                           <p className="text-xs text-green-700">Vencedora simulada</p>
-                          <p className="font-bold text-green-800 mt-1">
+                          <p className="font-bold text-green-800 mt-1 break-words">
                             {teste.vencedora}
                           </p>
                         </div>
                       </div>
 
-                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                        <div className="rounded-2xl bg-gray-50 border border-gray-100 p-5">
+                      <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
+                        <div className="rounded-2xl bg-gray-50 border border-gray-100 p-4 sm:p-5 min-w-0">
                           <h4 className="font-bold mb-3">
                             Campanha A
                           </h4>
 
-                          <div className="grid grid-cols-2 gap-3 text-sm">
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
                             <div>
                               <p className="text-gray-500">Mensagens</p>
-                              <p className="font-semibold">{formatarNumero(teste.mensagensA)}</p>
+                              <p className="font-semibold break-words">{formatarNumero(teste.mensagensA)}</p>
                             </div>
 
                             <div>
                               <p className="text-gray-500">Pedidos</p>
-                              <p className="font-semibold">{formatarNumero(teste.pedidosA)}</p>
+                              <p className="font-semibold break-words">{formatarNumero(teste.pedidosA)}</p>
                             </div>
 
                             <div>
                               <p className="text-gray-500">Conversão</p>
-                              <p className="font-semibold">{formatarPercentual(teste.conversaoA)}</p>
+                              <p className="font-semibold break-words">{formatarPercentual(teste.conversaoA)}</p>
                             </div>
 
                             <div>
                               <p className="text-gray-500">IC 95%</p>
-                              <p className="font-semibold">
+                              <p className="font-semibold break-words">
                                 {formatarPercentual(teste.intervaloConfiancaA95?.inferior)} a{' '}
                                 {formatarPercentual(teste.intervaloConfiancaA95?.superior)}
                               </p>
@@ -486,30 +530,30 @@ const Recomendacoes = () => {
                           </div>
                         </div>
 
-                        <div className="rounded-2xl bg-gray-50 border border-gray-100 p-5">
+                        <div className="rounded-2xl bg-gray-50 border border-gray-100 p-4 sm:p-5 min-w-0">
                           <h4 className="font-bold mb-3">
                             Campanha B
                           </h4>
 
-                          <div className="grid grid-cols-2 gap-3 text-sm">
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
                             <div>
                               <p className="text-gray-500">Mensagens</p>
-                              <p className="font-semibold">{formatarNumero(teste.mensagensB)}</p>
+                              <p className="font-semibold break-words">{formatarNumero(teste.mensagensB)}</p>
                             </div>
 
                             <div>
                               <p className="text-gray-500">Pedidos</p>
-                              <p className="font-semibold">{formatarNumero(teste.pedidosB)}</p>
+                              <p className="font-semibold break-words">{formatarNumero(teste.pedidosB)}</p>
                             </div>
 
                             <div>
                               <p className="text-gray-500">Conversão</p>
-                              <p className="font-semibold">{formatarPercentual(teste.conversaoB)}</p>
+                              <p className="font-semibold break-words">{formatarPercentual(teste.conversaoB)}</p>
                             </div>
 
                             <div>
                               <p className="text-gray-500">IC 95%</p>
-                              <p className="font-semibold">
+                              <p className="font-semibold break-words">
                                 {formatarPercentual(teste.intervaloConfiancaB95?.inferior)} a{' '}
                                 {formatarPercentual(teste.intervaloConfiancaB95?.superior)}
                               </p>
@@ -518,7 +562,7 @@ const Recomendacoes = () => {
                         </div>
                       </div>
 
-                      <p className="text-sm text-gray-700 mt-4">
+                      <p className="text-sm text-gray-700 mt-4 leading-relaxed break-words">
                         {teste.conclusao}
                       </p>
                     </div>
@@ -532,13 +576,13 @@ const Recomendacoes = () => {
                 </div>
               </section>
 
-              <section className="bg-white rounded-2xl p-6 border border-orange/10 shadow-sm">
-                <h2 className="text-xl font-bold mb-4">
+              <section className="bg-white rounded-2xl p-5 sm:p-6 border border-orange/10 shadow-sm">
+                <h2 className="text-lg sm:text-xl font-bold mb-4">
                   Detalhamento das recomendações
                 </h2>
 
-                <div className="overflow-x-auto">
-                  <table className="w-full text-sm">
+                <div className="overflow-x-auto -mx-5 sm:-mx-6 px-5 sm:px-6">
+                  <table className="w-full min-w-[1050px] text-sm">
                     <thead>
                       <tr className="border-b text-left text-gray-500">
                         <th className="py-3 pr-4">Empresa</th>

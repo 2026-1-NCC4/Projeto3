@@ -1,7 +1,11 @@
 const API_URL = 'http://localhost:3001/api';
 
+function getToken() {
+  return localStorage.getItem('token') || localStorage.getItem('authToken');
+}
+
 export async function buscarAdminDashboard(filtros = {}) {
-  const token = localStorage.getItem('token') || localStorage.getItem('authToken');
+  const token = getToken();
 
   const params = new URLSearchParams({
     periodo: filtros.periodo || 'todos',
@@ -22,6 +26,32 @@ export async function buscarAdminDashboard(filtros = {}) {
 
   if (!response.ok) {
     throw new Error(data.message || 'Erro ao carregar dashboard administrativo.');
+  }
+
+  return data.data;
+}
+
+export async function buscarCompanyDashboard(filtros = {}) {
+  const token = getToken();
+
+  const params = new URLSearchParams({
+    periodo: filtros.periodo || 'todos',
+    canal: filtros.canal || 'todos',
+    tipoPedido: filtros.tipoPedido || 'todos'
+  });
+
+  const response = await fetch(`${API_URL}/company-dashboard?${params.toString()}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    }
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || 'Erro ao carregar dashboard da empresa.');
   }
 
   return data.data;

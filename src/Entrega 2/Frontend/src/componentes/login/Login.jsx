@@ -32,6 +32,7 @@ const Login = () => {
         type="button"
         onClick={() => navigate('/')}
         className="fixed top-5 left-5 z-50 flex items-center gap-2 rounded-xl bg-white/90 px-4 py-2 text-sm font-semibold text-orange shadow-md border border-orange/10 hover:bg-white hover:scale-105 transition"
+        style={{ fontFamily: "'Poppins', sans-serif" }}
         title="Voltar para a página inicial"
       >
         <svg
