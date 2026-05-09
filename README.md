@@ -235,15 +235,16 @@ Após iniciar, acesse o sistema pela URL exibida no terminal do frontend.
 ---
 
 ## 📋 Licença/License
-<a href="https://github.com/2026-1-NCC4/Projeto2">Cannolitsky</a> © 2026 by <a href="https://github.com/2026-1-NCC4/Projeto3">Cannolitsky</a> is licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a><img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="" style="max-width: 0.5em;max-height:0.5em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="" style="max-width: 0.5em;max-height:0.5em;margin-left: .2em;">
+<a href="https://github.com/2026-1-NCC4/Projeto2">TechSnack dev Team</a> © 2026 by <a href="https://github.com/2026-1-NCC4/Projeto3">TechSnack dev Team<</a> is licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a><img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="" style="max-width: 0.5em;max-height:0.5em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="" style="max-width: 0.5em;max-height:0.5em;margin-left: .2em;">
 
 ## 🎓 Referências
 
 Aqui estão as referências usadas no projeto.
 
-1. <https://github.com/iuricode/readme-template>
-2. <https://github.com/gabrieldejesus/readme-model>
-3. <https://chooser-beta.creativecommons.org/>
-4. <https://freesound.org/>
-5. <https://www.toptal.com/developers/gitignore>
-6. Músicas por: <a href="https://freesound.org/people/DaveJf/sounds/616544/"> DaveJf </a> e <a href="https://freesound.org/people/DRFX/sounds/338986/"> DRFX </a> ambas com Licença CC 0.
+1. Cannoli. Plataforma de CRM, fidelização e inteligência de dados para foodservice. Disponível em: <https://www.cannoli.food/>
+2. Nielsen Norman Group. *Dashboards: Making Charts and Graphs Easier to Understand*. Disponível em: <https://www.nngroup.com/articles/dashboards-preattentive/>
+3. Microsoft Learn. *Tips for designing a great Power BI dashboard*. Disponível em: <https://learn.microsoft.com/en-us/power-bi/create-reports/service-dashboards-design-tips>
+4. React. Documentação oficial. Disponível em: <https://react.dev/>
+5. Node.js. Documentação oficial. Disponível em: <https://nodejs.org/>
+6. MySQL. Documentação oficial. Disponível em: <https://www.mysql.com/>
+7. Pandas. Documentação oficial. Disponível em: <https://pandas.pydata.org/>
