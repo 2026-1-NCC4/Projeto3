@@ -1,7 +1,9 @@
 # FECAP - Fundação de Comércio Álvares Penteado
 
 <p align="center">
-<a href= "https://www.fecap.br/"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhZPrRa89Kma0ZZogxm0pi-tCn_TLKeHGVxywp-LXAFGR3B1DPouAJYHgKZGV0XTEf4AE&usqp=CAU" alt="FECAP - Fundação de Comércio Álvares Penteado" border="0"></a>
+  <a href="https://www.fecap.br/">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhZPrRa89Kma0ZZogxm0pi-tCn_TLKeHGVxywp-LXAFGR3B1DPouAJYHgKZGV0XTEf4AE&usqp=CAU" alt="FECAP - Fundação de Comércio Álvares Penteado" border="0">
+  </a>
 </p>
 
 # Dashboard de Indicadores Cannoli - TechSnack DevTeam
@@ -11,10 +13,8 @@
 ## Integrantes
 
 * **[Esther Oliveira Costa](https://www.linkedin.com/in/estherolvr/)**
-* **[Higor Luiz Fonceca dos Santos](https://www.linkedin.com/in/higor-fonseca-santos/)**
-* **[JoÃo Victor de Faria](https://www.linkedin.com/in/joaovictordefaria/)**
-
-
+* **[Higor Luiz Fonseca dos Santos](https://www.linkedin.com/in/higor-fonseca-santos/)**
+* **[João Victor de Faria](https://www.linkedin.com/in/joaovictordefaria/)**
 
 ## 📚 Professores Orientadores
 
@@ -24,38 +24,138 @@
 * **[Rodnil da Silva Moreira Lisboa](https://www.linkedin.com/in/professorrodnil/)**
 * **[Victor Bruno Alexander Rosetti de Quiroz](https://www.linkedin.com/in/victorbarq/)**
 
+---
 
+## 📌 Sobre o Projeto
 
+O **Dashboard de Indicadores Cannoli** é uma plataforma web desenvolvida para centralizar, processar e visualizar dados comerciais da Cannoli, transformando informações operacionais em indicadores estratégicos para tomada de decisão.
 
-Este projeto é uma plataforma de centralização e análise de dados desenvolvida para a Cannoli, projetada para transformar métricas complexas em insights visuais e acionáveis. O foco principal é otimizar a leitura de KPIs e agilizar a tomada de decisão operacional.
+A aplicação permite acompanhar métricas relacionadas a empresas, clientes, pedidos, campanhas, desempenho financeiro, recorrência, ticket médio, crescimento de receita e alertas estratégicos. O projeto também conta com uma API mock em tempo real, que simula variações positivas e negativas nos dados para atualizar os painéis automaticamente.
 
-Além da visualização intuitiva, a arquitetura foi desenhada priorizando a escalabilidade e a segurança, garantindo que a integridade dos dados seja mantida mesmo com o aumento do volume de informações processadas. Com uma estrutura modular e pronta para integração com múltiplas fontes, o dashboard não atua apenas como um espelho do passado, mas como uma ferramenta estratégica que permite identificar tendências, antecipar gargalos operacionais e refinar o fluxo de trabalho diário da empresa com precisão cirúrgica.
-<br>
+O objetivo principal é oferecer uma visão gerencial clara, visual e acionável, permitindo que usuários administrativos, colaboradores e empresas parceiras acompanhem seus principais KPIs de forma simples, responsiva e integrada.
 
+---
 
-## 🛠 Estrutura de pastas
+## 🚀 Principais Funcionalidades
 
--Raiz<br>
-|<br>
-|-->documentos<br>
-  &emsp;|-->Entrega 1<br>
-    &emsp;&emsp;|-->Análise Inferencial de Dados<br>
-    &emsp;&emsp;|-->Contabilida de e Finanças<br>
-    &emsp;&emsp;|-->Engenhariade Software e Arquitetura de Sistemas<br>
-  &emsp;|-->Entrega 2<br>
-    &emsp;&emsp;|-->Análise Inferencial de Dados<br>
-    &emsp;&emsp;|-->Contabilida de e Finanças<br>
-    &emsp;&emsp;|-->Engenhariade Software e Arquitetura de Sistemas<br>
-  &emsp;|Documentação.docx<br>
-|-->imagens<br>
-|-->src<br>
-  &emsp;|-->Entrega 1<br>
-    &emsp;&emsp;|-->Backend<br>
-    &emsp;&emsp;|-->Frontend<br>
-  &emsp;|-->Entrega 2<br>
-    &emsp;&emsp;|-->Backend<br>
-    &emsp;&emsp;|-->Frontend<br>
-|readme.md<br>
+* Dashboard global com visão consolidada da plataforma.
+* Painel administrativo com indicadores comerciais, operacionais e financeiros.
+* Visualização de empresas cadastradas.
+* Gestão e análise de clientes.
+* Análise de campanhas e desempenho por canal.
+* Indicadores financeiros, como receita total, ticket médio, margem simulada, descontos e caixa estimado.
+* Recomendações estratégicas baseadas em recorrência, ticket médio, conversão e desempenho de campanhas.
+* Segmentação de clientes por comportamento de compra.
+* Análise RFM simplificada.
+* Exportação de detalhamentos em **CSV** e **PDF**.
+* API mock em tempo real para simulação de aumento e redução de indicadores.
+* Processamento de dados via Python.
+* Integração com banco de dados MySQL/MariaDB.
+* Sistema de login com perfis de acesso.
+* Convites para empresas e colaboradores.
+* Interface responsiva desenvolvida em React.
+
+---
+
+## 🧩 Tecnologias Utilizadas
+
+### Frontend
+
+* React
+* Vite
+* JavaScript
+* Tailwind CSS
+* Recharts
+* Lucide React
+* jsPDF
+* jsPDF AutoTable
+
+### Backend
+
+* Node.js
+* Express
+* MySQL/MariaDB
+* JWT
+* Bcrypt
+* Nodemon
+
+### Processamento de Dados
+
+* Python
+* Pandas
+* NumPy
+
+### Banco de Dados
+
+* MySQL/MariaDB
+* MySQL Workbench
+* XAMPP
+
+---
+
+## 🛠 Estrutura de Pastas
+
+```txt
+Raiz
+|
+|-- documentos
+|   |-- Entrega 1
+|   |   |-- Análise Inferencial de Dados
+|   |   |-- Contabilidade e Finanças
+|   |   |-- Engenharia de Software e Arquitetura de Sistemas
+|   |
+|   |-- Entrega 2
+|       |-- Análise Inferencial de Dados
+|       |-- Contabilidade e Finanças
+|       |-- Engenharia de Software e Arquitetura de Sistemas
+|
+|-- imagens
+|
+|-- src
+|   |-- Entrega 1
+|   |   |-- Backend
+|   |   |-- Frontend
+|   |
+|   |-- Entrega 2
+|       |-- Backend
+|       |   |-- config
+|       |   |-- controllers
+|       |   |-- data
+|       |   |-- database
+|       |   |-- middlewares
+|       |   |-- models
+|       |   |-- python
+|       |   |   |-- painel_admin
+|       |   |       |-- __init__.py
+|       |   |       |-- builder.py
+|       |   |       |-- cli.py
+|       |   |       |-- config.py
+|       |   |       |-- filters.py
+|       |   |       |-- recommendations.py
+|       |   |       |-- rfm.py
+|       |   |       |-- utils.py
+|       |   |-- routes
+|       |   |-- services
+|       |   |-- utils
+|       |   |-- app.js
+|       |   |-- server.js
+|       |   |-- package.json
+|       |
+|       |-- Frontend
+|           |-- public
+|           |-- src
+|               |-- componentes
+|               |   |-- admin
+|               |   |-- constants
+|               |   |-- dashboard
+|               |   |-- login
+|               |   |-- sections
+|               |   |-- services
+|               |   |-- utils
+|               |-- main.jsx
+|
+|-- README.md
+|-- .gitignore
 
 
 ## 🛠 Instalação
