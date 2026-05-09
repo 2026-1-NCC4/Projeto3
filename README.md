@@ -159,20 +159,79 @@ Raiz
 |
 |-- README.md
 |-- .gitignore
+```
+
 
 ## 💻 Configuração para Desenvolvimento
 
-Descreva como instalar todas as dependências para desenvolvimento e como rodar um test-suite automatizado de algum tipo. Se necessário, faça isso para múltiplas plataformas.
+1. Clonando o Projeto
 
-Para abrir este projeto você necessita das seguintes ferramentas:
+Após baixar/clonar o projeto, abra a pasta no VS Code ou terminal.
 
--<a href="https://godotengine.org/download">GODOT</a>
+O projeto possui duas pastas principais:
 
-```sh
-make install
-npm test
-Coloque código do prompt de comnando se for necessário
-```
+backend
+frontend
+
+Você deverá abrir um terminal para cada uma delas.
+
+🗄️ Configuração do Banco de Dados
+
+Antes de iniciar o sistema:
+
+Abra o MySQL.
+Crie um banco de dados.
+Abra o arquivo .sql disponibilizado no projeto.
+Execute o script SQL dentro do banco criado para importar todas as tabelas e dados necessários.
+⚙️ Rodando o Backend
+
+Acesse a pasta backend:
+
+cd backend
+
+Instale as dependências:
+
+npm install
+
+Inicie o servidor:
+
+npm run dev
+💻 Rodando o Frontend
+
+Abra outro terminal e acesse a pasta frontend:
+
+cd frontend
+
+Instale as dependências:
+
+npm install
+
+Inicie o frontend:
+
+npm run dev
+🔐 Acesso ao Sistema
+
+Após iniciar backend e frontend, acesse o sistema pela URL exibida no terminal do frontend.
+
+Usuário administrador padrão
+Email: admin@cannolicrm.com
+Senha: Admin@123
+🏢 Funcionamento da Plataforma
+Cadastro de Colaboradores Cannoli
+
+Para criar um colaborador da Cannoli:
+
+Acesse a aba de colaboradores da Cannoli.
+Realize o cadastro do colaborador.
+O sistema irá gerar um código de acesso.
+O colaborador utilizará esse código para efetuar login na plataforma.
+Cadastro de Empresas Parceiras
+
+Quando uma empresa parceira for adicionada:
+
+A Cannoli envia um convite para o email da empresa.
+O acesso ao sistema só pode ser realizado através desse convite.
+Sem o convite enviado pela Cannoli, a empresa não conseguirá acessar a plataforma.
 
 ## 📋 Licença/License
 <a href="https://github.com/2026-1-NCC4/Projeto2">Cannolitsky</a> © 2026 by <a href="https://github.com/2026-1-NCC4/Projeto2">Cannolitsky</a> is licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a><img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="" style="max-width: 0.5em;max-height:0.5em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="" style="max-width: 0.5em;max-height:0.5em;margin-left: .2em;">
