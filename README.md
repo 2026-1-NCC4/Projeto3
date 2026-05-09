@@ -164,74 +164,77 @@ Raiz
 
 ## 💻 Configuração para Desenvolvimento
 
-1. Clonando o Projeto
+### Pré-requisitos
 
-Após baixar/clonar o projeto, abra a pasta no VS Code ou terminal.
+Antes de começar, certifique-se de ter instalado:
 
-O projeto possui duas pastas principais:
+- [Node.js](https://nodejs.org/)
+- [MySQL](https://www.mysql.com/) ou [XAMPP](https://www.apachefriends.org/)
+- [MySQL Workbench](https://www.mysql.com/products/workbench/) *(opcional, mas recomendado)*
 
-backend
-frontend
+---
 
-Você deverá abrir um terminal para cada uma delas.
+### 🗄️ 1. Configuração do Banco de Dados
 
-🗄️ Configuração do Banco de Dados
+1. Abra o MySQL (ou inicie o XAMPP e ative o módulo MySQL).
+2. Crie um novo banco de dados.
+3. Localize o arquivo `.sql` disponível no projeto.
+4. Execute o script dentro do banco criado — ele irá importar todas as tabelas e dados necessários.
 
-Antes de iniciar o sistema:
+---
 
-Abra o MySQL.
-Crie um banco de dados.
-Abra o arquivo .sql disponibilizado no projeto.
-Execute o script SQL dentro do banco criado para importar todas as tabelas e dados necessários.
-⚙️ Rodando o Backend
+### ⚙️ 2. Rodando o Backend
 
-Acesse a pasta backend:
+Abra um terminal, acesse a pasta `backend` e execute:
 
+````bash
 cd backend
-
-Instale as dependências:
-
 npm install
-
-Inicie o servidor:
-
 npm run dev
-💻 Rodando o Frontend
+` ` `
 
-Abra outro terminal e acesse a pasta frontend:
+---
 
+### 🖥️ 3. Rodando o Frontend
+
+Abra **outro terminal**, acesse a pasta `frontend` e execute:
+
+```bash
 cd frontend
-
-Instale as dependências:
-
 npm install
-
-Inicie o frontend:
-
 npm run dev
-🔐 Acesso ao Sistema
+```
 
-Após iniciar backend e frontend, acesse o sistema pela URL exibida no terminal do frontend.
+Após iniciar, acesse o sistema pela URL exibida no terminal do frontend.
 
-Usuário administrador padrão
-Email: admin@cannolicrm.com
-Senha: Admin@123
-🏢 Funcionamento da Plataforma
-Cadastro de Colaboradores Cannoli
+---
 
-Para criar um colaborador da Cannoli:
+### 🔐 Credenciais de Acesso Padrão
 
-Acesse a aba de colaboradores da Cannoli.
-Realize o cadastro do colaborador.
-O sistema irá gerar um código de acesso.
-O colaborador utilizará esse código para efetuar login na plataforma.
-Cadastro de Empresas Parceiras
+| Campo | Valor |
+|-------|-------|
+| **Email** | `admin@cannolicrm.com` |
+| **Senha** | `Admin@123` |
 
-Quando uma empresa parceira for adicionada:
+---
 
-A Cannoli envia um convite para o email da empresa.
-O acesso ao sistema só pode ser realizado através desse convite.
-Sem o convite enviado pela Cannoli, a empresa não conseguirá acessar a plataforma.
+### 🏢 Como a Plataforma Funciona
+
+**Cadastro de Colaboradores Cannoli**
+
+1. Acesse a aba de **colaboradores**.
+2. Realize o cadastro do colaborador.
+3. O sistema gera um **código de acesso**.
+4. O colaborador utiliza esse código para efetuar login na plataforma.
+
+**Cadastro de Empresas Parceiras**
+
+1. A Cannoli envia um **convite por e-mail** para a empresa parceira.
+2. O acesso ao sistema só é liberado através desse convite.
+3. Sem o convite, a empresa não conseguirá acessar a plataforma.
+```
+
+` ``` `.
 
 ## 📋 Licença/License
 <a href="https://github.com/2026-1-NCC4/Projeto2">Cannolitsky</a> © 2026 by <a href="https://github.com/2026-1-NCC4/Projeto2">Cannolitsky</a> is licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a><img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="" style="max-width: 0.5em;max-height:0.5em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="" style="max-width: 0.5em;max-height:0.5em;margin-left: .2em;">
