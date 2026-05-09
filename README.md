@@ -187,12 +187,11 @@ Antes de começar, certifique-se de ter instalado:
 
 Abra um terminal, acesse a pasta `backend` e execute:
 
-````bash
+```bash
 cd backend
 npm install
 npm run dev
-` ` `
-
+```
 ---
 
 ### 🖥️ 3. Rodando o Frontend
