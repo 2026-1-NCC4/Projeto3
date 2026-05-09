@@ -8,7 +8,7 @@
 
 # Dashboard de Indicadores Cannoli - TechSnack DevTeam
 <p align="center">
-  <img src="imagens/dashbord.png" alt="Dashboard Global Cannoli" width="1000">
+  <img src="images/dashbord.png" alt="Dashboard Global Cannoli" width="1000">
 </p>
 
 ## 👥 Grupo: TechSnack DevTeam
