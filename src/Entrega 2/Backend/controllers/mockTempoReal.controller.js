@@ -1,38 +1,62 @@
 const mockTempoRealService = require('../services/mockTempoReal.service');
 
-function usuarioPodeUsarMock(req) {
-  return req.user && ['admin', 'colaborador'].includes(req.user.role);
-}
-
-async function gerarPedidosMock(req, res) {
+async function gerarPedidos(req, res) {
   try {
-    if (!usuarioPodeUsarMock(req)) {
-      return res.status(403).json({
-        message: 'Acesso não autorizado para simulação em tempo real.'
-      });
-    }
-
     const quantidade = Number(req.body.quantidade || 2);
 
-    const resultado = await mockTempoRealService.gerarPedidosMock({
-      quantidade,
-      usuarioId: req.user.id
+    const resultado = await mockTempoRealService.gerarPedidos({
+      quantidade
     });
 
-    return res.json({
+    return res.status(201).json({
       message: 'Pedidos simulados gerados com sucesso.',
       data: resultado
     });
   } catch (error) {
-    console.error('Erro ao gerar pedidos mock:', error);
+    console.error('Erro ao gerar pedidos simulados:', error);
 
     return res.status(500).json({
-      message: 'Erro ao gerar pedidos simulados.',
-      detail: error.message
+      message: error.message || 'Erro ao gerar pedidos simulados.'
+    });
+  }
+}
+
+async function atualizarDados(req, res) {
+  try {
+    const { direcao, quantidade, percentualAjuste } = req.body;
+
+    const resultado = await mockTempoRealService.atualizarDados({
+      direcao,
+      quantidade,
+      percentualAjuste
+    });
+
+    let message = 'Dados simulados atualizados com sucesso.';
+
+    if (resultado.direcao === 'aumentar') {
+      message = 'Dados simulados aumentados com sucesso.';
+    }
+
+    if (resultado.direcao === 'diminuir') {
+      message = resultado.quantidadeAfetada > 0
+        ? 'Dados simulados reduzidos com sucesso.'
+        : 'Não havia pedidos disponíveis para reduzir.';
+    }
+
+    return res.status(200).json({
+      message,
+      data: resultado
+    });
+  } catch (error) {
+    console.error('Erro ao atualizar dados simulados:', error);
+
+    return res.status(500).json({
+      message: error.message || 'Erro ao atualizar dados simulados.'
     });
   }
 }
 
 module.exports = {
-  gerarPedidosMock
+  gerarPedidos,
+  atualizarDados
 };

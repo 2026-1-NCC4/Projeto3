@@ -4,6 +4,56 @@ import Sidebar from '../dashboard/Sidebar';
 
 const API_URL = 'http://localhost:3001/api';
 
+const fontePoppins = {
+  fontFamily: "'Poppins', sans-serif"
+};
+
+function getInviteStatus(convite) {
+  if (!convite) return 'inactive';
+
+  if (convite.used_at || convite.status === 'used') {
+    return 'used';
+  }
+
+  if (convite.status === 'active') {
+    return 'active';
+  }
+
+  return 'inactive';
+}
+
+function getInviteStatusLabel(status) {
+  const labels = {
+    active: 'Ativo',
+    used: 'Usado',
+    inactive: 'Inativo'
+  };
+
+  return labels[status] || 'inactive';
+}
+
+function getInviteStatusClass(status) {
+  const classes = {
+    active: 'bg-green-100 text-green-700 border-green-200',
+    used: 'bg-blue-100 text-blue-700 border-blue-200',
+    inactive: 'bg-gray-100 text-gray-600 border-gray-200'
+  };
+
+  return classes[status] || classes.inactive;
+}
+
+function StatusConviteBadge({ convite }) {
+  const status = getInviteStatus(convite);
+
+  return (
+    <span
+      className={`inline-flex px-3 py-1 rounded-full text-xs font-semibold border whitespace-nowrap ${getInviteStatusClass(status)}`}
+    >
+      {getInviteStatusLabel(status)}
+    </span>
+  );
+}
+
 const ConvidarEmpresas = () => {
   const navigate = useNavigate();
 
@@ -26,6 +76,12 @@ const ConvidarEmpresas = () => {
   const empresaSelecionada = useMemo(() => {
     return empresas.find((empresa) => String(empresa.id) === String(companyId));
   }, [empresas, companyId]);
+
+  const ultimoConviteDaEmpresaSelecionada = useMemo(() => {
+    if (!companyId) return null;
+
+    return convites.find((convite) => String(convite.company_id) === String(companyId)) || null;
+  }, [convites, companyId]);
 
   const buscarEmpresas = async () => {
     const response = await fetch(`${API_URL}/companies/invite-options`, {
@@ -151,13 +207,19 @@ const ConvidarEmpresas = () => {
         </button>
 
         <main className="p-5 lg:p-8">
-          <div className="flex items-center justify-between mb-6">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-6">
             <div>
-              <h1 className="text-3xl font-bold text-text-dark">
+              <h1
+                className="text-3xl font-bold text-text-dark"
+                style={fontePoppins}
+              >
                 Convidar empresa
               </h1>
 
-              <p className="text-sm text-gray-500 mt-2">
+              <p
+                className="text-sm text-gray-500 mt-2"
+                style={fontePoppins}
+              >
                 Selecione uma empresa já importada do STORE.csv e envie um código de ativação para o responsável.
               </p>
             </div>
@@ -165,6 +227,7 @@ const ConvidarEmpresas = () => {
             <button
               onClick={() => navigate('/dashboard')}
               className="bg-orange text-white px-5 py-3 rounded-xl font-medium hover:bg-orange-dark transition-colors"
+              style={fontePoppins}
             >
               Voltar
             </button>
@@ -235,13 +298,20 @@ const ConvidarEmpresas = () => {
                   <strong>ID externo:</strong> {empresaSelecionada.external_store_id || '-'}
                 </p>
 
-                <p>
-                  <strong>Status:</strong>{' '}
-                  {empresaSelecionada.activated_at
-                    ? 'Empresa já ativada'
-                    : empresaSelecionada.invited_at
-                      ? 'Empresa já convidada'
-                      : 'Empresa ainda não convidada'}
+                <p className="flex flex-wrap items-center gap-2 mt-1">
+                  <strong>Status:</strong>
+
+                  {empresaSelecionada.activated_at ? (
+                    <span className="inline-flex px-3 py-1 rounded-full text-xs font-semibold border bg-blue-100 text-blue-700 border-blue-200">
+                      Usado
+                    </span>
+                  ) : ultimoConviteDaEmpresaSelecionada ? (
+                    <StatusConviteBadge convite={ultimoConviteDaEmpresaSelecionada} />
+                  ) : (
+                    <span className="inline-flex px-3 py-1 rounded-full text-xs font-semibold border bg-gray-100 text-gray-600 border-gray-200">
+                      Inativo
+                    </span>
+                  )}
                 </p>
               </div>
             )}
@@ -253,7 +323,7 @@ const ConvidarEmpresas = () => {
             </h2>
 
             <div className="overflow-x-auto">
-              <table className="w-full text-left">
+              <table className="w-full text-left min-w-[850px]">
                 <thead>
                   <tr className="border-b border-gray-200 text-sm text-gray-600">
                     <th className="py-3 pr-4">Empresa</th>
@@ -278,7 +348,9 @@ const ConvidarEmpresas = () => {
                         <td className="py-4 pr-4">{convite.company_name}</td>
                         <td className="py-4 pr-4">{convite.email}</td>
                         <td className="py-4 pr-4">{convite.invite_code}</td>
-                        <td className="py-4 pr-4">{convite.status}</td>
+                        <td className="py-4 pr-4">
+                          <StatusConviteBadge convite={convite} />
+                        </td>
                         <td className="py-4 pr-4">
                           {convite.expires_at
                             ? new Date(convite.expires_at).toLocaleString('pt-BR')

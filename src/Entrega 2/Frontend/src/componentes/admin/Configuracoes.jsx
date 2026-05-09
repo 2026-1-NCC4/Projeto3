@@ -41,6 +41,10 @@ const Configuracoes = () => {
 
   const isAdmin = perfil.role === 'admin' || usuarioLocal.role === 'admin';
 
+  const fontePoppins = {
+    fontFamily: "'Poppins', sans-serif"
+  };
+
   const limparFeedbackDepois = (tempo = 3000) => {
     if (feedbackTimer) {
       clearTimeout(feedbackTimer);
@@ -320,7 +324,10 @@ const Configuracoes = () => {
         <main className="p-5 lg:p-8">
           <header className="mb-8 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
             <div>
-              <h1 className="text-3xl font-bold text-text-dark">
+              <h1
+                className="text-3xl font-bold text-text-dark"
+                style={fontePoppins}
+              >
                 Configurações
               </h1>
 

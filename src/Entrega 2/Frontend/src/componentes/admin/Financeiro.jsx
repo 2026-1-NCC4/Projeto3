@@ -1,4 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
+import { Download, FileText, X } from 'lucide-react';
 import {
   Area,
   AreaChart,
@@ -43,9 +46,114 @@ const formatarPercentual = (valor) => {
   return `${Number(valor || 0).toFixed(2)}%`;
 };
 
-const CardResumo = ({ titulo, valor, descricao }) => {
+const renderizarValorTabela = (key, valor) => {
+  const chave = String(key || '').toLowerCase();
+
+  if (chave.includes('receita')) return formatarMoeda(valor);
+  if (chave.includes('faturamento')) return formatarMoeda(valor);
+  if (chave.includes('ticket')) return formatarMoeda(valor);
+  if (chave.includes('valor')) return formatarMoeda(valor);
+  if (chave.includes('margembruta')) return formatarMoeda(valor);
+  if (chave.includes('margem') && !chave.includes('percentual')) return formatarMoeda(valor);
+  if (chave.includes('custo')) return formatarMoeda(valor);
+  if (chave.includes('caixa')) return formatarMoeda(valor);
+  if (chave.includes('desconto') && !chave.includes('taxa')) return formatarMoeda(valor);
+
+  if (chave.includes('percentual')) return formatarPercentual(valor);
+  if (chave.includes('taxa')) return formatarPercentual(valor);
+  if (chave.includes('margempercentual')) return formatarPercentual(valor);
+
+  if (chave.includes('pedido')) return formatarNumero(valor);
+
+  return valor ?? '-';
+};
+
+const exportarCsv = ({ nomeArquivo, colunas, dados }) => {
+  if (!dados || dados.length === 0) return;
+
+  const cabecalho = colunas.map((coluna) => coluna.label).join(';');
+
+  const linhas = dados.map((item) => {
+    return colunas
+      .map((coluna) => {
+        const valor = item[coluna.key] ?? '';
+        const texto = String(valor).replace(/"/g, '""');
+        return `"${texto}"`;
+      })
+      .join(';');
+  });
+
+  const csv = [cabecalho, ...linhas].join('\n');
+
+  const blob = new Blob([`\uFEFF${csv}`], {
+    type: 'text/csv;charset=utf-8;'
+  });
+
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+
+  link.href = url;
+  link.download = nomeArquivo || 'detalhamento_financeiro.csv';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+
+  URL.revokeObjectURL(url);
+};
+
+const exportarPdf = ({ titulo, descricao, nomeArquivo, colunas, dados }) => {
+  if (!dados || dados.length === 0) return;
+
+  const documento = new jsPDF({
+    orientation: 'landscape',
+    unit: 'pt',
+    format: 'a4'
+  });
+
+  const dataAtual = new Date().toLocaleString('pt-BR');
+
+  documento.setFontSize(16);
+  documento.text(titulo || 'Detalhamento financeiro', 40, 40);
+
+  documento.setFontSize(9);
+  documento.text(descricao || 'Tabela de apoio exportada da aba Financeiro.', 40, 58);
+
+  documento.setFontSize(8);
+  documento.text(`Exportado em: ${dataAtual}`, 40, 74);
+
+  autoTable(documento, {
+    head: [colunas.map((coluna) => coluna.label)],
+    body: dados.map((item) => colunas.map((coluna) => renderizarValorTabela(coluna.key, item[coluna.key]))),
+    startY: 92,
+    styles: {
+      fontSize: 7,
+      cellPadding: 4,
+      overflow: 'linebreak'
+    },
+    headStyles: {
+      fillColor: [242, 99, 34],
+      textColor: 255,
+      fontStyle: 'bold'
+    },
+    alternateRowStyles: {
+      fillColor: [250, 246, 241]
+    },
+    margin: {
+      left: 40,
+      right: 40
+    }
+  });
+
+  documento.save((nomeArquivo || 'detalhamento_financeiro.csv').replace('.csv', '.pdf'));
+};
+
+const CardResumo = ({ titulo, valor, descricao, onClick }) => {
   return (
-    <div className="bg-white rounded-2xl p-6 border border-orange/10 shadow-sm">
+    <button
+      type="button"
+      onClick={onClick}
+      className="bg-white rounded-2xl p-6 border border-orange/10 shadow-sm text-left w-full hover:shadow-md hover:-translate-y-[1px] transition-all"
+    >
       <p className="text-sm text-gray-500">{titulo}</p>
 
       <h2 className="text-3xl font-bold mt-2 text-text-dark">
@@ -57,7 +165,11 @@ const CardResumo = ({ titulo, valor, descricao }) => {
           {descricao}
         </p>
       )}
-    </div>
+
+      <p className="text-xs text-orange font-semibold mt-3">
+        Clique para detalhar
+      </p>
+    </button>
   );
 };
 
@@ -82,6 +194,7 @@ const Financeiro = () => {
   const [loading, setLoading] = useState(true);
   const [erro, setErro] = useState('');
   const [filtros, setFiltros] = useState(FILTROS_PADRAO);
+  const [detalheAtivo, setDetalheAtivo] = useState(null);
 
   const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
   const isEmpresa = usuario.role === 'empresa';
@@ -114,11 +227,13 @@ const Financeiro = () => {
   };
 
   const aplicarFiltros = () => {
+    setDetalheAtivo(null);
     filtrosRef.current = filtros;
     carregarDados({ filtrosAplicados: filtros });
   };
 
   const limparFiltros = () => {
+    setDetalheAtivo(null);
     const filtrosLimpos = { ...FILTROS_PADRAO };
 
     setFiltros(filtrosLimpos);
@@ -139,6 +254,166 @@ const Financeiro = () => {
   const resultadoPorCanal = financeiro.resultadoPorCanal || [];
   const resultadoPorTipoPedido = financeiro.resultadoPorTipoPedido || [];
   const alertasFinanceiros = financeiro.alertasFinanceiros || [];
+
+  const detalhes = useMemo(() => {
+    return {
+      receitaBruta: {
+        titulo: 'Detalhamento da receita bruta',
+        descricao: 'Receita bruta, descontos, pedidos e ticket médio por período.',
+        nomeArquivo: 'detalhamento_receita_bruta.csv',
+        colunas: [
+          { key: 'periodo', label: 'Período' },
+          { key: 'receitaBruta', label: 'Receita bruta' },
+          { key: 'descontos', label: 'Descontos' },
+          { key: 'receitaLiquida', label: 'Receita líquida' },
+          { key: 'pedidos', label: 'Pedidos' },
+          { key: 'ticketMedio', label: 'Ticket médio' }
+        ],
+        dados: resultadoPorMes
+      },
+      receitaLiquida: {
+        titulo: 'Detalhamento da receita líquida',
+        descricao: 'Receita líquida após descontos simulados, custos e margem por período.',
+        nomeArquivo: 'detalhamento_receita_liquida.csv',
+        colunas: [
+          { key: 'periodo', label: 'Período' },
+          { key: 'receitaLiquida', label: 'Receita líquida' },
+          { key: 'descontos', label: 'Descontos' },
+          { key: 'custosVariaveis', label: 'Custos variáveis' },
+          { key: 'margemBruta', label: 'Margem bruta' },
+          { key: 'margemPercentual', label: 'Margem %' }
+        ],
+        dados: resultadoPorMes
+      },
+      custosVariaveis: {
+        titulo: 'Detalhamento dos custos variáveis',
+        descricao: 'Custos variáveis simulados e impacto na margem por período.',
+        nomeArquivo: 'detalhamento_custos_variaveis.csv',
+        colunas: [
+          { key: 'periodo', label: 'Período' },
+          { key: 'custosVariaveis', label: 'Custos variáveis' },
+          { key: 'receitaLiquida', label: 'Receita líquida' },
+          { key: 'margemBruta', label: 'Margem bruta' },
+          { key: 'margemPercentual', label: 'Margem %' }
+        ],
+        dados: resultadoPorMes
+      },
+      margemBruta: {
+        titulo: 'Detalhamento da margem bruta',
+        descricao: 'Margem bruta, margem percentual, receita líquida e custos por período.',
+        nomeArquivo: 'detalhamento_margem_bruta.csv',
+        colunas: [
+          { key: 'periodo', label: 'Período' },
+          { key: 'margemBruta', label: 'Margem bruta' },
+          { key: 'margemPercentual', label: 'Margem %' },
+          { key: 'receitaLiquida', label: 'Receita líquida' },
+          { key: 'custosVariaveis', label: 'Custos variáveis' }
+        ],
+        dados: resultadoPorMes
+      },
+      caixaEstimado: {
+        titulo: 'Detalhamento do caixa estimado',
+        descricao: 'Base mensal usada para leitura do caixa estimado e reserva simulada.',
+        nomeArquivo: 'detalhamento_caixa_estimado.csv',
+        colunas: [
+          { key: 'periodo', label: 'Período' },
+          { key: 'receitaLiquida', label: 'Receita líquida' },
+          { key: 'margemBruta', label: 'Margem bruta' },
+          { key: 'margemPercentual', label: 'Margem %' },
+          { key: 'pedidos', label: 'Pedidos' }
+        ],
+        dados: resultadoPorMes
+      },
+      ticketMedio: {
+        titulo: 'Detalhamento do ticket médio',
+        descricao: 'Ticket médio, receita e pedidos por período.',
+        nomeArquivo: 'detalhamento_ticket_medio_financeiro.csv',
+        colunas: [
+          { key: 'periodo', label: 'Período' },
+          { key: 'ticketMedio', label: 'Ticket médio' },
+          { key: 'receitaBruta', label: 'Receita bruta' },
+          { key: 'pedidos', label: 'Pedidos' }
+        ],
+        dados: resultadoPorMes
+      },
+      descontos: {
+        titulo: 'Detalhamento dos descontos',
+        descricao: 'Descontos aplicados e relação com receita bruta e líquida.',
+        nomeArquivo: 'detalhamento_descontos.csv',
+        colunas: [
+          { key: 'periodo', label: 'Período' },
+          { key: 'descontos', label: 'Descontos' },
+          { key: 'receitaBruta', label: 'Receita bruta' },
+          { key: 'receitaLiquida', label: 'Receita líquida' }
+        ],
+        dados: resultadoPorMes
+      },
+      taxaDesconto: {
+        titulo: 'Detalhamento da taxa média de desconto',
+        descricao: 'Descontos por período para análise da taxa média de desconto.',
+        nomeArquivo: 'detalhamento_taxa_desconto.csv',
+        colunas: [
+          { key: 'periodo', label: 'Período' },
+          { key: 'descontos', label: 'Descontos' },
+          { key: 'receitaBruta', label: 'Receita bruta' },
+          { key: 'receitaLiquida', label: 'Receita líquida' }
+        ],
+        dados: resultadoPorMes
+      },
+      canais: {
+        titulo: 'Detalhamento financeiro por canal',
+        descricao: 'Resultado financeiro consolidado por canal.',
+        nomeArquivo: 'detalhamento_financeiro_canais.csv',
+        colunas: [
+          { key: 'canal', label: 'Canal' },
+          { key: 'receitaLiquida', label: 'Receita líquida' },
+          { key: 'margemBruta', label: 'Margem bruta' },
+          { key: 'margemPercentual', label: 'Margem %' },
+          { key: 'pedidos', label: 'Pedidos' }
+        ],
+        dados: resultadoPorCanal
+      },
+      tiposPedido: {
+        titulo: 'Detalhamento financeiro por tipo de pedido',
+        descricao: 'Resultado financeiro consolidado por tipo de pedido.',
+        nomeArquivo: 'detalhamento_financeiro_tipos_pedido.csv',
+        colunas: [
+          { key: 'tipo', label: 'Tipo' },
+          { key: 'receitaLiquida', label: 'Receita líquida' },
+          { key: 'custosVariaveis', label: 'Custos variáveis' },
+          { key: 'margemBruta', label: 'Margem bruta' },
+          { key: 'margemPercentual', label: 'Margem %' },
+          { key: 'pedidos', label: 'Pedidos' }
+        ],
+        dados: resultadoPorTipoPedido
+      },
+      alertas: {
+        titulo: 'Detalhamento dos alertas financeiros',
+        descricao: 'Alertas financeiros críticos ou de atenção da visão atual.',
+        nomeArquivo: 'detalhamento_alertas_financeiros.csv',
+        colunas: [
+          { key: 'tipo', label: 'Tipo' },
+          { key: 'prioridade', label: 'Prioridade' },
+          { key: 'mensagem', label: 'Mensagem' },
+          { key: 'acaoSugerida', label: 'Ação sugerida' }
+        ],
+        dados: alertasFinanceiros
+      }
+    };
+  }, [resultadoPorMes, resultadoPorCanal, resultadoPorTipoPedido, alertasFinanceiros]);
+
+  const detalheSelecionado = detalheAtivo ? detalhes[detalheAtivo] : null;
+
+  const abrirDetalhe = (tipo) => {
+    setDetalheAtivo(tipo);
+
+    setTimeout(() => {
+      const elemento = document.getElementById('detalhamento-kpi');
+      if (elemento) {
+        elemento.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 100);
+  };
 
   return (
     <div className="flex min-h-screen bg-cream">
@@ -232,24 +507,28 @@ const Financeiro = () => {
               <section className="grid grid-cols-1 md:grid-cols-4 gap-5 mb-6">
                 <CardResumo
                   titulo="Receita bruta"
+                  onClick={() => abrirDetalhe('receitaBruta')}
                   valor={formatarMoeda(financeiro.receitaBruta ?? financeiro.receitaTotal)}
                   descricao="Receita total antes dos descontos"
                 />
 
                 <CardResumo
                   titulo="Receita líquida"
+                  onClick={() => abrirDetalhe('receitaLiquida')}
                   valor={formatarMoeda(financeiro.receitaLiquida)}
                   descricao="Receita após descontos simulados"
                 />
 
                 <CardResumo
                   titulo="Custos variáveis"
+                  onClick={() => abrirDetalhe('custosVariaveis')}
                   valor={formatarMoeda(financeiro.custosVariaveis)}
                   descricao={`Simulação: ${formatarPercentual(financeiro.percentualCustoVariavel)} da receita líquida`}
                 />
 
                 <CardResumo
                   titulo="Margem bruta"
+                  onClick={() => abrirDetalhe('margemBruta')}
                   valor={formatarMoeda(financeiro.margemBruta)}
                   descricao={`Margem: ${formatarPercentual(financeiro.margemPercentual)}`}
                 />
@@ -258,28 +537,139 @@ const Financeiro = () => {
               <section className="grid grid-cols-1 md:grid-cols-4 gap-5 mb-6">
                 <CardResumo
                   titulo="Caixa estimado"
+                  onClick={() => abrirDetalhe('caixaEstimado')}
                   valor={formatarMoeda(financeiro.caixaEstimado)}
                   descricao={`Reserva simulada: ${formatarPercentual(financeiro.percentualReservaCaixa)}`}
                 />
 
                 <CardResumo
                   titulo="Ticket médio"
+                  onClick={() => abrirDetalhe('ticketMedio')}
                   valor={formatarMoeda(financeiro.ticketMedio)}
                   descricao="Média por pedido"
                 />
 
                 <CardResumo
                   titulo="Descontos totais"
+                  onClick={() => abrirDetalhe('descontos')}
                   valor={formatarMoeda(financeiro.descontosTotal)}
                   descricao="Total de descontos aplicados"
                 />
 
                 <CardResumo
                   titulo="Taxa média de desconto"
+                  onClick={() => abrirDetalhe('taxaDesconto')}
                   valor={formatarPercentual(financeiro.taxaDescontoMedia)}
                   descricao="Descontos sobre subtotal"
                 />
               </section>
+
+              {detalheSelecionado && (
+                <section
+                  id="detalhamento-kpi"
+                  className="bg-white rounded-2xl shadow-sm p-6 mb-6 border border-orange/10"
+                >
+                  <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4 mb-5">
+                    <div>
+                      <h2 className="text-xl font-bold text-text-dark">
+                        {detalheSelecionado.titulo}
+                      </h2>
+
+                      <p className="text-sm text-gray-500 mt-1">
+                        {detalheSelecionado.descricao}
+                      </p>
+                    </div>
+
+                    <div className="flex flex-col sm:flex-row gap-3">
+                      <button
+                        type="button"
+                        onClick={() =>
+                          exportarCsv({
+                            nomeArquivo: detalheSelecionado.nomeArquivo,
+                            colunas: detalheSelecionado.colunas,
+                            dados: detalheSelecionado.dados
+                          })
+                        }
+                        disabled={!detalheSelecionado.dados || detalheSelecionado.dados.length === 0}
+                        className="px-4 py-3 rounded-xl bg-orange text-white font-semibold hover:bg-orange-dark transition disabled:opacity-50 flex items-center justify-center gap-2"
+                      >
+                        <Download size={18} />
+                        Exportar CSV
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() =>
+                          exportarPdf({
+                            titulo: detalheSelecionado.titulo,
+                            descricao: detalheSelecionado.descricao,
+                            nomeArquivo: detalheSelecionado.nomeArquivo,
+                            colunas: detalheSelecionado.colunas,
+                            dados: detalheSelecionado.dados
+                          })
+                        }
+                        disabled={!detalheSelecionado.dados || detalheSelecionado.dados.length === 0}
+                        className="px-4 py-3 rounded-xl bg-white border border-orange/20 text-orange font-semibold hover:bg-orange/5 transition disabled:opacity-50 flex items-center justify-center gap-2"
+                      >
+                        <FileText size={18} />
+                        Exportar PDF
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => setDetalheAtivo(null)}
+                        className="px-4 py-3 rounded-xl bg-orange/10 text-orange font-semibold hover:bg-orange/15 transition flex items-center justify-center gap-2"
+                      >
+                        <X size={18} />
+                        Fechar
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="overflow-x-auto">
+                    <table className="w-full min-w-[900px] text-sm">
+                      <thead>
+                        <tr className="border-b text-left text-gray-500">
+                          {detalheSelecionado.colunas.map((coluna) => (
+                            <th key={coluna.key} className="py-3 pr-4">
+                              {coluna.label}
+                            </th>
+                          ))}
+                        </tr>
+                      </thead>
+
+                      <tbody>
+                        {(detalheSelecionado.dados || []).slice(0, 30).map((item, index) => (
+                          <tr key={index} className="border-b last:border-b-0">
+                            {detalheSelecionado.colunas.map((coluna) => (
+                              <td key={coluna.key} className="py-3 pr-4">
+                                {renderizarValorTabela(coluna.key, item[coluna.key])}
+                              </td>
+                            ))}
+                          </tr>
+                        ))}
+
+                        {(!detalheSelecionado.dados || detalheSelecionado.dados.length === 0) && (
+                          <tr>
+                            <td
+                              colSpan={detalheSelecionado.colunas.length}
+                              className="py-6 text-center text-gray-500"
+                            >
+                              Nenhum dado encontrado para este detalhamento.
+                            </td>
+                          </tr>
+                        )}
+                      </tbody>
+                    </table>
+                  </div>
+
+                  {detalheSelecionado.dados?.length > 30 && (
+                    <p className="text-xs text-gray-500 mt-4">
+                      Mostrando os primeiros 30 registros. A exportação CSV/PDF inclui todos os registros disponíveis.
+                    </p>
+                  )}
+                </section>
+              )}
 
               <section className="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-6">
                 <div className="bg-white rounded-2xl p-6 border border-orange/10 shadow-sm">

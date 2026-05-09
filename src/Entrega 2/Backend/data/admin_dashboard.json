@@ -1,5 +1,5 @@
 {
-  "atualizadoEm": "2026-05-08T20:22:58.036770",
+  "atualizadoEm": "2026-05-09T15:39:51.586408",
   "perfil": "admin",
   "filtrosAplicados": {
     "periodo": "todos",
@@ -358,38 +358,38 @@
     ]
   },
   "kpis": {
-    "receitaTotal": 6150643.87,
-    "totalPedidos": 107023,
-    "ticketMedio": 57.47,
+    "receitaTotal": 6154257.23,
+    "totalPedidos": 107055,
+    "ticketMedio": 57.49,
     "totalEmpresas": 77,
     "totalClientes": 160710,
-    "clientesAtivos": 616,
-    "clientesInativos": 47087,
-    "clientesRecorrentes": 17877,
-    "clientesOcasionais": 29826,
+    "clientesAtivos": 644,
+    "clientesInativos": 47059,
+    "clientesRecorrentes": 17886,
+    "clientesOcasionais": 29817,
     "clientesSemPedido": 113007,
-    "taxaRecorrencia": 37.48,
-    "descontosTotal": 596910.94,
+    "taxaRecorrencia": 37.49,
+    "descontosTotal": 597013.77,
     "taxaDescontoMedia": 9.91,
-    "crescimentoReceita": 24701.45,
-    "crescimentoPedidos": 21300.0,
+    "crescimentoReceita": 25994.71,
+    "crescimentoPedidos": 22366.67,
     "totalCampanhas": 56461,
     "receitaCampanhas": 5843983.53
   },
   "crescimento": {
-    "receita": 24701.45,
-    "pedidos": 21300.0,
+    "receita": 25994.71,
+    "pedidos": 22366.67,
     "statusReceita": "saudavel",
     "statusPedidos": "saudavel"
   },
   "segmentacaoClientes": {
-    "ativos": 616,
-    "inativos": 47087,
-    "recorrentes": 17877,
-    "ocasionais": 29826,
+    "ativos": 644,
+    "inativos": 47059,
+    "recorrentes": 17886,
+    "ocasionais": 29817,
     "semPedido": 113007,
     "comPedido": 47703,
-    "taxaRecorrencia": 37.48
+    "taxaRecorrencia": 37.49
   },
   "graficos": {
     "receitaPorMes": [
@@ -450,8 +450,8 @@
       },
       {
         "periodo": "2026-05",
-        "receita": 69295.26,
-        "crescimento": 24701.45
+        "receita": 72908.62,
+        "crescimento": 25994.71
       }
     ],
     "pedidosPorMes": [
@@ -512,8 +512,8 @@
       },
       {
         "periodo": "2026-05",
-        "pedidos": 642,
-        "crescimento": 21300.0
+        "pedidos": 674,
+        "crescimento": 22366.67
       }
     ],
     "ticketMedioPorMes": [
@@ -563,7 +563,7 @@
       },
       {
         "periodo": "2026-05",
-        "ticketMedio": 107.94
+        "ticketMedio": 108.17
       }
     ],
     "clientesNovosPorMes": [
@@ -637,21 +637,21 @@
       },
       {
         "canal": "balcao",
-        "receita": 23992.5,
-        "pedidos": 220,
-        "ticketMedio": 109.06
-      },
-      {
-        "canal": "delivery_proprio",
-        "receita": 23162.94,
-        "pedidos": 212,
-        "ticketMedio": 109.26
+        "receita": 25047.74,
+        "pedidos": 229,
+        "ticketMedio": 109.38
       },
       {
         "canal": "app",
-        "receita": 22950.47,
-        "pedidos": 215,
-        "ticketMedio": 106.75
+        "receita": 24650.47,
+        "pedidos": 229,
+        "ticketMedio": 107.64
+      },
+      {
+        "canal": "delivery_proprio",
+        "receita": 24021.06,
+        "pedidos": 221,
+        "ticketMedio": 108.69
       },
       {
         "canal": "Cannoli-Tab",
@@ -702,31 +702,31 @@
       },
       {
         "tipo": "takeout",
-        "receita": 35748.95,
-        "pedidos": 333
+        "receita": 37778.7,
+        "pedidos": 351
       },
       {
         "tipo": "delivery",
-        "receita": 34356.96,
-        "pedidos": 314
+        "receita": 35940.57,
+        "pedidos": 328
       }
     ],
     "topEmpresasReceita": [
       {
         "empresa": "Padaria Century",
-        "receita": 1409374.06
+        "receita": 1410470.95
       },
       {
         "empresa": "La Brunet Paes E Doces Pedro Doll Ltda",
-        "receita": 631630.79
+        "receita": 632045.6
       },
       {
         "empresa": "Casa Da Esfiha Jardim Japão",
-        "receita": 429819.9
+        "receita": 430035.63
       },
       {
         "empresa": "Casa Da Esfiha Vila Gustavo Ltda",
-        "receita": 384342.86
+        "receita": 384708.0
       },
       {
         "empresa": "Bode Dú Burger",
@@ -734,37 +734,37 @@
       },
       {
         "empresa": "Gran Royalle",
-        "receita": 288124.26
+        "receita": 288183.67
       },
       {
         "empresa": "Caldo Bom Do Mateus",
-        "receita": 258396.55
+        "receita": 258545.54
       },
       {
         "empresa": "Padaria Maria Amália",
-        "receita": 208634.53
+        "receita": 208698.84
       }
     ],
     "topEmpresasPedidos": [
       {
         "empresa": "Padaria Century",
-        "pedidos": 22048
+        "pedidos": 22058
       },
       {
         "empresa": "La Brunet Paes E Doces Pedro Doll Ltda",
-        "pedidos": 10774
+        "pedidos": 10778
       },
       {
         "empresa": "Casa Da Esfiha Jardim Japão",
-        "pedidos": 8737
+        "pedidos": 8739
       },
       {
         "empresa": "Casa Da Esfiha Vila Gustavo Ltda",
-        "pedidos": 7685
+        "pedidos": 7688
       },
       {
         "empresa": "Caldo Bom Do Mateus",
-        "pedidos": 5715
+        "pedidos": 5716
       },
       {
         "empresa": "Bode Dú Burger",
@@ -772,11 +772,11 @@
       },
       {
         "empresa": "Padaria Silvana",
-        "pedidos": 5206
+        "pedidos": 5208
       },
       {
         "empresa": "Gran Royalle",
-        "pedidos": 4728
+        "pedidos": 4729
       }
     ],
     "clientesPorEstado": [
@@ -826,35 +826,35 @@
     {
       "storeid": "01Ac4Ec3-F7E0-451D-Ab31-2Db1799816Ca",
       "empresa": "Padaria Century",
-      "receita": 1409374.06,
-      "pedidos": 22048,
+      "receita": 1410470.95,
+      "pedidos": 22058,
       "clientes": 6461,
-      "clientesRecorrentes": 3045,
-      "ticketMedio": 63.92,
-      "recorrencia": 47.13,
-      "desconto": 105084.42,
+      "clientesRecorrentes": 3046,
+      "ticketMedio": 63.94,
+      "recorrencia": 47.14,
+      "desconto": 105120.6,
       "status": "saudavel"
     },
     {
       "storeid": "5325Fbf9-22E9-4C68-8E42-8C740E9Eec32",
       "empresa": "La Brunet Paes E Doces Pedro Doll Ltda",
-      "receita": 631630.79,
-      "pedidos": 10774,
+      "receita": 632045.6,
+      "pedidos": 10778,
       "clientes": 4751,
-      "clientesRecorrentes": 1782,
-      "ticketMedio": 58.63,
-      "recorrencia": 37.51,
-      "desconto": 68358.94,
+      "clientesRecorrentes": 1783,
+      "ticketMedio": 58.64,
+      "recorrencia": 37.53,
+      "desconto": 68376.31,
       "status": "saudavel"
     },
     {
       "storeid": "0C02619D-0C57-492D-9660-Dd0F357A2F0C",
       "empresa": "Casa Da Esfiha Jardim Japão",
-      "receita": 429819.9,
-      "pedidos": 8737,
+      "receita": 430035.63,
+      "pedidos": 8739,
       "clientes": 5052,
       "clientesRecorrentes": 1602,
-      "ticketMedio": 49.2,
+      "ticketMedio": 49.21,
       "recorrencia": 31.71,
       "desconto": 43372.72,
       "status": "atencao"
@@ -862,13 +862,13 @@
     {
       "storeid": "B6Bc362F-Cb27-44Ac-A9C8-5E9B08263F86",
       "empresa": "Casa Da Esfiha Vila Gustavo Ltda",
-      "receita": 384342.86,
-      "pedidos": 7685,
+      "receita": 384708.0,
+      "pedidos": 7688,
       "clientes": 4274,
-      "clientesRecorrentes": 1275,
-      "ticketMedio": 50.01,
-      "recorrencia": 29.83,
-      "desconto": 42265.96,
+      "clientesRecorrentes": 1277,
+      "ticketMedio": 50.04,
+      "recorrencia": 29.88,
+      "desconto": 42281.21,
       "status": "atencao"
     },
     {
@@ -886,8 +886,8 @@
     {
       "storeid": "8C4E96A9-A7B8-4B4C-A891-F600C9Eceee5",
       "empresa": "Gran Royalle",
-      "receita": 288124.26,
-      "pedidos": 4728,
+      "receita": 288183.67,
+      "pedidos": 4729,
       "clientes": 2107,
       "clientesRecorrentes": 757,
       "ticketMedio": 60.94,
@@ -898,20 +898,20 @@
     {
       "storeid": "483Af9D2-7C76-4B9B-Ae0F-81Ef7F021568",
       "empresa": "Caldo Bom Do Mateus",
-      "receita": 258396.55,
-      "pedidos": 5715,
+      "receita": 258545.54,
+      "pedidos": 5716,
       "clientes": 3280,
       "clientesRecorrentes": 1057,
-      "ticketMedio": 45.21,
+      "ticketMedio": 45.23,
       "recorrencia": 32.23,
-      "desconto": 26999.19,
+      "desconto": 27013.83,
       "status": "atencao"
     },
     {
       "storeid": "F7A936Fb-644A-436B-8907-7846B067865E",
       "empresa": "Padaria Maria Amália",
-      "receita": 208634.53,
-      "pedidos": 4233,
+      "receita": 208698.84,
+      "pedidos": 4234,
       "clientes": 2057,
       "clientesRecorrentes": 756,
       "ticketMedio": 49.29,
@@ -922,11 +922,11 @@
     {
       "storeid": "1E31B67E-621C-4915-9Fb2-67B918F3D6D6",
       "empresa": "Austrália Hamburgueria Artesanal",
-      "receita": 207008.18,
-      "pedidos": 4555,
+      "receita": 207137.02,
+      "pedidos": 4556,
       "clientes": 2054,
       "clientesRecorrentes": 1443,
-      "ticketMedio": 45.45,
+      "ticketMedio": 45.46,
       "recorrencia": 70.25,
       "desconto": 57278.03,
       "status": "saudavel"
@@ -934,24 +934,24 @@
     {
       "storeid": "1Fcd01E3-2Dba-4Af8-Ae58-C39060F3E575",
       "empresa": "Padaria Vitória Régia",
-      "receita": 191498.01,
-      "pedidos": 3492,
+      "receita": 191736.77,
+      "pedidos": 3494,
       "clientes": 1616,
-      "clientesRecorrentes": 611,
-      "ticketMedio": 54.84,
-      "recorrencia": 37.81,
+      "clientesRecorrentes": 612,
+      "ticketMedio": 54.88,
+      "recorrencia": 37.87,
       "desconto": 15194.66,
       "status": "saudavel"
     },
     {
       "storeid": "106Cd2Af-2375-40D3-Ab22-0172926F95F6",
       "empresa": "Padaria Silvana",
-      "receita": 181959.93,
-      "pedidos": 5206,
+      "receita": 182218.13,
+      "pedidos": 5208,
       "clientes": 1981,
-      "clientesRecorrentes": 829,
-      "ticketMedio": 34.95,
-      "recorrencia": 41.85,
+      "clientesRecorrentes": 830,
+      "ticketMedio": 34.99,
+      "recorrencia": 41.9,
       "desconto": 26678.45,
       "status": "saudavel"
     },
@@ -994,12 +994,12 @@
     {
       "storeid": "6Dad43B9-E9E2-4318-94D8-800Ece3Fdea2",
       "empresa": "Lp - Maringa - Willie Davids",
-      "receita": 125443.83,
-      "pedidos": 2387,
+      "receita": 125624.79,
+      "pedidos": 2389,
       "clientes": 1148,
-      "clientesRecorrentes": 407,
-      "ticketMedio": 52.55,
-      "recorrencia": 35.45,
+      "clientesRecorrentes": 408,
+      "ticketMedio": 52.58,
+      "recorrencia": 35.54,
       "desconto": 20267.69,
       "status": "saudavel"
     }
@@ -1009,22 +1009,22 @@
       {
         "storeid": "01Ac4Ec3-F7E0-451D-Ab31-2Db1799816Ca",
         "empresa": "Padaria Century",
-        "faturamentoTotal": 1409374.06,
-        "pedidosTotais": 22048,
-        "ticketMedio": 63.92,
+        "faturamentoTotal": 1410470.95,
+        "pedidosTotais": 22058,
+        "ticketMedio": 63.94,
         "mensagens": 2742,
         "campanhas": 4,
         "pedidosConvertidos": 3684,
         "receitaCampanhas": 847349.18,
         "taxaConversaoNumero": 134.35,
-        "taxaConversaoValor": 60.12
+        "taxaConversaoValor": 60.08
       },
       {
         "storeid": "5325Fbf9-22E9-4C68-8E42-8C740E9Eec32",
         "empresa": "La Brunet Paes E Doces Pedro Doll Ltda",
-        "faturamentoTotal": 631630.79,
-        "pedidosTotais": 10774,
-        "ticketMedio": 58.63,
+        "faturamentoTotal": 632045.6,
+        "pedidosTotais": 10778,
+        "ticketMedio": 58.64,
         "mensagens": 0,
         "campanhas": 0,
         "pedidosConvertidos": 0,
@@ -1035,28 +1035,28 @@
       {
         "storeid": "0C02619D-0C57-492D-9660-Dd0F357A2F0C",
         "empresa": "Casa Da Esfiha Jardim Japão",
-        "faturamentoTotal": 429819.9,
-        "pedidosTotais": 8737,
-        "ticketMedio": 49.2,
+        "faturamentoTotal": 430035.63,
+        "pedidosTotais": 8739,
+        "ticketMedio": 49.21,
         "mensagens": 3578,
         "campanhas": 8,
         "pedidosConvertidos": 3555,
         "receitaCampanhas": 705306.43,
         "taxaConversaoNumero": 99.36,
-        "taxaConversaoValor": 164.09
+        "taxaConversaoValor": 164.01
       },
       {
         "storeid": "B6Bc362F-Cb27-44Ac-A9C8-5E9B08263F86",
         "empresa": "Casa Da Esfiha Vila Gustavo Ltda",
-        "faturamentoTotal": 384342.86,
-        "pedidosTotais": 7685,
-        "ticketMedio": 50.01,
+        "faturamentoTotal": 384708.0,
+        "pedidosTotais": 7688,
+        "ticketMedio": 50.04,
         "mensagens": 3654,
         "campanhas": 8,
         "pedidosConvertidos": 2875,
         "receitaCampanhas": 801457.55,
         "taxaConversaoNumero": 78.68,
-        "taxaConversaoValor": 208.53
+        "taxaConversaoValor": 208.33
       },
       {
         "storeid": "99792B54-3864-420B-A5Df-354Ff67Ca28D",
@@ -1074,34 +1074,34 @@
       {
         "storeid": "8C4E96A9-A7B8-4B4C-A891-F600C9Eceee5",
         "empresa": "Gran Royalle",
-        "faturamentoTotal": 288124.26,
-        "pedidosTotais": 4728,
+        "faturamentoTotal": 288183.67,
+        "pedidosTotais": 4729,
         "ticketMedio": 60.94,
         "mensagens": 43,
         "campanhas": 3,
         "pedidosConvertidos": 148,
         "receitaCampanhas": 9321.49,
         "taxaConversaoNumero": 344.19,
-        "taxaConversaoValor": 3.24
+        "taxaConversaoValor": 3.23
       },
       {
         "storeid": "483Af9D2-7C76-4B9B-Ae0F-81Ef7F021568",
         "empresa": "Caldo Bom Do Mateus",
-        "faturamentoTotal": 258396.55,
-        "pedidosTotais": 5715,
-        "ticketMedio": 45.21,
+        "faturamentoTotal": 258545.54,
+        "pedidosTotais": 5716,
+        "ticketMedio": 45.23,
         "mensagens": 2515,
         "campanhas": 14,
         "pedidosConvertidos": 2149,
         "receitaCampanhas": 267561.86,
         "taxaConversaoNumero": 85.45,
-        "taxaConversaoValor": 103.55
+        "taxaConversaoValor": 103.49
       },
       {
         "storeid": "F7A936Fb-644A-436B-8907-7846B067865E",
         "empresa": "Padaria Maria Amália",
-        "faturamentoTotal": 208634.53,
-        "pedidosTotais": 4233,
+        "faturamentoTotal": 208698.84,
+        "pedidosTotais": 4234,
         "ticketMedio": 49.29,
         "mensagens": 14,
         "campanhas": 1,
@@ -1113,9 +1113,9 @@
       {
         "storeid": "1E31B67E-621C-4915-9Fb2-67B918F3D6D6",
         "empresa": "Austrália Hamburgueria Artesanal",
-        "faturamentoTotal": 207008.18,
-        "pedidosTotais": 4555,
-        "ticketMedio": 45.45,
+        "faturamentoTotal": 207137.02,
+        "pedidosTotais": 4556,
+        "ticketMedio": 45.46,
         "mensagens": 0,
         "campanhas": 0,
         "pedidosConvertidos": 0,
@@ -1126,9 +1126,9 @@
       {
         "storeid": "1Fcd01E3-2Dba-4Af8-Ae58-C39060F3E575",
         "empresa": "Padaria Vitória Régia",
-        "faturamentoTotal": 191498.01,
-        "pedidosTotais": 3492,
-        "ticketMedio": 54.84,
+        "faturamentoTotal": 191736.77,
+        "pedidosTotais": 3494,
+        "ticketMedio": 54.88,
         "mensagens": 0,
         "campanhas": 0,
         "pedidosConvertidos": 0,
@@ -1139,9 +1139,9 @@
       {
         "storeid": "106Cd2Af-2375-40D3-Ab22-0172926F95F6",
         "empresa": "Padaria Silvana",
-        "faturamentoTotal": 181959.93,
-        "pedidosTotais": 5206,
-        "ticketMedio": 34.95,
+        "faturamentoTotal": 182218.13,
+        "pedidosTotais": 5208,
+        "ticketMedio": 34.99,
         "mensagens": 0,
         "campanhas": 0,
         "pedidosConvertidos": 0,
@@ -1191,41 +1191,41 @@
       {
         "storeid": "6Dad43B9-E9E2-4318-94D8-800Ece3Fdea2",
         "empresa": "Lp - Maringa - Willie Davids",
-        "faturamentoTotal": 125443.83,
-        "pedidosTotais": 2387,
-        "ticketMedio": 52.55,
+        "faturamentoTotal": 125624.79,
+        "pedidosTotais": 2389,
+        "ticketMedio": 52.58,
         "mensagens": 14,
         "campanhas": 6,
         "pedidosConvertidos": 16,
         "receitaCampanhas": 2239.49,
         "taxaConversaoNumero": 114.29,
-        "taxaConversaoValor": 1.79
+        "taxaConversaoValor": 1.78
       },
       {
         "storeid": "4Bb014Bb-8B1D-489A-Aded-2060F3Fda27E",
         "empresa": "Pizza B",
-        "faturamentoTotal": 113245.03,
-        "pedidosTotais": 1194,
-        "ticketMedio": 94.85,
+        "faturamentoTotal": 113385.17,
+        "pedidosTotais": 1195,
+        "ticketMedio": 94.88,
         "mensagens": 710,
         "campanhas": 6,
         "pedidosConvertidos": 311,
         "receitaCampanhas": 121673.86,
         "taxaConversaoNumero": 43.8,
-        "taxaConversaoValor": 107.44
+        "taxaConversaoValor": 107.31
       },
       {
         "storeid": "8Eccb620-5990-433F-8C9B-D77D0F1Da591",
         "empresa": "Burguer For You",
-        "faturamentoTotal": 111277.23,
-        "pedidosTotais": 1070,
-        "ticketMedio": 104.0,
+        "faturamentoTotal": 111399.87,
+        "pedidosTotais": 1071,
+        "ticketMedio": 104.01,
         "mensagens": 1033,
         "campanhas": 1,
         "pedidosConvertidos": 964,
         "receitaCampanhas": 257189.43,
         "taxaConversaoNumero": 93.32,
-        "taxaConversaoValor": 231.12
+        "taxaConversaoValor": 230.87
       },
       {
         "storeid": "0D860437-8F2F-4437-A866-811Bd07Ac367",
@@ -1321,9 +1321,9 @@
       {
         "storeid": "392C030B-95A1-42C9-B08C-C9C64Eed1246",
         "empresa": "Padaria Villa Real",
-        "faturamentoTotal": 61749.29,
-        "pedidosTotais": 890,
-        "ticketMedio": 69.38,
+        "faturamentoTotal": 61927.83,
+        "pedidosTotais": 891,
+        "ticketMedio": 69.5,
         "mensagens": 2,
         "campanhas": 2,
         "pedidosConvertidos": 1,
@@ -1916,8 +1916,8 @@
       },
       {
         "empresa": "Padaria Silvana",
-        "ticketMedio": 34.95,
-        "pedidos": 5206,
+        "ticketMedio": 34.99,
+        "pedidos": 5208,
         "status": "saudavel"
       },
       {
@@ -1940,14 +1940,14 @@
       },
       {
         "empresa": "Caldo Bom Do Mateus",
-        "ticketMedio": 45.21,
-        "pedidos": 5715,
+        "ticketMedio": 45.23,
+        "pedidos": 5716,
         "status": "atencao"
       },
       {
         "empresa": "Austrália Hamburgueria Artesanal",
-        "ticketMedio": 45.45,
-        "pedidos": 4555,
+        "ticketMedio": 45.46,
+        "pedidos": 4556,
         "status": "saudavel"
       },
       {
@@ -2346,13 +2346,13 @@
   },
   "clientes": {
     "segmentacao": {
-      "ativos": 616,
-      "inativos": 47087,
-      "recorrentes": 17877,
-      "ocasionais": 29826,
+      "ativos": 644,
+      "inativos": 47059,
+      "recorrentes": 17886,
+      "ocasionais": 29817,
       "semPedido": 113007,
       "comPedido": 47703,
-      "taxaRecorrencia": 37.48
+      "taxaRecorrencia": 37.49
     },
     "clientesNovosPorMes": [
       {
@@ -2437,51 +2437,51 @@
     "rfm": {
       "resumo": {
         "totalClientesAnalisados": 47703,
-        "campeoes": 258,
+        "campeoes": 270,
         "fieis": 0,
-        "potenciais": 331,
-        "emRisco": 8948,
-        "perdidos": 38138,
+        "potenciais": 347,
+        "emRisco": 8933,
+        "perdidos": 38125,
         "novosClientes": 27
       },
       "segmentos": [
         {
           "segmento": "Em risco",
-          "clientes": 8948,
-          "participacao": 18.76,
-          "receita": 3085049.54,
-          "pedidos": 54515,
-          "ticketMedio": 55.8,
-          "recenciaMediaDias": 141,
-          "scoreMedio": 10.1
+          "clientes": 8933,
+          "participacao": 18.73,
+          "receita": 3063230.78,
+          "pedidos": 54149,
+          "ticketMedio": 55.79,
+          "recenciaMediaDias": 142,
+          "scoreMedio": 10.09
         },
         {
           "segmento": "Perdidos",
-          "clientes": 38138,
-          "participacao": 79.95,
-          "receita": 2646860.24,
-          "pedidos": 46478,
+          "clientes": 38125,
+          "participacao": 79.92,
+          "receita": 2645740.41,
+          "pedidos": 46461,
           "ticketMedio": 57.38,
-          "recenciaMediaDias": 175,
-          "scoreMedio": 5.44
+          "recenciaMediaDias": 176,
+          "scoreMedio": 5.43
         },
         {
           "segmento": "Campeões",
-          "clientes": 258,
-          "participacao": 0.54,
-          "receita": 349516.08,
-          "pedidos": 5143,
-          "ticketMedio": 64.78,
+          "clientes": 270,
+          "participacao": 0.57,
+          "receita": 372486.74,
+          "pedidos": 5515,
+          "ticketMedio": 64.95,
           "recenciaMediaDias": 3,
           "scoreMedio": 14.5
         },
         {
           "segmento": "Potenciais",
-          "clientes": 331,
-          "participacao": 0.69,
-          "receita": 66134.46,
-          "pedidos": 859,
-          "ticketMedio": 78.57,
+          "clientes": 347,
+          "participacao": 0.73,
+          "receita": 69715.75,
+          "pedidos": 902,
+          "ticketMedio": 78.79,
           "recenciaMediaDias": 3,
           "scoreMedio": 12.1
         },
@@ -2547,6 +2547,19 @@
           "ultimoPedido": "2026-05-04"
         },
         {
+          "customerid": "Fde483Af-1393-4135-A3Cd-9A0B143A68Ce",
+          "segmento": "Campeões",
+          "receita": 7014.75,
+          "pedidos": 99,
+          "ticketMedio": 70.86,
+          "recenciaDias": 0,
+          "scoreRecencia": 5,
+          "scoreFrequencia": 5,
+          "scoreMonetario": 5,
+          "scoreRFM": 15,
+          "ultimoPedido": "2026-05-09"
+        },
+        {
           "customerid": "Ab97A367-77Ff-4E91-A378-5A1B901Fca87",
           "segmento": "Campeões",
           "receita": 5197.44,
@@ -2591,12 +2604,25 @@
           "receita": 3956.36,
           "pedidos": 72,
           "ticketMedio": 54.95,
-          "recenciaDias": 0,
+          "recenciaDias": 1,
           "scoreRecencia": 5,
           "scoreFrequencia": 5,
           "scoreMonetario": 5,
           "scoreRFM": 15,
           "ultimoPedido": "2026-05-08"
+        },
+        {
+          "customerid": "9C3Bf992-6208-4818-97Ad-325Cf95D0Bc2",
+          "segmento": "Campeões",
+          "receita": 3393.96,
+          "pedidos": 61,
+          "ticketMedio": 55.64,
+          "recenciaDias": 0,
+          "scoreRecencia": 5,
+          "scoreFrequencia": 5,
+          "scoreMonetario": 5,
+          "scoreRFM": 15,
+          "ultimoPedido": "2026-05-09"
         },
         {
           "customerid": "51Ecf505-29A4-4A81-8215-59F7B5Bdde61",
@@ -2677,6 +2703,32 @@
           "ultimoPedido": "2026-05-04"
         },
         {
+          "customerid": "Aa732C2A-C8B0-40Aa-Bf73-A9A6D4C1627A",
+          "segmento": "Campeões",
+          "receita": 2502.55,
+          "pedidos": 61,
+          "ticketMedio": 41.03,
+          "recenciaDias": 0,
+          "scoreRecencia": 5,
+          "scoreFrequencia": 5,
+          "scoreMonetario": 5,
+          "scoreRFM": 15,
+          "ultimoPedido": "2026-05-09"
+        },
+        {
+          "customerid": "11F3449D-E179-461A-A094-3Bab3274733B",
+          "segmento": "Campeões",
+          "receita": 2481.33,
+          "pedidos": 35,
+          "ticketMedio": 70.9,
+          "recenciaDias": 0,
+          "scoreRecencia": 5,
+          "scoreFrequencia": 5,
+          "scoreMonetario": 5,
+          "scoreRFM": 15,
+          "ultimoPedido": "2026-05-09"
+        },
+        {
           "customerid": "9D65Bfef-Db3D-415F-B2E7-0D03A237Ccc8",
           "segmento": "Campeões",
           "receita": 2467.07,
@@ -2727,6 +2779,19 @@
           "scoreMonetario": 5,
           "scoreRFM": 15,
           "ultimoPedido": "2026-05-08"
+        },
+        {
+          "customerid": "1E67F1Eb-51B3-4Fe6-Becf-5Cdee4Ff5601",
+          "segmento": "Campeões",
+          "receita": 2343.94,
+          "pedidos": 43,
+          "ticketMedio": 54.51,
+          "recenciaDias": 0,
+          "scoreRecencia": 5,
+          "scoreFrequencia": 5,
+          "scoreMonetario": 5,
+          "scoreRFM": 15,
+          "ultimoPedido": "2026-05-09"
         },
         {
           "customerid": "365Ad0C1-F5Ee-45B6-8472-252Ce9F70776",
@@ -2831,71 +2896,6 @@
           "scoreMonetario": 5,
           "scoreRFM": 15,
           "ultimoPedido": "2026-05-04"
-        },
-        {
-          "customerid": "Acf55F10-A2A8-4083-Ac5C-9D3Dd0F761F6",
-          "segmento": "Campeões",
-          "receita": 1878.5,
-          "pedidos": 10,
-          "ticketMedio": 187.85,
-          "recenciaDias": 4,
-          "scoreRecencia": 5,
-          "scoreFrequencia": 5,
-          "scoreMonetario": 5,
-          "scoreRFM": 15,
-          "ultimoPedido": "2026-05-04"
-        },
-        {
-          "customerid": "2Ed61405-4C63-4Ab8-944A-810363D7Ae56",
-          "segmento": "Campeões",
-          "receita": 1856.63,
-          "pedidos": 17,
-          "ticketMedio": 109.21,
-          "recenciaDias": 0,
-          "scoreRecencia": 5,
-          "scoreFrequencia": 5,
-          "scoreMonetario": 5,
-          "scoreRFM": 15,
-          "ultimoPedido": "2026-05-08"
-        },
-        {
-          "customerid": "A97Fef5D-67Ff-44Dd-A982-9Dce0A1D8Ff1",
-          "segmento": "Campeões",
-          "receita": 1837.37,
-          "pedidos": 22,
-          "ticketMedio": 83.52,
-          "recenciaDias": 4,
-          "scoreRecencia": 5,
-          "scoreFrequencia": 5,
-          "scoreMonetario": 5,
-          "scoreRFM": 15,
-          "ultimoPedido": "2026-05-04"
-        },
-        {
-          "customerid": "39563008-9Fd2-4F9E-A828-92C548F7E028",
-          "segmento": "Campeões",
-          "receita": 1834.71,
-          "pedidos": 30,
-          "ticketMedio": 61.16,
-          "recenciaDias": 4,
-          "scoreRecencia": 5,
-          "scoreFrequencia": 5,
-          "scoreMonetario": 5,
-          "scoreRFM": 15,
-          "ultimoPedido": "2026-05-04"
-        },
-        {
-          "customerid": "223672E9-D65B-4F8B-Bb91-44Afd0283B7B",
-          "segmento": "Campeões",
-          "receita": 1810.83,
-          "pedidos": 19,
-          "ticketMedio": 95.31,
-          "recenciaDias": 4,
-          "scoreRecencia": 5,
-          "scoreFrequencia": 5,
-          "scoreMonetario": 5,
-          "scoreRFM": 15,
-          "ultimoPedido": "2026-05-04"
         }
       ]
     },
@@ -2943,8 +2943,8 @@
         "retencaoMes2": 0.0,
         "mes3": 0,
         "retencaoMes3": 0.0,
-        "mes4": 60,
-        "retencaoMes4": 0.77,
+        "mes4": 61,
+        "retencaoMes4": 0.78,
         "mes5": 0,
         "retencaoMes5": 0.0
       },
@@ -2961,8 +2961,8 @@
         "retencaoMes3": 0.0,
         "mes4": 0,
         "retencaoMes4": 0.0,
-        "mes5": 84,
-        "retencaoMes5": 0.78
+        "mes5": 86,
+        "retencaoMes5": 0.8
       },
       {
         "coorte": "2025-11",
@@ -3095,15 +3095,15 @@
     ]
   },
   "financeiro": {
-    "receitaTotal": 6150643.87,
-    "receitaBruta": 6150643.87,
-    "receitaLiquida": 5553732.93,
-    "custosVariaveis": 2110418.51,
-    "margemBruta": 3443314.42,
+    "receitaTotal": 6154257.23,
+    "receitaBruta": 6154257.23,
+    "receitaLiquida": 5557243.46,
+    "custosVariaveis": 2111752.51,
+    "margemBruta": 3445490.95,
     "margemPercentual": 62.0,
-    "caixaEstimado": 619796.59,
-    "ticketMedio": 57.47,
-    "descontosTotal": 596910.94,
+    "caixaEstimado": 620188.37,
+    "ticketMedio": 57.49,
+    "descontosTotal": 597013.77,
     "taxaDescontoMedia": 9.91,
     "percentualCustoVariavel": 38.0,
     "percentualReservaCaixa": 18.0,
@@ -3165,8 +3165,8 @@
       },
       {
         "periodo": "2026-05",
-        "receita": 69295.26,
-        "crescimento": 24701.45
+        "receita": 72908.62,
+        "crescimento": 25994.71
       }
     ],
     "ticketMedioPorMes": [
@@ -3216,7 +3216,7 @@
       },
       {
         "periodo": "2026-05",
-        "ticketMedio": 107.94
+        "ticketMedio": 108.17
       }
     ],
     "performanceCanais": [
@@ -3252,21 +3252,21 @@
       },
       {
         "canal": "balcao",
-        "receita": 23992.5,
-        "pedidos": 220,
-        "ticketMedio": 109.06
-      },
-      {
-        "canal": "delivery_proprio",
-        "receita": 23162.94,
-        "pedidos": 212,
-        "ticketMedio": 109.26
+        "receita": 25047.74,
+        "pedidos": 229,
+        "ticketMedio": 109.38
       },
       {
         "canal": "app",
-        "receita": 22950.47,
-        "pedidos": 215,
-        "ticketMedio": 106.75
+        "receita": 24650.47,
+        "pedidos": 229,
+        "ticketMedio": 107.64
+      },
+      {
+        "canal": "delivery_proprio",
+        "receita": 24021.06,
+        "pedidos": 221,
+        "ticketMedio": 108.69
       },
       {
         "canal": "Cannoli-Tab",
@@ -3317,13 +3317,13 @@
       },
       {
         "tipo": "takeout",
-        "receita": 35748.95,
-        "pedidos": 333
+        "receita": 37778.7,
+        "pedidos": 351
       },
       {
         "tipo": "delivery",
-        "receita": 34356.96,
-        "pedidos": 314
+        "receita": 35940.57,
+        "pedidos": 328
       }
     ],
     "resultadoPorMes": [
@@ -3450,14 +3450,14 @@
       },
       {
         "periodo": "2026-05",
-        "receitaBruta": 69295.26,
-        "descontos": 2652.47,
-        "receitaLiquida": 66642.79,
-        "custosVariaveis": 25324.26,
-        "margemBruta": 41318.53,
+        "receitaBruta": 72908.62,
+        "descontos": 2755.3,
+        "receitaLiquida": 70153.32,
+        "custosVariaveis": 26658.26,
+        "margemBruta": 43495.06,
         "margemPercentual": 62.0,
-        "pedidos": 642,
-        "ticketMedio": 107.94
+        "pedidos": 674,
+        "ticketMedio": 108.17
       }
     ],
     "resultadoPorCanal": [
@@ -3518,36 +3518,36 @@
       },
       {
         "canal": "balcao",
-        "receitaBruta": 23992.5,
-        "descontos": 1018.12,
-        "receitaLiquida": 22974.38,
-        "custosVariaveis": 8730.26,
-        "margemBruta": 14244.12,
+        "receitaBruta": 25047.74,
+        "descontos": 1069.8,
+        "receitaLiquida": 23977.94,
+        "custosVariaveis": 9111.62,
+        "margemBruta": 14866.32,
         "margemPercentual": 62.0,
-        "pedidos": 220,
-        "ticketMedio": 109.06
-      },
-      {
-        "canal": "delivery_proprio",
-        "receitaBruta": 23162.94,
-        "descontos": 835.8,
-        "receitaLiquida": 22327.14,
-        "custosVariaveis": 8484.31,
-        "margemBruta": 13842.83,
-        "margemPercentual": 62.0,
-        "pedidos": 212,
-        "ticketMedio": 109.26
+        "pedidos": 229,
+        "ticketMedio": 109.38
       },
       {
         "canal": "app",
-        "receitaBruta": 22950.47,
-        "descontos": 838.55,
-        "receitaLiquida": 22111.92,
-        "custosVariaveis": 8402.53,
-        "margemBruta": 13709.39,
+        "receitaBruta": 24650.47,
+        "descontos": 881.11,
+        "receitaLiquida": 23769.36,
+        "custosVariaveis": 9032.36,
+        "margemBruta": 14737.0,
         "margemPercentual": 62.0,
-        "pedidos": 215,
-        "ticketMedio": 106.75
+        "pedidos": 229,
+        "ticketMedio": 107.64
+      },
+      {
+        "canal": "delivery_proprio",
+        "receitaBruta": 24021.06,
+        "descontos": 844.39,
+        "receitaLiquida": 23176.67,
+        "custosVariaveis": 8807.13,
+        "margemBruta": 14369.54,
+        "margemPercentual": 62.0,
+        "pedidos": 221,
+        "ticketMedio": 108.69
       },
       {
         "canal": "Cannoli-Tab",
@@ -3638,23 +3638,23 @@
       },
       {
         "tipo": "takeout",
-        "receitaBruta": 35748.95,
-        "descontos": 1384.7,
-        "receitaLiquida": 34364.25,
-        "custosVariaveis": 13058.42,
-        "margemBruta": 21305.83,
+        "receitaBruta": 37778.7,
+        "descontos": 1429.66,
+        "receitaLiquida": 36349.04,
+        "custosVariaveis": 13812.64,
+        "margemBruta": 22536.4,
         "margemPercentual": 62.0,
-        "pedidos": 333
+        "pedidos": 351
       },
       {
         "tipo": "delivery",
-        "receitaBruta": 34356.96,
-        "descontos": 1307.77,
-        "receitaLiquida": 33049.19,
-        "custosVariaveis": 12558.69,
-        "margemBruta": 20490.5,
+        "receitaBruta": 35940.57,
+        "descontos": 1365.64,
+        "receitaLiquida": 34574.93,
+        "custosVariaveis": 13138.47,
+        "margemBruta": 21436.46,
         "margemPercentual": 62.0,
-        "pedidos": 314
+        "pedidos": 328
       }
     ],
     "alertasFinanceiros": []
@@ -3665,35 +3665,35 @@
       {
         "storeid": "01Ac4Ec3-F7E0-451D-Ab31-2Db1799816Ca",
         "empresa": "Padaria Century",
-        "receita": 1409374.06,
-        "pedidos": 22048,
+        "receita": 1410470.95,
+        "pedidos": 22058,
         "clientes": 6461,
-        "clientesRecorrentes": 3045,
-        "ticketMedio": 63.92,
-        "recorrencia": 47.13,
-        "desconto": 105084.42,
+        "clientesRecorrentes": 3046,
+        "ticketMedio": 63.94,
+        "recorrencia": 47.14,
+        "desconto": 105120.6,
         "status": "saudavel"
       },
       {
         "storeid": "5325Fbf9-22E9-4C68-8E42-8C740E9Eec32",
         "empresa": "La Brunet Paes E Doces Pedro Doll Ltda",
-        "receita": 631630.79,
-        "pedidos": 10774,
+        "receita": 632045.6,
+        "pedidos": 10778,
         "clientes": 4751,
-        "clientesRecorrentes": 1782,
-        "ticketMedio": 58.63,
-        "recorrencia": 37.51,
-        "desconto": 68358.94,
+        "clientesRecorrentes": 1783,
+        "ticketMedio": 58.64,
+        "recorrencia": 37.53,
+        "desconto": 68376.31,
         "status": "saudavel"
       },
       {
         "storeid": "0C02619D-0C57-492D-9660-Dd0F357A2F0C",
         "empresa": "Casa Da Esfiha Jardim Japão",
-        "receita": 429819.9,
-        "pedidos": 8737,
+        "receita": 430035.63,
+        "pedidos": 8739,
         "clientes": 5052,
         "clientesRecorrentes": 1602,
-        "ticketMedio": 49.2,
+        "ticketMedio": 49.21,
         "recorrencia": 31.71,
         "desconto": 43372.72,
         "status": "atencao"
@@ -3701,13 +3701,13 @@
       {
         "storeid": "B6Bc362F-Cb27-44Ac-A9C8-5E9B08263F86",
         "empresa": "Casa Da Esfiha Vila Gustavo Ltda",
-        "receita": 384342.86,
-        "pedidos": 7685,
+        "receita": 384708.0,
+        "pedidos": 7688,
         "clientes": 4274,
-        "clientesRecorrentes": 1275,
-        "ticketMedio": 50.01,
-        "recorrencia": 29.83,
-        "desconto": 42265.96,
+        "clientesRecorrentes": 1277,
+        "ticketMedio": 50.04,
+        "recorrencia": 29.88,
+        "desconto": 42281.21,
         "status": "atencao"
       },
       {
@@ -3725,8 +3725,8 @@
       {
         "storeid": "8C4E96A9-A7B8-4B4C-A891-F600C9Eceee5",
         "empresa": "Gran Royalle",
-        "receita": 288124.26,
-        "pedidos": 4728,
+        "receita": 288183.67,
+        "pedidos": 4729,
         "clientes": 2107,
         "clientesRecorrentes": 757,
         "ticketMedio": 60.94,
@@ -3737,20 +3737,20 @@
       {
         "storeid": "483Af9D2-7C76-4B9B-Ae0F-81Ef7F021568",
         "empresa": "Caldo Bom Do Mateus",
-        "receita": 258396.55,
-        "pedidos": 5715,
+        "receita": 258545.54,
+        "pedidos": 5716,
         "clientes": 3280,
         "clientesRecorrentes": 1057,
-        "ticketMedio": 45.21,
+        "ticketMedio": 45.23,
         "recorrencia": 32.23,
-        "desconto": 26999.19,
+        "desconto": 27013.83,
         "status": "atencao"
       },
       {
         "storeid": "F7A936Fb-644A-436B-8907-7846B067865E",
         "empresa": "Padaria Maria Amália",
-        "receita": 208634.53,
-        "pedidos": 4233,
+        "receita": 208698.84,
+        "pedidos": 4234,
         "clientes": 2057,
         "clientesRecorrentes": 756,
         "ticketMedio": 49.29,
@@ -3761,11 +3761,11 @@
       {
         "storeid": "1E31B67E-621C-4915-9Fb2-67B918F3D6D6",
         "empresa": "Austrália Hamburgueria Artesanal",
-        "receita": 207008.18,
-        "pedidos": 4555,
+        "receita": 207137.02,
+        "pedidos": 4556,
         "clientes": 2054,
         "clientesRecorrentes": 1443,
-        "ticketMedio": 45.45,
+        "ticketMedio": 45.46,
         "recorrencia": 70.25,
         "desconto": 57278.03,
         "status": "saudavel"
@@ -3773,24 +3773,24 @@
       {
         "storeid": "1Fcd01E3-2Dba-4Af8-Ae58-C39060F3E575",
         "empresa": "Padaria Vitória Régia",
-        "receita": 191498.01,
-        "pedidos": 3492,
+        "receita": 191736.77,
+        "pedidos": 3494,
         "clientes": 1616,
-        "clientesRecorrentes": 611,
-        "ticketMedio": 54.84,
-        "recorrencia": 37.81,
+        "clientesRecorrentes": 612,
+        "ticketMedio": 54.88,
+        "recorrencia": 37.87,
         "desconto": 15194.66,
         "status": "saudavel"
       },
       {
         "storeid": "106Cd2Af-2375-40D3-Ab22-0172926F95F6",
         "empresa": "Padaria Silvana",
-        "receita": 181959.93,
-        "pedidos": 5206,
+        "receita": 182218.13,
+        "pedidos": 5208,
         "clientes": 1981,
-        "clientesRecorrentes": 829,
-        "ticketMedio": 34.95,
-        "recorrencia": 41.85,
+        "clientesRecorrentes": 830,
+        "ticketMedio": 34.99,
+        "recorrencia": 41.9,
         "desconto": 26678.45,
         "status": "saudavel"
       },
@@ -3833,12 +3833,12 @@
       {
         "storeid": "6Dad43B9-E9E2-4318-94D8-800Ece3Fdea2",
         "empresa": "Lp - Maringa - Willie Davids",
-        "receita": 125443.83,
-        "pedidos": 2387,
+        "receita": 125624.79,
+        "pedidos": 2389,
         "clientes": 1148,
-        "clientesRecorrentes": 407,
-        "ticketMedio": 52.55,
-        "recorrencia": 35.45,
+        "clientesRecorrentes": 408,
+        "ticketMedio": 52.58,
+        "recorrencia": 35.54,
         "desconto": 20267.69,
         "status": "saudavel"
       }
@@ -3847,35 +3847,35 @@
       {
         "storeid": "01Ac4Ec3-F7E0-451D-Ab31-2Db1799816Ca",
         "empresa": "Padaria Century",
-        "receita": 1409374.06,
-        "pedidos": 22048,
+        "receita": 1410470.95,
+        "pedidos": 22058,
         "clientes": 6461,
-        "clientesRecorrentes": 3045,
-        "ticketMedio": 63.92,
-        "recorrencia": 47.13,
-        "desconto": 105084.42,
+        "clientesRecorrentes": 3046,
+        "ticketMedio": 63.94,
+        "recorrencia": 47.14,
+        "desconto": 105120.6,
         "status": "saudavel"
       },
       {
         "storeid": "5325Fbf9-22E9-4C68-8E42-8C740E9Eec32",
         "empresa": "La Brunet Paes E Doces Pedro Doll Ltda",
-        "receita": 631630.79,
-        "pedidos": 10774,
+        "receita": 632045.6,
+        "pedidos": 10778,
         "clientes": 4751,
-        "clientesRecorrentes": 1782,
-        "ticketMedio": 58.63,
-        "recorrencia": 37.51,
-        "desconto": 68358.94,
+        "clientesRecorrentes": 1783,
+        "ticketMedio": 58.64,
+        "recorrencia": 37.53,
+        "desconto": 68376.31,
         "status": "saudavel"
       },
       {
         "storeid": "0C02619D-0C57-492D-9660-Dd0F357A2F0C",
         "empresa": "Casa Da Esfiha Jardim Japão",
-        "receita": 429819.9,
-        "pedidos": 8737,
+        "receita": 430035.63,
+        "pedidos": 8739,
         "clientes": 5052,
         "clientesRecorrentes": 1602,
-        "ticketMedio": 49.2,
+        "ticketMedio": 49.21,
         "recorrencia": 31.71,
         "desconto": 43372.72,
         "status": "atencao"
@@ -3883,13 +3883,13 @@
       {
         "storeid": "B6Bc362F-Cb27-44Ac-A9C8-5E9B08263F86",
         "empresa": "Casa Da Esfiha Vila Gustavo Ltda",
-        "receita": 384342.86,
-        "pedidos": 7685,
+        "receita": 384708.0,
+        "pedidos": 7688,
         "clientes": 4274,
-        "clientesRecorrentes": 1275,
-        "ticketMedio": 50.01,
-        "recorrencia": 29.83,
-        "desconto": 42265.96,
+        "clientesRecorrentes": 1277,
+        "ticketMedio": 50.04,
+        "recorrencia": 29.88,
+        "desconto": 42281.21,
         "status": "atencao"
       },
       {
@@ -3965,8 +3965,8 @@
         },
         {
           "empresa": "Padaria Silvana",
-          "ticketMedio": 34.95,
-          "pedidos": 5206,
+          "ticketMedio": 34.99,
+          "pedidos": 5208,
           "status": "saudavel"
         },
         {
@@ -3989,14 +3989,14 @@
         },
         {
           "empresa": "Caldo Bom Do Mateus",
-          "ticketMedio": 45.21,
-          "pedidos": 5715,
+          "ticketMedio": 45.23,
+          "pedidos": 5716,
           "status": "atencao"
         },
         {
           "empresa": "Austrália Hamburgueria Artesanal",
-          "ticketMedio": 45.45,
-          "pedidos": 4555,
+          "ticketMedio": 45.46,
+          "pedidos": 4556,
           "status": "saudavel"
         },
         {
@@ -4235,11 +4235,11 @@
         "tipo": "upsell",
         "prioridade": "media",
         "campanhaRecomendada": "Campanha de combo, upsell ou pedido mínimo",
-        "justificativa": "A empresa possui ticket médio de R$ 34.95, entre os menores da base. Campanhas de combo e venda adicional podem aumentar o valor médio por pedido.",
+        "justificativa": "A empresa possui ticket médio de R$ 34.99, entre os menores da base. Campanhas de combo e venda adicional podem aumentar o valor médio por pedido.",
         "acaoSugerida": "Criar oferta de combo, adicional promocional ou benefício acima de um valor mínimo.",
         "metricaBase": "Ticket médio",
-        "valorMetrica": 34.95,
-        "receitaPotencial": 10917.6,
+        "valorMetrica": 34.99,
+        "receitaPotencial": 10933.09,
         "roiSimulado": 140.0,
         "intervaloConfianca95": {
           "inferior": 8.0,
@@ -4299,11 +4299,11 @@
         "tipo": "upsell",
         "prioridade": "media",
         "campanhaRecomendada": "Campanha de combo, upsell ou pedido mínimo",
-        "justificativa": "A empresa possui ticket médio de R$ 45.21, entre os menores da base. Campanhas de combo e venda adicional podem aumentar o valor médio por pedido.",
+        "justificativa": "A empresa possui ticket médio de R$ 45.23, entre os menores da base. Campanhas de combo e venda adicional podem aumentar o valor médio por pedido.",
         "acaoSugerida": "Criar oferta de combo, adicional promocional ou benefício acima de um valor mínimo.",
         "metricaBase": "Ticket médio",
-        "valorMetrica": 45.21,
-        "receitaPotencial": 15503.79,
+        "valorMetrica": 45.23,
+        "receitaPotencial": 15512.73,
         "roiSimulado": 140.0,
         "intervaloConfianca95": {
           "inferior": 8.0,
@@ -4475,7 +4475,7 @@
         "tipo": "maior_faturamento",
         "prioridade": "media",
         "titulo": "Empresa com maior faturamento",
-        "mensagem": "Padaria Century lidera em faturamento com R$ 1409374.06.",
+        "mensagem": "Padaria Century lidera em faturamento com R$ 1410470.95.",
         "acaoSugerida": "Usar essa empresa como referência para benchmarking comercial."
       },
       {
@@ -4534,7 +4534,7 @@
       "tipo": "ticket_baixo",
       "prioridade": "media",
       "empresa": "Padaria Silvana",
-      "mensagem": "Ticket médio de R$ 34.95 está entre os menores da base.",
+      "mensagem": "Ticket médio de R$ 34.99 está entre os menores da base.",
       "acaoSugerida": "Avaliar estratégia de combos, upsell e ticket mínimo."
     },
     {

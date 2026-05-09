@@ -4,6 +4,44 @@ import Sidebar from '../dashboard/Sidebar';
 
 const API_URL = 'http://localhost:3001/api';
 
+const normalizarStatusConvite = (convite) => {
+  if (convite?.used_at || convite?.status === 'used') {
+    return 'used';
+  }
+
+  if (convite?.status === 'active') {
+    return 'active';
+  }
+
+  return 'inactive';
+};
+
+const statusConfig = {
+  active: {
+    label: 'Ativo',
+    classe: 'bg-green-100 text-green-700 border-green-200'
+  },
+  used: {
+    label: 'Usado',
+    classe: 'bg-blue-100 text-blue-700 border-blue-200'
+  },
+  inactive: {
+    label: 'Inativo',
+    classe: 'bg-gray-100 text-gray-600 border-gray-200'
+  }
+};
+
+const StatusBadge = ({ convite }) => {
+  const status = normalizarStatusConvite(convite);
+  const config = statusConfig[status] || statusConfig.inactive;
+
+  return (
+    <span className={`inline-flex px-3 py-1 rounded-full text-xs font-semibold border whitespace-nowrap ${config.classe}`}>
+      {config.label}
+    </span>
+  );
+};
+
 const ConvidarStaff = () => {
   const navigate = useNavigate();
 
@@ -235,7 +273,9 @@ const ConvidarStaff = () => {
                         <td className="py-4 pr-4">{convite.name}</td>
                         <td className="py-4 pr-4">{convite.email}</td>
                         <td className="py-4 pr-4">{convite.invite_code}</td>
-                        <td className="py-4 pr-4">{convite.status}</td>
+                        <td className="py-4 pr-4">
+                          <StatusBadge convite={convite} />
+                        </td>
                         <td className="py-4 pr-4">
                           {convite.expires_at
                             ? new Date(convite.expires_at).toLocaleString('pt-BR')

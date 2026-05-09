@@ -1,4 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
+import { Download, FileText, X } from 'lucide-react';
 import Sidebar from '../dashboard/Sidebar';
 import FiltrosDashboard from './shared/FiltrosDashboard';
 import {
@@ -45,6 +48,112 @@ const formatarPercentual = (valor) => {
 
 const coresGraficos = ['#f26322', '#ff8a4c', '#ffb088', '#ffd2bd', '#f7a072', '#d9480f'];
 
+const renderizarValorTabela = (key, valor) => {
+  const chave = String(key || '').toLowerCase();
+
+  if (chave.includes('receita')) return formatarMoeda(valor);
+  if (chave.includes('valor')) return formatarMoeda(valor);
+  if (chave.includes('faturamento')) return formatarMoeda(valor);
+  if (chave.includes('ticket')) return formatarMoeda(valor);
+
+  if (chave.includes('conversao')) return formatarPercentual(valor);
+  if (chave.includes('taxa')) return formatarPercentual(valor);
+  if (chave.includes('percentual')) return formatarPercentual(valor);
+
+  if (chave.includes('pedidos')) return formatarNumero(valor);
+  if (chave.includes('clientes')) return formatarNumero(valor);
+  if (chave.includes('mensagens')) return formatarNumero(valor);
+  if (chave.includes('campanhas')) return formatarNumero(valor);
+  if (chave.includes('usos')) return formatarNumero(valor);
+
+  return valor ?? '-';
+};
+
+const exportarCsv = ({ nomeArquivo, colunas, dados }) => {
+  if (!dados || dados.length === 0) {
+    return;
+  }
+
+  const cabecalho = colunas.map((coluna) => coluna.label).join(';');
+
+  const linhas = dados.map((item) => {
+    return colunas
+      .map((coluna) => {
+        const valor = item[coluna.key] ?? '';
+        const texto = String(valor).replace(/"/g, '""');
+        return `"${texto}"`;
+      })
+      .join(';');
+  });
+
+  const csv = [cabecalho, ...linhas].join('\n');
+
+  const blob = new Blob([`\uFEFF${csv}`], {
+    type: 'text/csv;charset=utf-8;'
+  });
+
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+
+  link.href = url;
+  link.download = nomeArquivo;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+
+  URL.revokeObjectURL(url);
+};
+
+const exportarPdf = ({ titulo, descricao, nomeArquivo, colunas, dados }) => {
+  if (!dados || dados.length === 0) {
+    return;
+  }
+
+  const documento = new jsPDF({
+    orientation: 'landscape',
+    unit: 'pt',
+    format: 'a4'
+  });
+
+  const dataAtual = new Date().toLocaleString('pt-BR');
+
+  documento.setFontSize(16);
+  documento.text(titulo || 'Detalhamento de campanhas', 40, 40);
+
+  documento.setFontSize(9);
+  documento.text(descricao || 'Tabela de apoio exportada da aba Campanhas.', 40, 58);
+
+  documento.setFontSize(8);
+  documento.text(`Exportado em: ${dataAtual}`, 40, 74);
+
+  autoTable(documento, {
+    head: [colunas.map((coluna) => coluna.label)],
+    body: dados.map((item) => {
+      return colunas.map((coluna) => renderizarValorTabela(coluna.key, item[coluna.key]));
+    }),
+    startY: 92,
+    styles: {
+      fontSize: 7,
+      cellPadding: 4,
+      overflow: 'linebreak'
+    },
+    headStyles: {
+      fillColor: [242, 99, 34],
+      textColor: 255,
+      fontStyle: 'bold'
+    },
+    alternateRowStyles: {
+      fillColor: [250, 246, 241]
+    },
+    margin: {
+      left: 40,
+      right: 40
+    }
+  });
+
+  documento.save((nomeArquivo || 'detalhamento_campanhas.csv').replace('.csv', '.pdf'));
+};
+
 const TooltipGrafico = ({ active, payload, label }) => {
   if (!active || !payload || payload.length === 0) {
     return null;
@@ -79,9 +188,13 @@ const TooltipGrafico = ({ active, payload, label }) => {
   );
 };
 
-const CardResumo = ({ titulo, valor, descricao }) => {
+const CardResumo = ({ titulo, valor, descricao, onClick }) => {
   return (
-    <div className="bg-white rounded-2xl p-5 sm:p-6 border border-orange/10 shadow-sm min-w-0">
+    <button
+      type="button"
+      onClick={onClick}
+      className="bg-white rounded-2xl p-5 sm:p-6 border border-orange/10 shadow-sm min-w-0 text-left w-full hover:shadow-md hover:-translate-y-[1px] transition-all"
+    >
       <p className="text-sm text-gray-500 break-words">
         {titulo}
       </p>
@@ -95,7 +208,11 @@ const CardResumo = ({ titulo, valor, descricao }) => {
           {descricao}
         </p>
       )}
-    </div>
+
+      <p className="text-xs text-orange font-semibold mt-3">
+        Clique para detalhar
+      </p>
+    </button>
   );
 };
 
@@ -129,6 +246,7 @@ const Campanhas = () => {
   const [atualizando, setAtualizando] = useState(false);
   const [ultimaAtualizacao, setUltimaAtualizacao] = useState(null);
   const [filtros, setFiltros] = useState(FILTROS_PADRAO);
+  const [detalheAtivo, setDetalheAtivo] = useState(null);
 
   const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
   const isEmpresa = usuario.role === 'empresa';
@@ -171,11 +289,13 @@ const Campanhas = () => {
   };
 
   const aplicarFiltros = () => {
+    setDetalheAtivo(null);
     filtrosRef.current = filtros;
     carregarDados({ filtrosAplicados: filtros });
   };
 
   const limparFiltros = () => {
+    setDetalheAtivo(null);
     const filtrosLimpos = { ...FILTROS_PADRAO };
 
     setFiltros(filtrosLimpos);
@@ -253,6 +373,163 @@ const Campanhas = () => {
       .sort((a, b) => Number(b.usos || 0) - Number(a.usos || 0))
       .slice(0, 8);
   }, [templates]);
+
+  const detalhes = useMemo(() => {
+    return {
+      totalCampanhas: {
+        titulo: 'Detalhamento das campanhas',
+        descricao: 'Campanhas cadastradas/processadas na visão atual.',
+        nomeArquivo: 'detalhamento_campanhas.csv',
+        colunas: [
+          { key: 'campanha', label: 'Campanha' },
+          { key: 'receita', label: 'Receita' },
+          { key: 'pedidos', label: 'Pedidos' },
+          { key: 'mensagens', label: 'Mensagens' },
+          { key: 'clientes', label: 'Clientes' },
+          { key: 'conversao', label: 'Conversão' }
+        ],
+        dados: melhoresCampanhas
+      },
+      receitaCampanhas: {
+        titulo: 'Detalhamento da receita por campanhas',
+        descricao: 'Receita vinculada às campanhas por campanha e empresa.',
+        nomeArquivo: 'detalhamento_receita_campanhas.csv',
+        colunas: [
+          { key: 'empresa', label: 'Empresa' },
+          { key: 'campanha', label: 'Campanha' },
+          { key: 'receita', label: 'Receita' },
+          { key: 'mensagens', label: 'Mensagens' },
+          { key: 'pedidosConvertidos', label: 'Pedidos convertidos' },
+          { key: 'clientes', label: 'Clientes' },
+          { key: 'taxaConversao', label: 'Conversão' }
+        ],
+        dados: mensagensPorCampanhaEmpresa
+      },
+      pedidosGerados: {
+        titulo: 'Detalhamento dos pedidos gerados',
+        descricao: 'Pedidos associados às campanhas.',
+        nomeArquivo: 'detalhamento_pedidos_gerados_campanhas.csv',
+        colunas: [
+          { key: 'campanha', label: 'Campanha' },
+          { key: 'pedidos', label: 'Pedidos' },
+          { key: 'receita', label: 'Receita' },
+          { key: 'mensagens', label: 'Mensagens' },
+          { key: 'clientes', label: 'Clientes' },
+          { key: 'conversao', label: 'Conversão' }
+        ],
+        dados: melhoresCampanhas
+      },
+      conversaoMedia: {
+        titulo: 'Detalhamento da conversão média',
+        descricao: 'Conversão das campanhas por mensagens enviadas.',
+        nomeArquivo: 'detalhamento_conversao_campanhas.csv',
+        colunas: [
+          { key: 'empresa', label: 'Empresa' },
+          { key: 'campanha', label: 'Campanha' },
+          { key: 'taxaConversao', label: 'Conversão' },
+          { key: 'mensagens', label: 'Mensagens' },
+          { key: 'pedidosConvertidos', label: 'Pedidos convertidos' },
+          { key: 'clientes', label: 'Clientes' },
+          { key: 'receita', label: 'Receita' }
+        ],
+        dados: mensagensPorCampanhaEmpresa
+      },
+      mensagensCampanhaEmpresa: {
+        titulo: 'Detalhamento de mensagens por campanha e empresa',
+        descricao: 'Indicador obrigatório: mensagens por campanha e empresa.',
+        nomeArquivo: 'detalhamento_mensagens_campanha_empresa.csv',
+        colunas: [
+          { key: 'empresa', label: 'Empresa' },
+          { key: 'campanha', label: 'Campanha' },
+          { key: 'mensagens', label: 'Mensagens' },
+          { key: 'pedidosConvertidos', label: 'Pedidos convertidos' },
+          { key: 'clientes', label: 'Clientes' },
+          { key: 'receita', label: 'Receita' },
+          { key: 'taxaConversao', label: 'Conversão' }
+        ],
+        dados: mensagensPorCampanhaEmpresa
+      },
+      pedidosConvertidos: {
+        titulo: 'Detalhamento dos pedidos convertidos',
+        descricao: 'Pedidos convertidos por campanha e empresa.',
+        nomeArquivo: 'detalhamento_pedidos_convertidos.csv',
+        colunas: [
+          { key: 'empresa', label: 'Empresa' },
+          { key: 'campanha', label: 'Campanha' },
+          { key: 'pedidosConvertidos', label: 'Pedidos convertidos' },
+          { key: 'mensagens', label: 'Mensagens' },
+          { key: 'taxaConversao', label: 'Conversão' },
+          { key: 'receita', label: 'Receita' }
+        ],
+        dados: mensagensPorCampanhaEmpresa
+      },
+      receitaConvertida: {
+        titulo: 'Detalhamento da receita convertida',
+        descricao: 'Receita das campanhas por empresa e campanha.',
+        nomeArquivo: 'detalhamento_receita_convertida.csv',
+        colunas: [
+          { key: 'empresa', label: 'Empresa' },
+          { key: 'campanha', label: 'Campanha' },
+          { key: 'receita', label: 'Receita' },
+          { key: 'pedidosConvertidos', label: 'Pedidos convertidos' },
+          { key: 'mensagens', label: 'Mensagens' },
+          { key: 'taxaConversao', label: 'Conversão' }
+        ],
+        dados: mensagensPorCampanhaEmpresa
+      },
+      conversaoObrigatoria: {
+        titulo: 'Detalhamento da conversão obrigatória',
+        descricao: 'Pedidos convertidos divididos por mensagens.',
+        nomeArquivo: 'detalhamento_conversao_obrigatoria.csv',
+        colunas: [
+          { key: 'empresa', label: 'Empresa' },
+          { key: 'campanha', label: 'Campanha' },
+          { key: 'taxaConversao', label: 'Conversão' },
+          { key: 'pedidosConvertidos', label: 'Pedidos convertidos' },
+          { key: 'mensagens', label: 'Mensagens' },
+          { key: 'receita', label: 'Receita' }
+        ],
+        dados: mensagensPorCampanhaEmpresa
+      },
+      baixaConversao: {
+        titulo: 'Detalhamento de campanhas com baixa conversão',
+        descricao: 'Campanhas com baixa eficiência de conversão.',
+        nomeArquivo: 'detalhamento_baixa_conversao.csv',
+        colunas: [
+          { key: 'campanha', label: 'Campanha' },
+          { key: 'conversao', label: 'Conversão' },
+          { key: 'mensagens', label: 'Mensagens' },
+          { key: 'pedidos', label: 'Pedidos' },
+          { key: 'receita', label: 'Receita' }
+        ],
+        dados: baixaConversao
+      },
+      templates: {
+        titulo: 'Detalhamento dos templates mais usados',
+        descricao: 'Templates ordenados por quantidade de usos.',
+        nomeArquivo: 'detalhamento_templates.csv',
+        colunas: [
+          { key: 'template', label: 'Template' },
+          { key: 'usos', label: 'Usos' }
+        ],
+        dados: templates
+      }
+    };
+  }, [melhoresCampanhas, mensagensPorCampanhaEmpresa, baixaConversao, templates]);
+
+  const detalheSelecionado = detalheAtivo ? detalhes[detalheAtivo] : null;
+
+  const abrirDetalhe = (tipo) => {
+    setDetalheAtivo(tipo);
+
+    setTimeout(() => {
+      const elemento = document.getElementById('detalhamento-kpi');
+
+      if (elemento) {
+        elemento.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 100);
+  };
 
   return (
     <div className="flex min-h-screen bg-cream">
@@ -380,24 +657,28 @@ const Campanhas = () => {
                   titulo="Total de campanhas"
                   valor={formatarNumero(campanhas.totalCampanhas)}
                   descricao="Campanhas cadastradas/processadas"
+                  onClick={() => abrirDetalhe('totalCampanhas')}
                 />
 
                 <CardResumo
                   titulo="Receita por campanhas"
                   valor={formatarMoeda(campanhas.receitaCampanhas)}
                   descricao="Receita vinculada às campanhas"
+                  onClick={() => abrirDetalhe('receitaCampanhas')}
                 />
 
                 <CardResumo
                   titulo="Pedidos gerados"
                   valor={formatarNumero(campanhas.pedidosGerados)}
                   descricao="Pedidos associados às campanhas"
+                  onClick={() => abrirDetalhe('pedidosGerados')}
                 />
 
                 <CardResumo
                   titulo="Conversão média"
                   valor={formatarPercentual(campanhas.conversaoMedia)}
                   descricao="Pedidos / mensagens"
+                  onClick={() => abrirDetalhe('conversaoMedia')}
                 />
               </section>
 
@@ -406,26 +687,137 @@ const Campanhas = () => {
                   titulo="Mensagens por campanha/empresa"
                   valor={formatarNumero(totalMensagensPorCampanhaEmpresa)}
                   descricao="Total do indicador obrigatório"
+                  onClick={() => abrirDetalhe('mensagensCampanhaEmpresa')}
                 />
 
                 <CardResumo
                   titulo="Pedidos convertidos"
                   valor={formatarNumero(totalPedidosConvertidosPorCampanhaEmpresa)}
                   descricao="Pedidos convertidos por campanha/empresa"
+                  onClick={() => abrirDetalhe('pedidosConvertidos')}
                 />
 
                 <CardResumo
                   titulo="Receita convertida"
                   valor={formatarMoeda(totalReceitaCampanhaEmpresa)}
                   descricao="Receita das campanhas por empresa"
+                  onClick={() => abrirDetalhe('receitaConvertida')}
                 />
 
                 <CardResumo
                   titulo="Conversão obrigatória"
                   valor={formatarPercentual(conversaoObrigatoria)}
                   descricao="Pedidos convertidos / mensagens"
+                  onClick={() => abrirDetalhe('conversaoObrigatoria')}
                 />
               </section>
+              {detalheSelecionado && (
+                <section
+                  id="detalhamento-kpi"
+                  className="bg-white rounded-2xl shadow-sm p-5 sm:p-6 mb-6 border border-orange/10"
+                >
+                  <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4 mb-5">
+                    <div className="min-w-0">
+                      <h2 className="text-lg sm:text-xl font-bold text-text-dark">
+                        {detalheSelecionado.titulo}
+                      </h2>
+
+                      <p className="text-sm text-gray-500 mt-1 leading-relaxed">
+                        {detalheSelecionado.descricao}
+                      </p>
+                    </div>
+
+                    <div className="flex flex-col sm:flex-row gap-3">
+                      <button
+                        type="button"
+                        onClick={() =>
+                          exportarCsv({
+                            nomeArquivo: detalheSelecionado.nomeArquivo,
+                            colunas: detalheSelecionado.colunas,
+                            dados: detalheSelecionado.dados
+                          })
+                        }
+                        disabled={!detalheSelecionado.dados || detalheSelecionado.dados.length === 0}
+                        className="px-4 py-3 rounded-xl bg-orange text-white font-semibold hover:bg-orange-dark transition disabled:opacity-50 flex items-center justify-center gap-2"
+                      >
+                        <Download size={18} />
+                        Exportar CSV
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() =>
+                          exportarPdf({
+                            titulo: detalheSelecionado.titulo,
+                            descricao: detalheSelecionado.descricao,
+                            nomeArquivo: detalheSelecionado.nomeArquivo,
+                            colunas: detalheSelecionado.colunas,
+                            dados: detalheSelecionado.dados
+                          })
+                        }
+                        disabled={!detalheSelecionado.dados || detalheSelecionado.dados.length === 0}
+                        className="px-4 py-3 rounded-xl bg-white border border-orange/20 text-orange font-semibold hover:bg-orange/5 transition disabled:opacity-50 flex items-center justify-center gap-2"
+                      >
+                        <FileText size={18} />
+                        Exportar PDF
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => setDetalheAtivo(null)}
+                        className="px-4 py-3 rounded-xl bg-orange/10 text-orange font-semibold hover:bg-orange/15 transition flex items-center justify-center gap-2"
+                      >
+                        <X size={18} />
+                        Fechar
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="overflow-x-auto -mx-5 sm:-mx-6 px-5 sm:px-6">
+                    <table className="w-full min-w-[900px] text-sm">
+                      <thead>
+                        <tr className="border-b text-left text-gray-500">
+                          {detalheSelecionado.colunas.map((coluna) => (
+                            <th key={coluna.key} className="py-3 pr-4">
+                              {coluna.label}
+                            </th>
+                          ))}
+                        </tr>
+                      </thead>
+
+                      <tbody>
+                        {(detalheSelecionado.dados || []).slice(0, 30).map((item, index) => (
+                          <tr key={index} className="border-b last:border-b-0">
+                            {detalheSelecionado.colunas.map((coluna) => (
+                              <td key={coluna.key} className="py-3 pr-4">
+                                {renderizarValorTabela(coluna.key, item[coluna.key])}
+                              </td>
+                            ))}
+                          </tr>
+                        ))}
+
+                        {(!detalheSelecionado.dados || detalheSelecionado.dados.length === 0) && (
+                          <tr>
+                            <td
+                              colSpan={detalheSelecionado.colunas.length}
+                              className="py-6 text-center text-gray-500"
+                            >
+                              Nenhum dado encontrado para este detalhamento.
+                            </td>
+                          </tr>
+                        )}
+                      </tbody>
+                    </table>
+                  </div>
+
+                  {detalheSelecionado.dados?.length > 30 && (
+                    <p className="text-xs text-gray-500 mt-4">
+                      Mostrando os primeiros 30 registros. A exportação CSV/PDF inclui todos os registros disponíveis.
+                    </p>
+                  )}
+                </section>
+              )}
+
 
               <section className="grid grid-cols-1 2xl:grid-cols-2 gap-5 sm:gap-6 mb-6">
                 <CardGrafico

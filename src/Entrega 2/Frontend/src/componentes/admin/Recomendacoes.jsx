@@ -1,4 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
+import { Download, FileText, X } from 'lucide-react';
 import Sidebar from '../dashboard/Sidebar';
 import {
   buscarAdminDashboard,
@@ -59,9 +62,9 @@ const TipoBadge = ({ tipo }) => {
   );
 };
 
-const CardResumo = ({ titulo, valor, descricao }) => {
-  return (
-    <div className="bg-white rounded-2xl p-5 sm:p-6 border border-orange/10 shadow-sm min-w-0">
+const CardResumo = ({ titulo, valor, descricao, onClick }) => {
+  const conteudo = (
+    <>
       <p className="text-sm text-gray-500 break-words">
         {titulo}
       </p>
@@ -75,8 +78,155 @@ const CardResumo = ({ titulo, valor, descricao }) => {
           {descricao}
         </p>
       )}
+
+      {onClick && (
+        <p className="text-xs text-orange font-semibold mt-3">
+          Clique para detalhar
+        </p>
+      )}
+    </>
+  );
+
+  if (onClick) {
+    return (
+      <button
+        type="button"
+        onClick={onClick}
+        className="bg-white rounded-2xl p-5 sm:p-6 border border-orange/10 shadow-sm min-w-0 text-left w-full hover:shadow-md hover:-translate-y-[1px] transition-all"
+      >
+        {conteudo}
+      </button>
+    );
+  }
+
+  return (
+    <div className="bg-white rounded-2xl p-5 sm:p-6 border border-orange/10 shadow-sm min-w-0">
+      {conteudo}
     </div>
   );
+};
+
+
+const renderizarValorTabela = (key, valor) => {
+  const chave = String(key || '').toLowerCase();
+
+  if (valor === null || valor === undefined || valor === '') {
+    return '-';
+  }
+
+  if (
+    chave.includes('receita') ||
+    chave.includes('ticket') ||
+    chave.includes('faturamento')
+  ) {
+    return formatarMoeda(valor);
+  }
+
+  if (
+    chave.includes('roi') ||
+    chave.includes('conversao') ||
+    chave.includes('taxa') ||
+    chave.includes('percentual') ||
+    chave.includes('valorMetrica'.toLowerCase()) ||
+    chave.includes('retencao')
+  ) {
+    return formatarPercentual(valor);
+  }
+
+  if (
+    chave.includes('pedidos') ||
+    chave.includes('clientes') ||
+    chave.includes('mensagens') ||
+    chave.includes('recomendacoes') ||
+    chave.includes('testes')
+  ) {
+    return formatarNumero(valor);
+  }
+
+  return valor;
+};
+
+const exportarCsv = ({ nomeArquivo, colunas, dados }) => {
+  if (!dados || dados.length === 0) {
+    return;
+  }
+
+  const cabecalho = colunas.map((coluna) => coluna.label).join(';');
+
+  const linhas = dados.map((item) => {
+    return colunas
+      .map((coluna) => {
+        const valor = item[coluna.key] ?? '';
+        const texto = String(valor).replace(/"/g, '""');
+        return `"${texto}"`;
+      })
+      .join(';');
+  });
+
+  const csv = [cabecalho, ...linhas].join('\n');
+
+  const blob = new Blob([`\uFEFF${csv}`], {
+    type: 'text/csv;charset=utf-8;'
+  });
+
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+
+  link.href = url;
+  link.download = nomeArquivo;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+
+  URL.revokeObjectURL(url);
+};
+
+const exportarPdf = ({ titulo, descricao, nomeArquivo, colunas, dados }) => {
+  if (!dados || dados.length === 0) {
+    return;
+  }
+
+  const documento = new jsPDF({
+    orientation: 'landscape',
+    unit: 'pt',
+    format: 'a4'
+  });
+
+  const dataAtual = new Date().toLocaleString('pt-BR');
+
+  documento.setFontSize(16);
+  documento.text(titulo || 'Detalhamento de Recomendações', 40, 40);
+
+  documento.setFontSize(9);
+  documento.text(descricao || 'Tabela de apoio exportada do painel.', 40, 58);
+
+  documento.setFontSize(8);
+  documento.text(`Exportado em: ${dataAtual}`, 40, 74);
+
+  autoTable(documento, {
+    head: [colunas.map((coluna) => coluna.label)],
+    body: dados.map((item) => colunas.map((coluna) => renderizarValorTabela(coluna.key, item[coluna.key]))),
+    startY: 92,
+    styles: {
+      fontSize: 7,
+      cellPadding: 4,
+      overflow: 'linebreak'
+    },
+    headStyles: {
+      fillColor: [242, 99, 34],
+      textColor: 255,
+      fontStyle: 'bold'
+    },
+    alternateRowStyles: {
+      fillColor: [250, 246, 241]
+    },
+    margin: {
+      left: 40,
+      right: 40
+    }
+  });
+
+  documento.save(nomeArquivo.replace('.csv', '.pdf'));
 };
 
 const Recomendacoes = () => {
@@ -85,6 +235,7 @@ const Recomendacoes = () => {
   const [loading, setLoading] = useState(true);
   const [erro, setErro] = useState('');
   const [filtros, setFiltros] = useState(FILTROS_PADRAO);
+  const [detalheAtivo, setDetalheAtivo] = useState(null);
 
   const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
   const isEmpresa = usuario.role === 'empresa';
@@ -117,11 +268,13 @@ const Recomendacoes = () => {
   };
 
   const aplicarFiltros = () => {
+    setDetalheAtivo(null);
     filtrosRef.current = filtros;
     carregarDados({ filtrosAplicados: filtros });
   };
 
   const limparFiltros = () => {
+    setDetalheAtivo(null);
     const filtrosLimpos = { ...FILTROS_PADRAO };
 
     setFiltros(filtrosLimpos);
@@ -142,6 +295,119 @@ const Recomendacoes = () => {
   const sugestoesAltaPrioridade = sugestoes.filter(
     (item) => item.prioridade === 'alta'
   );
+
+  const sugestoesPorRoi = useMemo(() => {
+    return [...sugestoes].sort((a, b) => Number(b.roiSimulado || 0) - Number(a.roiSimulado || 0));
+  }, [sugestoes]);
+
+  const testesPorConversao = useMemo(() => {
+    return [...testesAB].sort((a, b) => {
+      const melhorA = Math.max(Number(a.conversaoA || 0), Number(a.conversaoB || 0));
+      const melhorB = Math.max(Number(b.conversaoA || 0), Number(b.conversaoB || 0));
+      return melhorB - melhorA;
+    });
+  }, [testesAB]);
+
+  const detalhes = useMemo(() => {
+    return {
+      totalRecomendacoes: {
+        titulo: 'Detalhamento do total de recomendações',
+        descricao: 'Lista completa das recomendações geradas por regras analíticas.',
+        nomeArquivo: 'detalhamento_total_recomendacoes.csv',
+        colunas: [
+          { key: 'empresa', label: 'Empresa' },
+          { key: 'tipo', label: 'Tipo' },
+          { key: 'prioridade', label: 'Prioridade' },
+          { key: 'campanhaRecomendada', label: 'Campanha recomendada' },
+          { key: 'metricaBase', label: 'Métrica base' },
+          { key: 'valorMetrica', label: 'Valor da métrica' },
+          { key: 'roiSimulado', label: 'ROI simulado' },
+          { key: 'receitaPotencial', label: 'Receita potencial' }
+        ],
+        dados: sugestoes
+      },
+
+      altaPrioridade: {
+        titulo: 'Detalhamento das recomendações de alta prioridade',
+        descricao: 'Ações críticas para atenção imediata.',
+        nomeArquivo: 'detalhamento_recomendacoes_alta_prioridade.csv',
+        colunas: [
+          { key: 'empresa', label: 'Empresa' },
+          { key: 'tipo', label: 'Tipo' },
+          { key: 'prioridade', label: 'Prioridade' },
+          { key: 'campanhaRecomendada', label: 'Campanha recomendada' },
+          { key: 'justificativa', label: 'Justificativa' },
+          { key: 'acaoSugerida', label: 'Ação sugerida' },
+          { key: 'roiSimulado', label: 'ROI simulado' },
+          { key: 'receitaPotencial', label: 'Receita potencial' }
+        ],
+        dados: sugestoesAltaPrioridade
+      },
+
+      roiMedio: {
+        titulo: 'Detalhamento do ROI médio simulado',
+        descricao: 'Recomendações ordenadas pelo ROI simulado.',
+        nomeArquivo: 'detalhamento_roi_simulado.csv',
+        colunas: [
+          { key: 'empresa', label: 'Empresa' },
+          { key: 'tipo', label: 'Tipo' },
+          { key: 'campanhaRecomendada', label: 'Campanha recomendada' },
+          { key: 'roiSimulado', label: 'ROI simulado' },
+          { key: 'receitaPotencial', label: 'Receita potencial' },
+          { key: 'metricaBase', label: 'Métrica base' },
+          { key: 'valorMetrica', label: 'Valor da métrica' }
+        ],
+        dados: sugestoesPorRoi
+      },
+
+      melhorConversao: {
+        titulo: 'Detalhamento da melhor conversão',
+        descricao: 'Testes A/B simulados ordenados pela melhor taxa de conversão identificada.',
+        nomeArquivo: 'detalhamento_melhor_conversao.csv',
+        colunas: [
+          { key: 'empresa', label: 'Empresa' },
+          { key: 'campanhaA', label: 'Campanha A' },
+          { key: 'conversaoA', label: 'Conversão A' },
+          { key: 'campanhaB', label: 'Campanha B' },
+          { key: 'conversaoB', label: 'Conversão B' },
+          { key: 'vencedora', label: 'Vencedora' },
+          { key: 'conclusao', label: 'Conclusão' }
+        ],
+        dados: testesPorConversao
+      },
+
+      insights: {
+        titulo: 'Detalhamento dos insights estratégicos',
+        descricao: 'Insights gerados para orientar ações comerciais e de campanha.',
+        nomeArquivo: 'detalhamento_insights_estrategicos.csv',
+        colunas: [
+          { key: 'tipo', label: 'Tipo' },
+          { key: 'titulo', label: 'Título' },
+          { key: 'prioridade', label: 'Prioridade' },
+          { key: 'mensagem', label: 'Mensagem' },
+          { key: 'acaoSugerida', label: 'Ação sugerida' }
+        ],
+        dados: insights
+      }
+    };
+  }, [sugestoes, sugestoesAltaPrioridade, sugestoesPorRoi, testesPorConversao, insights]);
+
+  const detalheSelecionado = detalheAtivo ? detalhes[detalheAtivo] : null;
+
+  const abrirDetalhe = (tipo) => {
+    setDetalheAtivo(tipo);
+
+    setTimeout(() => {
+      const elemento = document.getElementById('detalhamento-kpi');
+
+      if (elemento) {
+        elemento.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
+    }, 100);
+  };
 
   return (
     <div className="flex min-h-screen bg-cream">
@@ -239,26 +505,137 @@ const Recomendacoes = () => {
                   titulo="Total de recomendações"
                   valor={formatarNumero(resumo.totalRecomendacoes)}
                   descricao="Sugestões geradas por regras analíticas"
+                  onClick={() => abrirDetalhe('totalRecomendacoes')}
                 />
 
                 <CardResumo
                   titulo="Alta prioridade"
                   valor={formatarNumero(resumo.altaPrioridade)}
                   descricao="Ações críticas para atenção imediata"
+                  onClick={() => abrirDetalhe('altaPrioridade')}
                 />
 
                 <CardResumo
                   titulo="ROI médio simulado"
                   valor={formatarPercentual(resumo.roiMedioSimulado)}
                   descricao="Retorno estimado das recomendações"
+                  onClick={() => abrirDetalhe('roiMedio')}
                 />
 
                 <CardResumo
                   titulo="Melhor conversão"
                   valor={formatarPercentual(resumo.melhorConversao)}
                   descricao="Maior conversão identificada nas campanhas"
+                  onClick={() => abrirDetalhe('melhorConversao')}
                 />
               </section>
+
+              {detalheSelecionado && (
+                <section
+                  id="detalhamento-kpi"
+                  className="bg-white rounded-2xl shadow-sm p-5 sm:p-6 mb-6 border border-orange/10"
+                >
+                  <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4 mb-5">
+                    <div className="min-w-0">
+                      <h2 className="text-lg sm:text-xl font-bold text-text-dark">
+                        {detalheSelecionado.titulo}
+                      </h2>
+
+                      <p className="text-sm text-gray-500 mt-1 leading-relaxed">
+                        {detalheSelecionado.descricao}
+                      </p>
+                    </div>
+
+                    <div className="flex flex-col sm:flex-row gap-3">
+                      <button
+                        type="button"
+                        onClick={() =>
+                          exportarCsv({
+                            nomeArquivo: detalheSelecionado.nomeArquivo,
+                            colunas: detalheSelecionado.colunas,
+                            dados: detalheSelecionado.dados
+                          })
+                        }
+                        disabled={!detalheSelecionado.dados || detalheSelecionado.dados.length === 0}
+                        className="px-4 py-3 rounded-xl bg-orange text-white font-semibold hover:bg-orange-dark transition disabled:opacity-50 flex items-center justify-center gap-2"
+                      >
+                        <Download size={18} />
+                        Exportar CSV
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() =>
+                          exportarPdf({
+                            titulo: detalheSelecionado.titulo,
+                            descricao: detalheSelecionado.descricao,
+                            nomeArquivo: detalheSelecionado.nomeArquivo,
+                            colunas: detalheSelecionado.colunas,
+                            dados: detalheSelecionado.dados
+                          })
+                        }
+                        disabled={!detalheSelecionado.dados || detalheSelecionado.dados.length === 0}
+                        className="px-4 py-3 rounded-xl bg-white border border-orange/20 text-orange font-semibold hover:bg-orange/5 transition disabled:opacity-50 flex items-center justify-center gap-2"
+                      >
+                        <FileText size={18} />
+                        Exportar PDF
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => setDetalheAtivo(null)}
+                        className="px-4 py-3 rounded-xl bg-orange/10 text-orange font-semibold hover:bg-orange/15 transition flex items-center justify-center gap-2"
+                      >
+                        <X size={18} />
+                        Fechar
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="overflow-x-auto -mx-5 sm:-mx-6 px-5 sm:px-6">
+                    <table className="w-full min-w-[1050px] text-sm">
+                      <thead>
+                        <tr className="border-b text-left text-gray-500">
+                          {detalheSelecionado.colunas.map((coluna) => (
+                            <th key={coluna.key} className="py-3 pr-4">
+                              {coluna.label}
+                            </th>
+                          ))}
+                        </tr>
+                      </thead>
+
+                      <tbody>
+                        {(detalheSelecionado.dados || []).slice(0, 30).map((item, index) => (
+                          <tr key={index} className="border-b last:border-b-0">
+                            {detalheSelecionado.colunas.map((coluna) => (
+                              <td key={coluna.key} className="py-3 pr-4">
+                                {renderizarValorTabela(coluna.key, item[coluna.key])}
+                              </td>
+                            ))}
+                          </tr>
+                        ))}
+
+                        {(!detalheSelecionado.dados || detalheSelecionado.dados.length === 0) && (
+                          <tr>
+                            <td
+                              colSpan={detalheSelecionado.colunas.length}
+                              className="py-6 text-center text-gray-500"
+                            >
+                              Nenhum dado encontrado para este detalhamento.
+                            </td>
+                          </tr>
+                        )}
+                      </tbody>
+                    </table>
+                  </div>
+
+                  {detalheSelecionado.dados?.length > 30 && (
+                    <p className="text-xs text-gray-500 mt-4">
+                      Mostrando os primeiros 30 registros. A exportação CSV/PDF inclui todos os registros disponíveis.
+                    </p>
+                  )}
+                </section>
+              )}
 
               <section className="grid grid-cols-1 2xl:grid-cols-3 gap-5 sm:gap-6 mb-6">
                 <div className="bg-white rounded-2xl p-5 sm:p-6 border border-orange/10 shadow-sm 2xl:col-span-2 min-w-0">
