@@ -231,12 +231,11 @@ Após iniciar, acesse o sistema pela URL exibida no terminal do frontend.
 1. A Cannoli envia um **convite por e-mail** para a empresa parceira.
 2. O acesso ao sistema só é liberado através desse convite.
 3. Sem o convite, a empresa não conseguirá acessar a plataforma.
-```
 
-` ``` `.
+---
 
 ## 📋 Licença/License
-<a href="https://github.com/2026-1-NCC4/Projeto2">Cannolitsky</a> © 2026 by <a href="https://github.com/2026-1-NCC4/Projeto2">Cannolitsky</a> is licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a><img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="" style="max-width: 0.5em;max-height:0.5em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="" style="max-width: 0.5em;max-height:0.5em;margin-left: .2em;">
+<a href="https://github.com/2026-1-NCC4/Projeto2">Cannolitsky</a> © 2026 by <a href="https://github.com/2026-1-NCC4/Projeto3">Cannolitsky</a> is licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a><img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="" style="max-width: 0.5em;max-height:0.5em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="" style="max-width: 0.5em;max-height:0.5em;margin-left: .2em;">
 
 ## 🎓 Referências
 
