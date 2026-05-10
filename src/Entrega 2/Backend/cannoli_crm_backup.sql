@@ -1,3 +1,19 @@
+None selected
+
+Skip to content
+Using Gmail with screen readers
+1 of 8,933
+(no subject)
+Inbox
+
+Esther Oliveira Costa
+Attachments
+9:37 PM (0 minutes ago)
+to me
+
+
+ One attachment
+  •  Scanned by Gmail
 -- MariaDB dump 10.19  Distrib 10.4.32-MariaDB, for Win64 (AMD64)
 --
 -- Host: 127.0.0.1    Database: cannoli_crm
@@ -407,3 +423,5 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2026-05-09 18:09:26
+banco.txt
+Displaying banco.txt.
