@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Sidebar from '../dashboard/Sidebar';
 
-const API_URL = 'http://localhost:3001/api';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
 
 const formatarNumero = (valor) => {
   return Number(valor || 0).toLocaleString('pt-BR');

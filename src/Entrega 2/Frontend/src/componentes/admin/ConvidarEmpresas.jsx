@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Sidebar from '../dashboard/Sidebar';
 
-const API_URL = 'http://localhost:3001/api';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
 
 const fontePoppins = {
   fontFamily: "'Poppins', sans-serif"
@@ -379,3 +379,4 @@ const ConvidarEmpresas = () => {
 };
 
 export default ConvidarEmpresas;
+

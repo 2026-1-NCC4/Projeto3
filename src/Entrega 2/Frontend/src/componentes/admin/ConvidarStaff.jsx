@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Sidebar from '../dashboard/Sidebar';
 
-const API_URL = 'http://localhost:3001/api';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
 
 const normalizarStatusConvite = (convite) => {
   if (convite?.used_at || convite?.status === 'used') {
@@ -304,3 +304,4 @@ const ConvidarStaff = () => {
 };
 
 export default ConvidarStaff;
+
