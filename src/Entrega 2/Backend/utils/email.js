@@ -1,83 +1,97 @@
-const nodemailer = require('nodemailer');
+const axios = require('axios');
 
-function getEmailConfig() {
-  const host = process.env.EMAIL_HOST;
-  const port = Number(process.env.EMAIL_PORT) || 587;
-  const user = process.env.EMAIL_USER;
-  const pass = process.env.EMAIL_PASS;
-  const from = process.env.EMAIL_FROM;
+function parseEmailFrom() {
+  const from = process.env.EMAIL_FROM || 'Cannoli CRM <estherjaeg@gmail.com>';
 
-  if (!host || !user || !pass || !from) {
-    throw new Error('Configuração de e-mail ausente. Verifique EMAIL_HOST, EMAIL_USER, EMAIL_PASS e EMAIL_FROM.');
+  const match = from.match(/^(.*?)\s*<(.+?)>$/);
+
+  if (match) {
+    return {
+      name: match[1].trim() || 'Cannoli CRM',
+      email: match[2].trim()
+    };
   }
 
   return {
-    host,
-    port,
-    user,
-    pass,
-    from
+    name: 'Cannoli CRM',
+    email: from.trim()
   };
 }
 
-function createTransporter() {
-  const { host, port, user, pass } = getEmailConfig();
+function getBrevoConfig() {
+  const apiKey = process.env.BREVO_API_KEY;
 
-  return nodemailer.createTransport({
-    host,
-    port,
-    secure: port === 465,
-    auth: {
-      user,
-      pass
-    },
-    connectionTimeout: 15000,
-    greetingTimeout: 15000,
-    socketTimeout: 15000,
-    pool: false
-  });
+  if (!apiKey) {
+    throw new Error('BREVO_API_KEY não configurada no ambiente.');
+  }
+
+  const sender = parseEmailFrom();
+
+  if (!sender.email) {
+    throw new Error('EMAIL_FROM não configurado corretamente.');
+  }
+
+  return {
+    apiKey,
+    sender
+  };
 }
 
 async function sendMailWithLog({ to, subject, html, context }) {
   const startTime = Date.now();
 
   try {
-    const { from } = getEmailConfig();
-    const transporter = createTransporter();
+    const { apiKey, sender } = getBrevoConfig();
 
-    console.log('[EMAIL] Iniciando envio.', {
+    console.log('[EMAIL_API] Iniciando envio via Brevo API.', {
       to,
       subject,
       context,
-      host: process.env.EMAIL_HOST,
-      port: process.env.EMAIL_PORT
+      sender: sender.email
     });
 
-    const info = await transporter.sendMail({
-      from,
-      to,
-      subject,
-      html
-    });
+    const response = await axios.post(
+      'https://api.brevo.com/v3/smtp/email',
+      {
+        sender: {
+          name: sender.name,
+          email: sender.email
+        },
+        to: [
+          {
+            email: to
+          }
+        ],
+        subject,
+        htmlContent: html
+      },
+      {
+        headers: {
+          accept: 'application/json',
+          'api-key': apiKey,
+          'content-type': 'application/json'
+        },
+        timeout: 15000
+      }
+    );
 
-    console.log('[EMAIL] Enviado com sucesso.', {
+    console.log('[EMAIL_API] E-mail enviado com sucesso.', {
       to,
       subject,
       context,
-      messageId: info.messageId,
+      messageId: response.data?.messageId,
       durationMs: Date.now() - startTime
     });
 
-    return info;
+    return response.data;
   } catch (error) {
-    console.error('[EMAIL] Erro ao enviar e-mail.', {
+    console.error('[EMAIL_API] Erro ao enviar e-mail via Brevo API.', {
       to,
       subject,
       context,
       message: error.message,
-      code: error.code,
-      command: error.command,
-      response: error.response,
+      status: error.response?.status,
+      response: error.response?.data,
       durationMs: Date.now() - startTime
     });
 
