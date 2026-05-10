@@ -16,6 +16,39 @@ function isValidEmail(email) {
   return email && email.includes('@') && email.includes('.');
 }
 
+function sendPasswordResetEmailInBackground(result) {
+  if (!result || !result.user) {
+    return;
+  }
+
+  const startTime = Date.now();
+
+  Promise.resolve()
+    .then(() =>
+      sendPasswordResetEmail({
+        to: result.user.email,
+        name: result.user.name,
+        code: result.resetCode
+      })
+    )
+    .then(() => {
+      console.log('[EMAIL_PASSWORD_RESET] E-mail enviado com sucesso.', {
+        email: result.user.email,
+        durationMs: Date.now() - startTime
+      });
+    })
+    .catch((error) => {
+      console.error('[EMAIL_PASSWORD_RESET] Falha ao enviar e-mail em segundo plano.', {
+        email: result.user.email,
+        message: error.message,
+        code: error.code,
+        command: error.command,
+        response: error.response,
+        durationMs: Date.now() - startTime
+      });
+    });
+}
+
 async function registerCompany(req, res) {
   try {
     const { name, cnpj, email, password } = req.body;
@@ -107,6 +140,8 @@ async function registerStaffByInvite(req, res) {
 }
 
 async function login(req, res) {
+  const startTime = Date.now();
+
   try {
     const { email, password } = req.body;
 
@@ -121,11 +156,21 @@ async function login(req, res) {
       password
     });
 
+    console.log('[LOGIN] Login realizado.', {
+      email,
+      durationMs: Date.now() - startTime
+    });
+
     return res.json({
       message: 'Login realizado com sucesso.',
       data: result
     });
   } catch (error) {
+    console.error('[LOGIN] Erro ao realizar login.', {
+      message: error.message,
+      durationMs: Date.now() - startTime
+    });
+
     return res.status(401).json({
       message: error.message
     });
@@ -133,6 +178,8 @@ async function login(req, res) {
 }
 
 async function requestPasswordReset(req, res) {
+  const startTime = Date.now();
+
   try {
     const { email } = req.body;
 
@@ -144,19 +191,25 @@ async function requestPasswordReset(req, res) {
 
     const result = await authService.requestPasswordReset(email);
 
+    console.log('[PASSWORD_RESET] Código gerado/processado.', {
+      email,
+      hasResult: Boolean(result),
+      durationMs: Date.now() - startTime
+    });
+
     if (result) {
-      await sendPasswordResetEmail({
-        to: result.user.email,
-        name: result.user.name,
-        code: result.resetCode
-      });
+      sendPasswordResetEmailInBackground(result);
     }
 
     return res.json({
       message: 'Se o e-mail existir, enviaremos o código de recuperação.'
     });
   } catch (error) {
-    console.error('Erro em requestPasswordReset:', error);
+    console.error('[PASSWORD_RESET] Erro em requestPasswordReset.', {
+      message: error.message,
+      stack: error.stack,
+      durationMs: Date.now() - startTime
+    });
 
     return res.status(500).json({
       message: 'Erro ao solicitar recuperação de senha.'

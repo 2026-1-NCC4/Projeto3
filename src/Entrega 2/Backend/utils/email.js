@@ -1,28 +1,95 @@
 const nodemailer = require('nodemailer');
 
-function createTransporter() {
-  if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
-    throw new Error('Configuração de e-mail ausente.');
+function getEmailConfig() {
+  const host = process.env.EMAIL_HOST;
+  const port = Number(process.env.EMAIL_PORT) || 587;
+  const user = process.env.EMAIL_USER;
+  const pass = process.env.EMAIL_PASS;
+  const from = process.env.EMAIL_FROM;
+
+  if (!host || !user || !pass || !from) {
+    throw new Error('Configuração de e-mail ausente. Verifique EMAIL_HOST, EMAIL_USER, EMAIL_PASS e EMAIL_FROM.');
   }
 
+  return {
+    host,
+    port,
+    user,
+    pass,
+    from
+  };
+}
+
+function createTransporter() {
+  const { host, port, user, pass } = getEmailConfig();
+
   return nodemailer.createTransport({
-    host: process.env.EMAIL_HOST,
-    port: Number(process.env.EMAIL_PORT),
-    secure: false,
+    host,
+    port,
+    secure: port === 465,
     auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS
-    }
+      user,
+      pass
+    },
+    connectionTimeout: 15000,
+    greetingTimeout: 15000,
+    socketTimeout: 15000,
+    pool: false
   });
 }
 
-async function sendPasswordResetEmail({ to, name, code }) {
-  const transporter = createTransporter();
+async function sendMailWithLog({ to, subject, html, context }) {
+  const startTime = Date.now();
 
-  await transporter.sendMail({
-    from: process.env.EMAIL_FROM,
+  try {
+    const { from } = getEmailConfig();
+    const transporter = createTransporter();
+
+    console.log('[EMAIL] Iniciando envio.', {
+      to,
+      subject,
+      context,
+      host: process.env.EMAIL_HOST,
+      port: process.env.EMAIL_PORT
+    });
+
+    const info = await transporter.sendMail({
+      from,
+      to,
+      subject,
+      html
+    });
+
+    console.log('[EMAIL] Enviado com sucesso.', {
+      to,
+      subject,
+      context,
+      messageId: info.messageId,
+      durationMs: Date.now() - startTime
+    });
+
+    return info;
+  } catch (error) {
+    console.error('[EMAIL] Erro ao enviar e-mail.', {
+      to,
+      subject,
+      context,
+      message: error.message,
+      code: error.code,
+      command: error.command,
+      response: error.response,
+      durationMs: Date.now() - startTime
+    });
+
+    throw error;
+  }
+}
+
+async function sendPasswordResetEmail({ to, name, code }) {
+  return sendMailWithLog({
     to,
     subject: 'Código de recuperação de senha - Cannoli CRM',
+    context: 'password_reset',
     html: `
       <p>Olá, ${name}.</p>
 
@@ -40,12 +107,10 @@ async function sendPasswordResetEmail({ to, name, code }) {
 }
 
 async function sendStaffInviteEmail({ to, name, inviteCode }) {
-  const transporter = createTransporter();
-
-  await transporter.sendMail({
-    from: process.env.EMAIL_FROM,
+  return sendMailWithLog({
     to,
     subject: 'Convite para acessar o Cannoli CRM',
+    context: 'staff_invite',
     html: `
       <p>Olá, ${name}.</p>
 
@@ -65,12 +130,10 @@ async function sendStaffInviteEmail({ to, name, inviteCode }) {
 }
 
 async function sendCollaboratorInviteEmail({ to, name, companyName, inviteCode }) {
-  const transporter = createTransporter();
-
-  await transporter.sendMail({
-    from: process.env.EMAIL_FROM,
+  return sendMailWithLog({
     to,
     subject: 'Convite para acessar o Cannoli CRM',
+    context: 'collaborator_invite',
     html: `
       <p>Olá, ${name}.</p>
 
@@ -90,12 +153,10 @@ async function sendCollaboratorInviteEmail({ to, name, companyName, inviteCode }
 }
 
 async function sendCompanyInviteEmail({ to, companyName, inviteCode }) {
-  const transporter = createTransporter();
-
-  await transporter.sendMail({
-    from: process.env.EMAIL_FROM,
+  return sendMailWithLog({
     to,
     subject: 'Convite para ativar sua empresa no Cannoli CRM',
+    context: 'company_invite',
     html: `
       <p>Olá.</p>
 
