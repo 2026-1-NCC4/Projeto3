@@ -7,8 +7,15 @@
 </p>
 
 # Dashboard de Indicadores Cannoli - TechSnack DevTeam
+
 <p align="center">
   <img src="images/dashbord.png" alt="Dashboard Global Cannoli" width="1000">
+</p>
+
+<p align="center">
+  <a href="https://frontend-cannoli.vercel.app/" target="_blank">
+    🔗 Acessar aplicação na Web
+  </a>
 </p>
 
 ## 👥 Grupo: TechSnack DevTeam
