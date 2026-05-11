@@ -184,8 +184,6 @@ Disponibilizamos acesso para:
     👉 Clique aqui para acessar a aplicação 👈
   </a>
 </h3>
----
----
 
 ### Pré-requisitos
 
