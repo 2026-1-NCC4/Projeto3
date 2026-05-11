@@ -13,10 +13,15 @@
 </p>
 
 <p align="center">
-  <a href="https://frontend-cannoli.vercel.app/" target="_blank">
-    <img src="https://img.shields.io/badge/ACESSAR%20APLICAÇÃO-FF6B00?style=for-the-badge&logo=vercel&logoColor=white">
-  </a>
+  <img src="images/dashbord.png" alt="Dashboard Global Cannoli" width="1000">
 </p>
+
+<h3 align="center">
+  <a href="https://frontend-cannoli.vercel.app/" target="_blank">
+    👉 Clique aqui para acessar a aplicação 👈
+
+  </a>
+</h3>
 
 ## 👥 Grupo: TechSnack DevTeam
 
@@ -200,6 +205,60 @@ npm install axios
 npm install
 npm run dev
 ```
+---
+
+# 🔐 Configuração do .env
+
+Crie um arquivo chamado:
+
+```bash
+.env
+```
+
+dentro da pasta:
+
+```bash
+src/Entrega 2/Backend
+```
+
+Adicione as seguintes variáveis:
+
+```env
+PORT=3001
+
+DB_HOST=localhost
+DB_PORT=3306
+DB_USER=root
+DB_PASSWORD=coloque_sua_senha
+DB_NAME=cannoli_crm
+
+JWT_SECRET=sua_chave_secreta
+JWT_EXPIRES_IN=1d
+
+FRONTEND_URL=http://localhost:5174
+
+EMAIL_HOST=smtp-relay.brevo.com
+EMAIL_PORT=587
+EMAIL_USER=seu_email_brevo
+EMAIL_PASS=sua_senha_brevo
+
+BREVO_API_KEY=sua_chave_brevo
+
+EMAIL_FROM="Cannoli CRM <seuemail@gmail.com>"
+```
+---
+
+# ⚠️ Importante
+
+Para o sistema funcionar corretamente é necessário:
+
+- Ter o MySQL rodando
+- Configurar corretamente a senha do banco
+- Configurar a senha SMTP da Brevo
+- Configurar a API KEY da Brevo
+
+Sem essas informações o sistema de autenticação e envio de emails não irá funcionar.
+
 ---
 
 ### 🖥️ 3. Rodando o Frontend
