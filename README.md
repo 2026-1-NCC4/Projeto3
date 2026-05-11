@@ -169,6 +169,7 @@ Raiz
 |-- .gitignore
 ```
 
+---
 
 ## 💻 Configuração para Desenvolvimento
 
