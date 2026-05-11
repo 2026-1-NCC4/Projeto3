@@ -14,7 +14,7 @@
 
 <p align="center">
   <a href="https://frontend-cannoli.vercel.app/" target="_blank">
-    🔗 Acessar aplicação na Web
+    <img src="https://img.shields.io/badge/ACESSAR%20APLICAÇÃO-FF6B00?style=for-the-badge&logo=vercel&logoColor=white">
   </a>
 </p>
 
