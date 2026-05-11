@@ -176,11 +176,25 @@ Raiz
 
 ## 💻 Configuração para Desenvolvimento
 
+Caso não queira configurar o ambiente localmente, você pode acessar diretamente nossa hospedagem no Vercel utilizando as credenciais disponibilizadas no README.
+
+Disponibilizamos acesso para:
+- 👨‍💼 Perfil Administrador
+- 🏢 Perfil Empresa
+
+<h3 align="center">
+  <a href="https://frontend-cannoli.vercel.app/" target="_blank">
+    👉 Clique aqui para acessar a aplicação 👈
+  </a>
+</h3>
+---
+
 ### Pré-requisitos
 
 Antes de começar, certifique-se de ter instalado:
 
 - [Node.js](https://nodejs.org/)
+- [Python](https://www.python.org/)
 - [MySQL](https://www.mysql.com/) ou [XAMPP](https://www.apachefriends.org/)
 - [MySQL Workbench](https://www.mysql.com/products/workbench/) *(opcional, mas recomendado)*
 
@@ -275,12 +289,19 @@ Após iniciar, acesse o sistema pela URL exibida no terminal do frontend.
 
 ---
 
-### 🔐 Credenciais de Acesso Padrão
+### 🔐 Credenciais de Acesso ADM Cannoli
 
 | Campo | Valor |
 |-------|-------|
 | **Email** | `admin@cannolicrm.com` |
 | **Senha** | `Admin@123` |
+
+### 🏢 Credenciais de Acesso Empresa
+
+| Campo | Valor |
+|-------|-------|
+| **Email** | `jaegcostaestheroliveira@gmail.com` |
+| **Senha** | `@#$273baratA` |
 
 ---
 
