@@ -196,6 +196,7 @@ Abra um terminal, acesse a pasta `backend` e execute:
 
 ```bash
 cd backend
+npm install axios
 npm install
 npm run dev
 ```
